@@ -7,7 +7,9 @@
 |Alberto Archetti|915207|
 |Fabio Carminati|919803|
 
-### Deadline: ### 
+This is a group of 2 people
+
+### Deadline: 
 
 <br/>
 
