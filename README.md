@@ -1,4 +1,4 @@
-# Software Engineering II - TrackMe
+# Software Engineering 2 - TrackMe
 
 ## Authors
 
