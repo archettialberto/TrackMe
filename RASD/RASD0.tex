@@ -72,14 +72,25 @@
     Requirement analysis and elicitation is an iterative process. This is the version \thisDocVersion\ of the RASD document. See section~\ref{sec:revhistory} for more details on revision history.
 
   \subsection{Scope}
-
+  \subsubsection{Description of the given problem}
     TrackMe wants to develop a software-based service that allows individual users to collect, store and monitor health data, called \texttt{Data4Help}. The data collected can be shared to third parties in two ways: single-person data (after authorization of the individual) or anonymized data (at least 1000 anonymized individuals). Third parties can subscribe to new data and receive it as soon as it is collected by the service.
 
     Another service that TrackMe wants to develop is \texttt{AutomatedSOS}, built on \texttt{Data4Help}. This service analyzes users'data and calls a SOS whenever data exceedes the basic health parameters. For this particular purpose, system performances will be critical, because even seconds matter in critical health situations.
+ %seconds matter:ambiguous???
 
-    % TODO add goals
 
+   \subsubsection{Goals}
+
+G1-Allow the user to share his personal data with Data4Help.\\
+G1.2-Allow a user to update his DataSet anytime.\\
+G2-Third parties can access either at specificl DataSet or anonymized DataSets of a group of individuals.\\
+G2.1-Third parties can subscribe to new data and receive them as soos as they are available.\\
+G3-Elderly user can subscribe to AutomatedSOS.\\
+%[G5]-User has to know which third party has collected his own data( already in G2!?)
+%registration of user,third party is available requirement:
   \subsection{Definitions, acronyms, abbreviations}
+\textbf{DataSet}=Set of all data shared by the user with TrackMe.\\
+\textbf{Threshold}=It refers to a limit for a Health parameter. If crossed implies that the user needs help. \\
   \subsection{Revision history}
   \label{sec:revhistory}
 
@@ -117,7 +128,20 @@
   \subsection{Product perspective}
   \subsection{Product functions}
   \subsection{User characteristics}
-  \subsection{Assumptions, dependencies, constraints}
+ \subsubsection{Actors}
+\begin{itemize}
+\item \textbf{Visitor}:Someone who hasn't got an account of TrackMe and therefore must complete registration before having granted the access to TrackMe.
+%visitor useful only if we create an adeguate use case (ex. first login)
+\item \textbf{User}:Person that has successfully created an account of TrackMe.She or He can exploit all the functionalities of the application.
+\item  \textbf{Third Party}: Entity that can request to Data4Help  the access  to either individual or group DataSets.
+%maybe split between Data4Help and AutomatedSOS user?
+\end{itemize} 
+ \subsection{Assumptions, dependencies, constraints}
+ \subsubsection{Domain Assumptions:}
+D1-The chosen thresholds are enough to describe user health.\\
+D2-The Data collected by the external sensors and the GPS location are accurate enough.\\
+D3-There is at least one ambulance available when It is required by AutomatedSOS.\\
+
 
 \clearpage
 \section{Specific requirements}
@@ -128,7 +152,15 @@
     \subsubsection{Hardware interfaces}
     \subsubsection{Software interfaces}
     \subsubsection{Communication interfaces}
+   \subsection{Scenarios}:
+  \subsubsection{Scenario 1}:
+
   \subsection{Functional requirements}
+ \subsubsection{Allow a Third Party to access at a speficy DataSet prior User Authorization}
+...
+\subsubsection{Allow a Third Party to access at  group of anonymous DataSets made by at least 1000 individuals}
+%check whether the data fits with the request of the third party
+\subsubsection{Activation of AutomatedSOS must be granted in case of need}
   \subsection{Performance requirements}
   \subsection{Design constraints}
     \subsubsection{Standards compliance}
