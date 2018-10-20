@@ -1,0 +1,181 @@
+\documentclass[12pt]{article}
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+
+\def \thisDocVersion {\texttt{v.0.0}}
+
+% TODO finish section 1
+% TODO add reference documents
+
+% === RASD ===
+%The Requirements analysis and specification document (RASD) contains the description of the scenarios, the use cases that describe them, and the models describing requirements and specification for the problem under consideration. You are to use a suitable mix of natural language, UML, and Alloy. UML and Alloy MUST be part of the documentation. You must also show that you used the Alloy tool for analysis, by reporting the models you obtained by using it. Of course, the initial written problem statement we provide suffers from the typical drawbacks of natural language descriptions: it is informal, incomplete, uses different terms for the same concepts, and the like. You may choose to solve the incompleteness and ambiguity as you wish, but be careful to clearly document the choices you make and the corresponding rationale. You will also include in the document information on the number of hours each group member has worked towards the fulfillment of this deadline. As a reference structure for your document, you should refer to the one reported below that is derived from the one suggested by IEEE. Please include in the document information about the effort spent by each group member for completing this document.
+
+% === TrackMe ===
+%TrackMe is a company that wants to develop a software-based service allowing third parties to monitor the location and health status of individuals. This service is called Data4Help. The service supports the registration of individuals who, by registering, agree that TrackMe acquires their data (data acquisition can happen through smartwatches or similar devices). Also, it supports the registration of third parties.
+%After registration, these third parties can request:
+%\begin{itemize}
+%  \item Access to the data of some specific individuals (we can assume, for instance, that they know an individual by his/her social security number or fiscal code in Italy). In this case, TrackMe passes the request to the specific individuals who can accept or refuse it
+%  \item Access to anonymized data of groups of individuals (for instance, all those living in a certain geographical area, all those of a specific age range, etc.). These requests are handled directly by TrackMe that approves them if it is able to properly anonymize the requested data. For instance, if the third party is asking for data about 10-year-old children living in a certain street in Milano and the number of these children is two, then the third party could be able to derive their identity simply having people monitoring the residents of the street between 8.00 and 9.00 when kids go to school. Then, to avoid this risk and the possibility of a misuse of data, TrackMe will not accept the request. For simplicity, we assume that TrackMe will accept any request for which the number of individuals whose data satisfy the request is higher than 1000
+%\end{itemize}
+%As soon as a request for data is approved, TrackMe makes the previously saved data available to the third party. Also, it allows the third party to subscribe to new data and to receive them as soon as they are produced.
+%Imagine now that, after some time, TrackMe realizes that a good part of its third-party customers wants to use the data acquired through Data4Help to offer a personalized and non-intrusive SOS service to elderly people. Therefore, TrackMe decides to build a new service, called AutomatedSOS, on top of Data4Help. AutomatedSOS monitors the health status of the subscribed customers and, when such parameters are below certain thresholds, sends to the location of the customer an ambulance, guaranteeing a reaction time of less than 5 seconds from the time the parameters are below the threshold.
+
+\begin{document}
+
+\begin{titlepage}
+  \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+  \center
+  \includegraphics[width=140pt]{polimi.png}\\[1cm]
+  \textsc{\LARGE Politecnico di Milano}\\[1cm]
+  \textsc{\Large Master's Degree in \\Computer Science and Engineering}\\[0.5cm]
+  \textsc{\large Software Engineering 2}\\[0.5cm]
+  \HRule \\[0.4cm]
+  { \huge \bfseries \texttt{Data4Help} and \texttt{AutomatedSOS}\\[0.4cm] Requirements Analysis and Specification Document }\\[0.4cm]
+
+  \HRule \\[1cm]
+  \begin{minipage}{0.4\textwidth}
+  \begin{flushleft} \large
+  \emph{Authors}\\
+  Alberto \textsc{Archetti}
+
+  Fabio \textsc{Carminati}
+  \end{flushleft}
+  \end{minipage}
+  ~
+  \begin{minipage}{0.4\textwidth}
+  \begin{flushright} \large
+  \emph{Reference professor} \\
+  Elisabetta \textsc{Di Nitto}
+  \end{flushright}
+  \end{minipage}\\[1cm]
+  {\large \thisDocVersion\ - \today}\\[1cm]
+  \vfill
+\end{titlepage}
+
+\clearpage
+\pagenumbering{gobble}
+\nonumber
+\tableofcontents
+\clearpage
+\pagenumbering{arabic}
+
+\clearpage
+\section{Introduction}
+\label{sec:intro}
+
+  \subsection{Purpose}
+
+    This is the Requirement Analysis and Specification Document (RASD) of \texttt{Data4Help} and \texttt{AutomatedSOS} services, commissioned by TrackMe company. We will specify goals, domain assumptions, requirements, interfaces and high-level models using \texttt{UML} and \texttt{Alloy} languages of the systems that will be produced. This is an important step in software development, because identifying from the starts the correct scope, the constraints and the overall structure of our products is the key to produce mantainable and secure software that correctly responds to the stakeholder's needs.
+
+    Requirement analysis and elicitation is an iterative process. This is the version \thisDocVersion\ of the RASD document. See section~\ref{sec:revhistory} for more details on revision history.
+
+  \subsection{Scope}
+
+    TrackMe wants to develop a software-based service that allows individual users to collect, store and monitor health data, called \texttt{Data4Help}. The data collected can be shared to third parties in two ways: single-person data (after authorization of the individual) or anonymized data (at least 1000 anonymized individuals). Third parties can subscribe to new data and receive it as soon as it is collected by the service.
+
+    Another service that TrackMe wants to develop is \texttt{AutomatedSOS}, built on \texttt{Data4Help}. This service analyzes users'data and calls a SOS whenever data exceedes the basic health parameters. For this particular purpose, system performances will be critical, because even seconds matter in critical health situations.
+
+    % TODO add goals
+
+  \subsection{Definitions, acronyms, abbreviations}
+  \subsection{Revision history}
+  \label{sec:revhistory}
+
+    \begin{table}[h]
+      \begin{tabular}{|c|l|}
+        \hline
+        \textbf{Version}                & \textbf{Log} \\ \hline
+        \texttt{v.0.0} &
+          Introduction sketch
+        \\ \hline
+      \end{tabular}
+    \end{table}
+
+  \subsection{Reference documents}
+
+    \begin{itemize}
+      \item Mandatory Project Assignment AY 2018-2019
+    \end{itemize}
+
+  \subsection{Document structure}
+
+    This document uses the IEEE standards for requirement analysis documents as a guideline towards a clear and logical explanation of its contents:
+    \begin{itemize}
+      \item Section~\ref{sec:intro} gives a brief introduction on the project to be developed and adds notes on references and revisions
+      \item Section~\ref{sec:overdesc} describes the world and the shared phenomena, by defining assumptions and constraints; it identifies also the goals and the main functions of the project
+      \item Section~\ref{sec:specreq}, as the main part of this document, is about requirement analysis; it has also sections about interfaces of the system and software attributes
+      \item Section~\ref{sec:alloy} contains the \texttt{Alloy} model that certifies correctness of goals implication by requirements and domain assumptions
+      \item Section~\ref{sec:effort} lists the overall modifications and additions to this document, ordered by date, as the hour counter of effort spent by each group member
+    \end{itemize}
+
+\clearpage
+\section{Overall description}
+\label{sec:overdesc}
+
+  \subsection{Product perspective}
+  \subsection{Product functions}
+  \subsection{User characteristics}
+  \subsection{Assumptions, dependencies, constraints}
+
+\clearpage
+\section{Specific requirements}
+\label{sec:specreq}
+
+  \subsection{External interface requirements}
+    \subsubsection{User interfaces}
+    \subsubsection{Hardware interfaces}
+    \subsubsection{Software interfaces}
+    \subsubsection{Communication interfaces}
+  \subsection{Functional requirements}
+  \subsection{Performance requirements}
+  \subsection{Design constraints}
+    \subsubsection{Standards compliance}
+    \subsubsection{Hardware limitations}
+    \subsubsection{Any other constraint}
+  \subsection{Software system attributes}
+    \subsubsection{Reliability}
+    \subsubsection{Availability}
+    \subsubsection{Security}
+    \subsubsection{Mantainability}
+    \subsubsection{Portability}
+
+\clearpage
+\section{Formal analysis using Alloy}
+\label{sec:alloy}
+
+\clearpage
+\section{Effort spent}
+\label{sec:effort}
+
+
+\clearpage
+\begin{thebibliography}{9}
+
+  \bibitem{latex_templates}
+  \LaTeX templates
+  \\\texttt{http://www.latextemplates.com/}
+  \\\texttt
+  {http://www.overleaf.com/latex/examples/title-page-with-logo/hrskypjpkrpd}
+
+  \bibitem{slides}
+  Slides of the course by Prof. Di Nitto
+  \\\texttt{https://beep.metid.polimi.it/}
+
+  %\bibitem{latexcompanion}
+  %Michel Goossens, Frank Mittelbach, and Alexander Samarin.
+  %\textit{The \LaTeX\ Companion}.
+  %Addison-Wesley, Reading, Massachusetts, 1993.
+
+  %\bibitem{einstein}
+  %Albert Einstein.
+  %\textit{Zur Elektrodynamik bewegter K{\"o}rper}. (German)
+  %[\textit{On the electrodynamics of moving bodies}].
+  %Annalen der Physik, 322(10):891–921, 1905.
+
+
+
+\end{thebibliography}
+
+\end{document}
