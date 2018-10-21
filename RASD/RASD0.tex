@@ -32,7 +32,7 @@
   \textsc{\Large Master's Degree in \\Computer Science and Engineering}\\[0.5cm]
   \textsc{\large Software Engineering 2}\\[0.5cm]
   \HRule \\[0.4cm]
-  { \huge \bfseries \texttt{Data4Help} and \texttt{AutomatedSOS}\\[0.4cm] Requirements Analysis and Specification Document }\\[0.4cm]
+  { \huge \bfseries TrackMe\\[0.4cm] Requirements Analysis and Specification Document }\\[0.4cm]
 
   \HRule \\[1cm]
   \begin{minipage}{0.4\textwidth}
@@ -67,34 +67,88 @@
 
   \subsection{Purpose}
 
-    This is the Requirement Analysis and Specification Document (RASD) of \texttt{Data4Help} and \texttt{AutomatedSOS} services, commissioned by TrackMe company. We will specify goals, domain assumptions, requirements, interfaces and high-level models using \texttt{UML} and \texttt{Alloy} languages of the systems that will be produced. This is an important step in software development, because identifying from the starts the correct scope, the constraints and the overall structure of our products is the key to produce mantainable and secure software that correctly responds to the stakeholder's needs.
+    This is the Requirement Analysis and Specification Document (RASD) of \texttt{Data4Help} and \texttt{AutomatedSOS} services, commissioned by TrackMe company. We will specify goals, domain assumptions, requirements, interfaces and high-level models using \texttt{UML} and \texttt{Alloy} languages of the systems that will be produced. This is an important step in software development, because identifying from the starts the correct scope, the constraints and the overall structure of our products is the key to produce mantainable and secure software that correctly responds to the stakeholder's needs. \\
+    The audience of this document is very wide. It includes
+    \begin{itemize}
+      \item stakeholders, as it acts as a contract that certifies what is required to our final product in order to satisfy their needs
+      \item developers that will be guided by this document's prescriptions
+      \item testers that are asked to verify the correspondence between the implementation and the requirements
+      \item managers, in order to keep track of the project development
+    \end{itemize}
+    % FABIO ho rimesso questa lista perché nel documento dell'IEEE si dice che qua vanno segnati i destinatari del documento
 
     Requirement analysis and elicitation is an iterative process. This is the version \thisDocVersion\ of the RASD document. See section~\ref{sec:revhistory} for more details on revision history.
 
   \subsection{Scope}
-  \subsubsection{Description of the given problem}
-    TrackMe wants to develop a software-based service that allows individual users to collect, store and monitor health data, called \texttt{Data4Help}. The data collected can be shared to third parties in two ways: single-person data (after authorization of the individual) or anonymized data (at least 1000 anonymized individuals). Third parties can subscribe to new data and receive it as soon as it is collected by the service.
 
-    Another service that TrackMe wants to develop is \texttt{AutomatedSOS}, built on \texttt{Data4Help}. This service analyzes users'data and calls a SOS whenever data exceedes the basic health parameters. For this particular purpose, system performances will be critical, because even seconds matter in critical health situations.
- %seconds matter:ambiguous???
+      \subsubsection{Project description}
 
+        TrackMe wants to develop a software-based service that allows individual users to collect health data, called \texttt{Data4Help}. This data, stored in the \texttt{Data4Help} system, can be retrived and visualized according to different filters and projections. \\
+        The system allows third parties registration. Third parties can request access to users'collected data in two ways:
 
-   \subsubsection{Goals}
+        \begin{description}
+          \item [\textbf{Single-person data}] After the request by the third party is made through the system interface, the system asks the user for authorization; if positively provided, the third party is granted access to the user's data
+          \item [\textbf{Amonymous-group data}] Thirs parties can be interested in big amounts of data, regarding who are the people that are providing it; the system, once the request by the third party is sent, checks if the data can be effectively anonymized (it must find at least 1000 people that match the third party request) and, if positively evaluated, grants access to the anonymized data to the third party that requested it
+        \end{description}
 
-G1-Allow the user to share his personal data with Data4Help.\\
-G1.2-Allow a user to update his DataSet anytime.\\
-G2-Third parties can access either at specificl DataSet or anonymized DataSets of a group of individuals.\\
-G2.1-Third parties can subscribe to new data and receive them as soos as they are available.\\
-G3-Elderly user can subscribe to AutomatedSOS.\\
-%[G5]-User has to know which third party has collected his own data( already in G2!?)
-%registration of user,third party is available requirement:
+        Third parties can subscribe to new data and receive it as soon as it is collected by the system.
+
+        Another service that TrackMe wants to develop is \texttt{AutomatedSOS}, built on \texttt{Data4Help}. This service analyzes users'data and calls a SOS whenever data exceedes the basic health parameters. For this particular purpose, system performances will be a critical aspect to be taken into account, because even the slightest delay matters in critical health situations.
+
+      \subsubsection{Goals}
+
+        Here we present the goals that will be reached once the project is completed:
+
+        %G1-Allow the user to share his personal data with Data4Help.\\
+        %G1.2-Allow a user to update his DataSet anytime.\\
+        %G2-Third parties can access either at specificl DataSet or anonymized DataSets of a group of individuals.\\
+        %G2.1-Third parties can subscribe to new data and receive them as soos as they are available.\\
+        %G3-Elderly user can subscribe to AutomatedSOS.\\
+        %[G5]-User has to know which third party has collected his own data( already in G2!?)
+        %registration of user,third party is available requirement:
+
+        % FABIO ho commentato i goal perché secondo me ci conviene metterli una volta che abbiamo definito anche domain assumptions e requirements, magari martedì?
+
+        \begin{description}
+          % TODO end defining goals
+          \item [\texttt{G1}] goal 1
+          \begin{description}
+            \item [\texttt{G1.1}] goal 1
+          \end{description}
+          \item [\texttt{G2}] goal 2
+        \end{description}
+
   \subsection{Definitions, acronyms, abbreviations}
-\textbf{DataSet}=Set of all data shared by the user with TrackMe.\\
-\textbf{Threshold}=It refers to a limit for a Health parameter. If crossed implies that the user needs help. \\
+
+    \subsubsection{Definitions}
+
+      \begin{description}
+        \item[]
+        %\item [Data Set]
+        % FABIO prima di threshold ci conviene definire quali parametri raccogliere e cos'è un "set" di parametri per un utente, tipo vettore
+        %\item [Threshold] % In the context of \texttt{AutomatedSOS}, it refers to a particular boundary in health parameters space that divides the set of all ...
+      \end{description}
+      % \textbf{DataSet}=Set of all data shared by the user with TrackMe.\\
+      % FABIO ho pensato ad un modo per aggirare il problema della scelta dell'utente di poter cambiare i permessi sulle sue condivisioni: domani ti spiego e ridefiniamo Data Set se ti va bene l'idea
+      %\textbf{Threshold}=It refers to a limit for a Health parameter. If crossed implies that the user needs help. \\
+      % TODO fill this
+
+    \subsubsection{Acronyms}
+
+      \begin{description}
+        \item[]
+      \end{description}
+
+    \subsubsection{Abbreviations}
+
+      \begin{description}
+        \item[]
+      \end{description}
+
   \subsection{Revision history}
   \label{sec:revhistory}
 
-    \begin{table}[h]
+    \begin{table}[hbt!]
       \begin{tabular}{|c|l|}
         \hline
         \textbf{Version}                & \textbf{Log} \\ \hline
@@ -108,6 +162,11 @@ G3-Elderly user can subscribe to AutomatedSOS.\\
 
     \begin{itemize}
       \item Mandatory Project Assignment AY 2018-2019
+      \item IEEE 830-1993 - IEEE Recommended Practice for Software Requirements Specifications
+      \item ISO/IEC/IEEE 29148 - Systems and software engineering — Life cycle processes — Requirements engineering
+      \item Collection and Processing of Data from Wrist Wearable Devices in Heterogeneous and Multiple-User Scenarios \\ \texttt{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5038811/}
+      \item Google Fit API \\
+      \texttt{https://developers.google.com/fit/overview}
     \end{itemize}
 
   \subsection{Document structure}
@@ -128,39 +187,48 @@ G3-Elderly user can subscribe to AutomatedSOS.\\
   \subsection{Product perspective}
   \subsection{Product functions}
   \subsection{User characteristics}
- \subsubsection{Actors}
-\begin{itemize}
-\item \textbf{Visitor}:Someone who hasn't got an account of TrackMe and therefore must complete registration before having granted the access to TrackMe.
-%visitor useful only if we create an adeguate use case (ex. first login)
-\item \textbf{User}:Person that has successfully created an account of TrackMe.She or He can exploit all the functionalities of the application.
-\item  \textbf{Third Party}: Entity that can request to Data4Help  the access  to either individual or group DataSets.
-%maybe split between Data4Help and AutomatedSOS user?
-\end{itemize} 
- \subsection{Assumptions, dependencies, constraints}
- \subsubsection{Domain Assumptions:}
-D1-The chosen thresholds are enough to describe user health.\\
-D2-The Data collected by the external sensors and the GPS location are accurate enough.\\
-D3-There is at least one ambulance available when It is required by AutomatedSOS.\\
+
+    \subsubsection{Actors}
+
+      \begin{description}
+        %\item \textbf{Visitor}:Someone who hasn't got an account of TrackMe and therefore must complete registration before having granted the access to TrackMe.
+        %visitor useful only if we create an adeguate use case (ex. first login)
+        % FABIO secondo me possiamo chiamarlo user e basta, perché altrimenti sembra che ci possa essere uno che usa l'applicazione senza essere registrato
+        \item [User] Person that has successfully created an account of TrackMe. She or He can exploit all the functionalities of the application
+        \item [Third Party] Entity that can request to Data4Help  the access  to either individual or group DataSets
+        %maybe split between Data4Help and AutomatedSOS user?
+      \end{description}
+
+  \subsection{Assumptions, dependencies, constraints}
+
+    \subsubsection{Domain assumptions}
+
+      \begin{description}
+        \item[\texttt{D1}] da 1
+        \item[\texttt{D2}] da 2
+      \end{description}
+      % FABIO stesso dircorso dei goal, ci conviene definirli tutti assieme
+      %D1-The chosen thresholds are enough to describe user health.\\
+      %D2-The Data collected by the external sensors and the GPS location are accurate enough.\\
+      %D3-There is at least one ambulance available when It is required by AutomatedSOS.\\
 
 
 \clearpage
 \section{Specific requirements}
 \label{sec:specreq}
 
+  % === SCENARIOS ===
+    %\subsubsection{Allow a Third Party to access at a speficy DataSet prior User Authorization}
+    %	\subsubsection{Allow a Third Party to access at  group of anonymous DataSets made by at least 1000 individuals}
+    %check whether the data fits with the request of the third party
+    %	\subsubsection{Activation of AutomatedSOS must be granted in case of need}
+
   \subsection{External interface requirements}
     \subsubsection{User interfaces}
     \subsubsection{Hardware interfaces}
     \subsubsection{Software interfaces}
     \subsubsection{Communication interfaces}
-   \subsection{Scenarios}:
-  \subsubsection{Scenario 1}:
-
   \subsection{Functional requirements}
- \subsubsection{Allow a Third Party to access at a speficy DataSet prior User Authorization}
-...
-\subsubsection{Allow a Third Party to access at  group of anonymous DataSets made by at least 1000 individuals}
-%check whether the data fits with the request of the third party
-\subsubsection{Activation of AutomatedSOS must be granted in case of need}
   \subsection{Performance requirements}
   \subsection{Design constraints}
     \subsubsection{Standards compliance}
@@ -180,7 +248,6 @@ D3-There is at least one ambulance available when It is required by AutomatedSOS
 \clearpage
 \section{Effort spent}
 \label{sec:effort}
-
 
 \clearpage
 \begin{thebibliography}{9}
@@ -205,9 +272,6 @@ D3-There is at least one ambulance available when It is required by AutomatedSOS
   %\textit{Zur Elektrodynamik bewegter K{\"o}rper}. (German)
   %[\textit{On the electrodynamics of moving bodies}].
   %Annalen der Physik, 322(10):891–921, 1905.
-
-
-
 \end{thebibliography}
 
 \end{document}
