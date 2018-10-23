@@ -5,6 +5,7 @@
 \usepackage{graphicx}
 
 \def \thisDocVersion {\texttt{v.0.0}}
+\def \PACKAGE {\texttt{Package}}
 
 % TODO finish section 1
 
@@ -74,7 +75,6 @@
       \item testers that are asked to verify the correspondence between the implementation and the requirements
       \item managers, in order to keep track of the project development
     \end{itemize}
-    % FABIO ho rimesso questa lista perché nel documento dell'IEEE si dice che qua vanno segnati i destinatari del documento
 
     Requirement analysis and elicitation is an iterative process. This is the version \thisDocVersion\ of the RASD document. See section~\ref{sec:revhistory} for more details on revision history.
 
@@ -96,10 +96,12 @@
 
       \subsubsection{Goals}
 
-        Here we present the goals that will be reached once the project is completed:
+        Here we present the goals that will be reached once the project is completed. Goals with identifier that starts with \texttt{G.U} focus on the users, while goals with identifier that starts with \texttt{G.T} focus on third parties.
 
         %G1-Allow the user to share his personal data with Data4Help.\\
+        % FABIO riassunto in G.U1, G.U2 e G.U3
         %G1.2-Allow a user to update his DataSet anytime.\\
+        % FABIO uguale a G.U1
         %G2-Third parties can access either at specificl DataSet or anonymized DataSets of a group of individuals.\\
         %G2.1-Third parties can subscribe to new data and receive them as soos as they are available.\\
         %G3-Elderly user can subscribe to AutomatedSOS.\\
@@ -110,19 +112,63 @@
 
         \begin{description}
           % TODO end defining goals
-          \item [\texttt{G1}] goal 1
+
+          % === USER GOALS ===
+
+          \item[\texttt{G.U1}] Users can
           \begin{description}
-            \item [\texttt{G1.1}] goal 1
+            \item[\texttt{G.U1.1}] collect\footnote{acquire data through external devices} their health data
+            % TODO add reference of external devices
+            % TODO add reference to the health data types
+            \item[\texttt{G.U1.2}] store\footnote{data shouldn't be lost once acquired and should be always retrievable by the user that produced it and by third parties that have access to it} their health data
+            \item[\texttt{G.U1.3}] manage\footnote{search through data by time intervals and filter data by type} their health data
           \end{description}
-          \item [\texttt{G2}] goal 2
+          \item[\texttt{G.U2}] Users can decide which data can be anonymously shared to third parties
+          \item[\texttt{G.U3}] Users can decide whether to accept or decline third paties'requests for their data sharing
+          \item[\texttt{G.U4}] Users can revoke the data sharing permissions for both anonymized data (see \texttt{G.U2}) and single-user data (see \texttt{G.U3}); once the permission is revoked, the third party will still have access to the previously acquired data of the user, but will not have access to newly produced data by the user that fits the revoked request\footnote{
+          data is said to \textit{fit the revoked request} if
+          1. it would be shared if the request is accepted but not revoked
+          2. it would not be shared if the request has been accepted, then revoked; see Section~\ref{sec:definitions} for more details}
+          \item[\texttt{G.U5}] If a user chose to be monitored by \texttt{AutomatedSOS} system and his/her health parameters are critical, then an ambulance will be dispatched within 5 seconds and then arrive at the user's location
+
+          % === THIRD PARTIES GOALS ===
+
+          \item[\texttt{G.T1}] Third parties can ask to a user the permission for sharing some\footnote{data can be requested by third parties according to the \PACKAGE\ concept; see Section~\ref{sec:definitions} for more details % TODO add reference
+          } of his/her data; if the user accepts the request, his/her data that fits the request
+          % TODO add reference to definitions for 'fits the request'
+          is then accessible by the third party, otherwise the data is not not accessible by the third party
+          \item[\texttt{G.T2}] Third parties can request access
+          % TODO add reference to the 'request access concept'
+          to anonymized data of a group of individuals; if the data can be anonymized, then the third party that made the request gains access to the data, otherwise it has no access to it; the shared data should be properly anonymized (the third party shouldn't be able to discover who are the users that produced that data)
+          % TODO add domain assumption: anonymized = >= 1000 indivisuals
+          \item[\texttt{G.T3}] Third parties can revoke their data requests; they still have access
+          % TODO add note to what 'have access mean'
+          to the previously acquired data, but will not receive any more data that fits the revoked request
         \end{description}
 
   \subsection{Definitions, acronyms, abbreviations}
 
     \subsubsection{Definitions}
+    \label{sec:definitions}
 
       \begin{description}
-        \item[]
+        \item[(To have) access to the data] A user has access to the data if he produced it i.e. if the data was
+        % TODO add reference
+        while logged in the user's profile; a third party has access to the data if retrived by the system through external sensors
+        \item[Anonymized data] Data is said to be anonymized if it has no information about the user that produced it; a set of data (also known as aggregate data or group of data) is said to be anonymized if it contains only anonymized data and its cardinality (number of elements contained in it) is greater or equal to $1000$
+        \item[Data] Information about health parameters that has been retrived by the S2B through sensors while logged in a user profile; data belongs to that user and he/she can retrive it from the system; data tuples are identified by the owner user and the acquisition timestamp
+        \item[Data fits the request] Data is said to fit a particular request if the following holds:\\
+        1. if the request is accepted but not revoked by the target user, then it would be shared between the user and the third party that made the request \\
+        2. if the request has been accepted and after revoked by the user, then it would not be shared between the user and the third party i.e. the third party cannot retrive the data it asked
+        \item[Health parameter] Numerical variable that encodes information about a physical phenomena that can be related to the person's health and can be measured through external sensors
+        % TODO add reference to another paragraph
+        % Blood pressure, weight and BMI, cholesterol, glucose, heart rate, exercise and sleep.
+        % https://www.selfcare4me.com/en/parameters-what-do-you-want-to-measure/
+        \item[\PACKAGE] % TODO define this concept
+        \item[Request] Making a request means asking for a permission to access some data; a request is made by a third party and the target can be a single user's data (the third party wants to have access to the user's data) or aggregate data (the third party is interested in a huge number of data that has been anonymized by the system); a request can be accepted (third party gains access to the data that fits the request) or declined (third party has no access to that data)
+        \item[Threshold] Health parameters, as numerical variables, can be labled as \textit{ordinary} or \textit{critical} according to some intervals; these intervals are defined through thresholds that separate the \textit{ordinary} domain to the \textit{critical} one; thresholds are a domain property
+        % TODO add references to medical articles
+        \item[Timestamp] A timestamp\footnote{\texttt{https://en.wikipedia.org/wiki/Timestamp}} is a sequence of characters or encoded information identifying when a certain event occurred, usually giving date and time of day, sometimes accurate to a small fraction of a second
         %\item [Data Set]
         % FABIO prima di threshold ci conviene definire quali parametri raccogliere e cos'è un "set" di parametri per un utente, tipo vettore.OK
         %\item [Threshold] % In the context of \texttt{AutomatedSOS}, it refers to a particular boundary in health parameters space that divides the set of all ...
@@ -130,22 +176,22 @@
       % \textbf{DataSet}=Set of all data shared by the user with TrackMe.\\
       % FABIO ho pensato ad un modo per aggirare il problema della scelta dell'utente di poter cambiare i permessi sulle sue condivisioni: domani ti spiego e ridefiniamo Data Set se ti va bene l'idea.OK
       %\textbf{Threshold}=It refers to a limit for a Health parameter. If crossed implies that the user needs help. \\
-      % TODO fill this
+      % TODO end filling this
 
     \subsubsection{Acronyms}
 
       \begin{description}
-        \item[]
+        \item[] % TODO fill this
       \end{description}
 
     \subsubsection{Abbreviations}
 
       \begin{description}
-        \item[]
+        \item[S2B] % TODO fill this
       \end{description}
 
   \subsection{Revision history}
-  
+
   \label{sec:revhistory}
     \begin{table}[!h]
       \begin{tabular}{|c|l|}
