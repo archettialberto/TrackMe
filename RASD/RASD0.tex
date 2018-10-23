@@ -262,6 +262,9 @@
 %\subsubsection{Scenario 2:}
 %The franchise BodySlim is opening a new  gym in Milan near Parco Sempione;the most relevant aspect that characterize it, is the timetable:open 365 days, 8 hours per day. In order to maximize the revenue the management would like to know in which time of the day the potential customers made exercise. In order to have a reliable sample BodySlim create a third party account and asked Data4Help to provide a sample of 2000 individuals with particular characteristics: age between 20 and 60,at least once a week they are running in Parco Sempione(this can be checked with GPS position).Now looking at the most common hours chosen for running by these individuals the manager can easily identify the most profitable hours in which the gym should be opened.
 
+%\subsubsection{Scenario 3}
+%FastandEasy,car-sharing company, has a business model based on how much time the user rent one of his car in a week. After 5 years the society has to decide whether change this model with a new one based on the kilometers travelled in a week or keep going with the old one. In order to take the right decision is decided to ask the user to share their GPS location with the company for 3 months. Because of this is a temporary solution it will be a waste of money for FastandEasy to implement his own system for picking up these data. Therefore the company creates a third party account of Data4Help and asks the GPS location only of the users of the car-sharing society. This is a request for specific DataSets therefore before giving the data, Data4Help will ask directly to the user which can deny or approve it. After 3 months looking at the GPS location the company can compute the possible earnings of the new model,compare them with the old ones and finally make a decision.
+
     %\subsubsection{Allow a Third Party to access at a speficy DataSet prior User Authorization}
     %	\subsubsection{Allow a Third Party to access at  group of anonymous DataSets made by at least 1000 individuals}
     %check whether the data fits with the request of the third party
@@ -273,6 +276,78 @@
     \subsubsection{Software interfaces}
     \subsubsection{Communication interfaces}
   \subsection{Functional requirements}
+%description of the functional requirements  
+%\subsection{Use Cases} %related to functional requirements
+%\subsubsection{Sign in}     
+%Actor:Mark\\     
+%Entry Condition: The application is installed on the smartphone and smartwatch\\
+%Flow of Events:
+%1. Mark click on "Create a new account" button in the homepage of the app.
+%2. Mark fills all the mandatory fields("Age","Name","Surname","Email","Sex","Password","Fiscal Code").
+%3. Mark insert in the fields "Shared Data" the data that he want to share with the app.
+%4. Mark clicks on the "Confirm" button.
+%5.The system create a DataSet for Mark with the data shared.
+%Exit Condition:A new account has been successfully created.\\
+%Exceptions:
+%1. The system find that Mark filled the field "Age" with 12. 
+%2. The system find that Mark filled the field "Email"  with an email that is non-existent or that has already been associated with another user.
+%3. The system find that Mark filled the field "Fiscal Code" with an expression not long 16 characters.
+%4. The system find that Mark filled the field "Password" with an expression shorter than 8 characters.
+%All exceptions are handled notifying the issue to Mark and taking back the Flow of Events to the point 2.
+%Special Requirements:\\
+
+%\subsubsection{Log In}
+%Actor: Phil\\
+%Entry Condition: Phil has already created an account
+%Flow of Events:
+%1. Phil opens the app on his smartphone.
+%2. Phil insert his email and password in the fields "Email" and "Password" in the homepage of Data4Help.
+%3. Phil Click on "Log In" button in the homepage of the app. 
+%Exit Condition: Phil is successfully logged in\\
+%Exceptions:
+%1. Phil has to re-insert the field "Email" if the system doesn't found the email address inserted in that field.
+%2. Phil has to re-insert the field "Password" if the system doesn't found the password inserted in that field.
+%3. Phil has to re-insert both the fields and "Email" "Password" and  if the system found both the email and the password inserted by Phil but these refers to 2 different users.
+%\\
+%Special Requirements:\\
+
+
+%\subsubsection{Asking an individual DataSet request}
+%Actor:Bakery,Fabio\\
+%Entry Condition:Bakery has already a third party account and is already log in in Data4Help.\\
+%Flow of Events:
+%1. Bakery clicks on the button "Request Individual DataSet}
+%2. Bakery insert the Fiscal Code of Fabio in the field "Fiscal Code" of the Individual Request page.
+%3. Bakery insert the data of Fabio which it would like to access.
+%4. The system asks Fabio whether he accept or decline to share the specified data with Bakery
+%5. Fabio answer clicking in the field "Yes" in the myworld page.
+%\\
+%Exit Condition: Data requested are available for Bakery   \\
+%Exceptions:
+%1. Bakery has to re-insert the field "Fiscal Code" if the system doesn't found the fiscal code inserted in that field.
+%2. System discovers that at the moment Bakery asks the data, Fabio hasn't shared the requested data with Data4Help. Therefore Bakery has to insert a new fiscal code(a new user is needed).
+%3. Bakery has to insert a new fiscal code because Fabio declined the request. (a new user is needed).
+%Special Requirements:\\
+
+
+
+%\subsubsection{Call an ambulance}
+%Actor:Ambulance,Andrew\\
+%Entry Condition:Andrew health parameters are below threshold\\
+%Flow of Events:
+%1. The system request an ambulance
+%2. The ambulance is sent to the location of the customer(Domain assumption) .
+%\\
+%Exit Condition: Data requested are available for Bakery   \\
+%Exceptions:
+%with the domain assumption:no
+%Special Requirements:
+%The ambulance must be dispatched within 5 seconds from the time the helath parameters goes below goes below 
+
+
+
+
+
   \subsection{Performance requirements}
   \subsection{Design constraints}
     \subsubsection{Standards compliance}
