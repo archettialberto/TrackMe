@@ -4,7 +4,7 @@
 \usepackage{amsmath}
 \usepackage{graphicx}
 
-\def \thisDocVersion {\texttt{v.0.0}}
+\def \thisDocVersion {\texttt{v.0}}
 \def \PACKAGE {\texttt{Package}}
 
 % TODO finish section 1
@@ -67,27 +67,14 @@
 
   \subsection{Purpose}
 
-    This is the Requirement Analysis and Specification Document (RASD) of \texttt{Data4Help} and \texttt{AutomatedSOS} services, commissioned by TrackMe company. We will specify goals, domain assumptions, requirements, interfaces and high-level models using \texttt{UML} and \texttt{Alloy} languages of the systems that will be produced. This is an important step in software development, because identifying from the starts the correct scope, the constraints and the overall structure of our products is the key to produce mantainable and secure software that correctly responds to the stakeholder's needs. \\
-    The audience of this document is very wide. It includes
-    \begin{itemize}
-      \item stakeholders, as it acts as a contract that certifies what is required to our final product in order to satisfy their needs
-      \item developers that will be guided by this document's prescriptions
-      \item testers that are asked to verify the correspondence between the implementation and the requirements
-      \item managers, in order to keep track of the project development
-    \end{itemize}
-
-    Requirement analysis and elicitation is an iterative process. This is the version \thisDocVersion\ of the RASD document. See section~\ref{sec:revhistory} for more details on revision history.
-
-  \subsection{Scope}
-
       \subsubsection{Project description}
 
-        TrackMe wants to develop a software-based service that allows individual users to collect health data, called \texttt{Data4Help}. This data, stored in the \texttt{Data4Help} system, can be retrived and visualized according to different filters and projections. \\
+        TrackMe wants to develop a software-based service that allows individual users to collect health data, called \texttt{Data4Help}. This data can be retrived from the system and visualized according to different filters by a user interface. \\
         The system allows third parties registration. Third parties can request access to users'collected data in two ways:
 
         \begin{description}
-          \item [\textbf{Single-person data}] After the request by the third party is made through the system interface, the system asks the user for authorization; if positively provided, the third party is granted access to the user's data
-          \item [\textbf{Amonymous-group data}] Thirs parties can be interested in big amounts of data, regarding who are the people that are providing it; the system, once the request by the third party is sent, checks if the data can be effectively anonymized (it must find at least 1000 people that match the third party request) and, if positively evaluated, grants access to the anonymized data to the third party that requested it
+          \item [\textbf{Single-person data}] After the the third party makes a request to the system for a single user data sharing (providing for example the fiscal code of the user), the system asks the user for authorization; if positively provided, the third party is granted access to the user's data
+          \item [\textbf{Amonymous-group data}] Thirs parties can be interested in big amounts of data, but not in who are the people that are providing it; the system, once the request by the third party is sent, checks if the data can be effectively anonymized (it must find at least 1000 people that match the third party request) and, if positively evaluated, grants access to the anonymized data to the third party that requested it
         \end{description}
 
         Third parties can subscribe to new data and receive it as soon as it is collected by the system.
@@ -96,55 +83,53 @@
 
       \subsubsection{Goals}
 
-        Here we present the goals that will be reached once the project is completed. Goals with identifier that starts with \texttt{G.U} focus on the users, while goals with identifier that starts with \texttt{G.T} focus on third parties.
-
-        %G1-Allow the user to share his personal data with Data4Help.\\
-        % FABIO riassunto in G.U1, G.U2 e G.U3
-        %G1.2-Allow a user to update his DataSet anytime.\\
-        % FABIO uguale a G.U1
-        %G2-Third parties can access either at specificl DataSet or anonymized DataSets of a group of individuals.\\
-        %G2.1-Third parties can subscribe to new data and receive them as soos as they are available.\\
-        %G3-Elderly user can subscribe to AutomatedSOS.\\
-        %[G5]-User has to know which third party has collected his own data( already in G2!?)
-        %registration of user,third party is available requirement:
-
-        %Magari martedì li confermiamo?
+        Here we present the goals that will be reached once the project is completed:
 
         \begin{description}
-          % TODO end defining goals
-
-          % === USER GOALS ===
-
-          \item[\texttt{G.U1}] Users can
-          \begin{description}
-            \item[\texttt{G.U1.1}] collect\footnote{acquire data through external devices} their health data
-            % TODO add reference of external devices
-            % TODO add reference to the health data types
-            \item[\texttt{G.U1.2}] store\footnote{data shouldn't be lost once acquired and should be always retrievable by the user that produced it and by third parties that have access to it} their health data
-            \item[\texttt{G.U1.3}] manage\footnote{search through data by time intervals and filter data by type} their health data
-          \end{description}
-          \item[\texttt{G.U2}] Users can decide which data can be anonymously shared to third parties
-          \item[\texttt{G.U3}] Users can decide whether to accept or decline third paties'requests for their data sharing
-          \item[\texttt{G.U4}] Users can revoke the data sharing permissions for both anonymized data (see \texttt{G.U2}) and single-user data (see \texttt{G.U3}); once the permission is revoked, the third party will still have access to the previously acquired data of the user, but will not have access to newly produced data by the user that fits the revoked request\footnote{
-          data is said to \textit{fit the revoked request} if
-          1. it would be shared if the request is accepted but not revoked
-          2. it would not be shared if the request has been accepted, then revoked; see Section~\ref{sec:definitions} for more details}
-          \item[\texttt{G.U5}] If a user chose to be monitored by \texttt{AutomatedSOS} system and his/her health parameters are critical, then an ambulance will be dispatched within 5 seconds and then arrive at the user's location
-
-          % === THIRD PARTIES GOALS ===
-
-          \item[\texttt{G.T1}] Third parties can ask to a user the permission for sharing some\footnote{data can be requested by third parties according to the \PACKAGE\ concept; see Section~\ref{sec:definitions} for more details % TODO add reference
-          } of his/her data; if the user accepts the request, his/her data that fits the request
-          % TODO add reference to definitions for 'fits the request'
-          is then accessible by the third party, otherwise the data is not not accessible by the third party
-          \item[\texttt{G.T2}] Third parties can request access
-          % TODO add reference to the 'request access concept'
-          to anonymized data of a group of individuals; if the data can be anonymized, then the third party that made the request gains access to the data, otherwise it has no access to it; the shared data should be properly anonymized (the third party shouldn't be able to discover who are the users that produced that data)
-          % TODO add domain assumption: anonymized = >= 1000 indivisuals
-          \item[\texttt{G.T3}] Third parties can revoke their data requests; they still have access
-          % TODO add note to what 'have access mean'
-          to the previously acquired data, but will not receive any more data that fits the revoked request
+          \item[\texttt{G.U1}] Users can collect, store and manage their health data
+          \item[\texttt{G.U2}] Users can choose to have their health monitored; if their health is critical, an ambulance will be dispatched
+          \item[\texttt{G.T1}] Third parties can ask single users for their health data sharing
+          \item[\texttt{G.T2}] Third parties can request access to anonymized data that comes from groups of people
+          \item[\texttt{G.T3}] Third parties can subscribe to new data and receive it as soon it is produced
         \end{description}
+
+    %This is the Requirement Analysis and Specification Document (RASD) of \texttt{Data4Help} and \texttt{AutomatedSOS} services, commissioned by TrackMe company. We will specify goals, domain assumptions, requirements, interfaces and high-level models using \texttt{UML} and \texttt{Alloy} languages of the systems that will be produced. This is an important step in software development, because identifying from the starts the correct scope, the constraints and the overall structure of our products is the key to produce mantainable and secure software that correctly responds to the stakeholder's needs. \\
+    %The audience of this document is very wide. It includes
+    %\begin{itemize}
+    %  \item stakeholders, as it acts as a contract that certifies what is required to our final product in order to satisfy their needs
+    %  \item developers that will be guided by this document's prescriptions
+    %  \item testers that are asked to verify the correspondence between the implementation and the requirements
+    %  \item managers, in order to keep track of the project development
+    %\end{itemize}
+
+    %Requirement analysis and elicitation is an iterative process. This is the version \thisDocVersion\ of the RASD document. See section~\ref{sec:revhistory} for more details on revision history.
+
+  \subsection{Scope}
+
+    \subsubsection{World}
+
+      Our \textit{world} is composed of two main actors: users and third parties. Users are interestes in monitoring their health parameters and third parties are interested in developing services or researches that exploit the data gathered by the users. \texttt{Data4Help} is the service that acts as a bridge between these actors'needs. \\
+      Phenomena that occur in the \textit{world} and are related to our application domain are
+      \begin{itemize}
+        \item physical conditions of our users
+        \item third parties projects
+        \item SOS system that is able to dispatch ambulances
+      \end{itemize}
+      These phenomena exist in the \textit{world}, but cannot be observerd directly by our system.
+
+    \subsubsection{Shared phenomena}
+
+      In order to communicate with the \textit{world}, our system needs to share some aspects with it. We will list the aspects controlled by the world, but observable by the machine:
+      \begin{itemize}
+        \item physical parameters of the users, gathered through sensors on wereable devices
+        \item third parties requests to the system for the data they need
+        \item users'location, acquired through GPS signals
+      \end{itemize}
+      On the other hand, the aspects that occur in the machine, but are observable by the world are
+      \begin{itemize}
+        \item interfaces that organize the gathered data that can be filtered according to time or type of data
+        \item messages for the SOS system, that are sent in case of critical health of a user
+      \end{itemize}
 
   \subsection{Definitions, acronyms, abbreviations}
 
@@ -152,23 +137,24 @@
     \label{sec:definitions}
 
       \begin{description}
-        \item[(To have) access to the data] A user has access to the data if he produced it i.e. if the data was
+        \item[]
+        %\item[(To have) access to the data] A user has access to the data if he produced it i.e. if the data was
         % TODO add reference
-        while logged in the user's profile; a third party has access to the data if retrived by the system through external sensors
-        \item[Anonymized data] Data is said to be anonymized if it has no information about the user that produced it; a set of data (also known as aggregate data or group of data) is said to be anonymized if it contains only anonymized data and its cardinality (number of elements contained in it) is greater or equal to $1000$
-        \item[Data] Information about health parameters that has been retrived by the S2B through sensors while logged in a user profile; data belongs to that user and he/she can retrive it from the system; data tuples are identified by the owner user and the acquisition timestamp
-        \item[Data fits the request] Data is said to fit a particular request if the following holds:\\
-        1. if the request is accepted but not revoked by the target user, then it would be shared between the user and the third party that made the request \\
-        2. if the request has been accepted and after revoked by the user, then it would not be shared between the user and the third party i.e. the third party cannot retrive the data it asked
-        \item[Health parameter] Numerical variable that encodes information about a physical phenomena that can be related to the person's health and can be measured through external sensors
+        %while logged in the user's profile; a third party has access to the data if retrived by the system through external sensors
+        %\item[Anonymized data] Data is said to be anonymized if it has no information about the user that produced it; a set of data (also known as aggregate data or group of data) is said to be anonymized if it contains only anonymized data and its cardinality (number of elements contained in it) is greater or equal to $1000$
+        %\item[Data] Information about health parameters that has been retrived by the S2B through sensors while logged in a user profile; data belongs to that user and he/she can retrive it from the system; data tuples are identified by the owner user and the acquisition timestamp
+        %\item[Data fits the request] Data is said to fit a particular request if the following holds:\\
+        %1. if the request is accepted but not revoked by the target user, then it would be shared between the user and the third party that made the request \\
+        %2. if the request has been accepted and after revoked by the user, then it would not be shared between the user and the third party i.e. the third party cannot retrive the data it asked
+        %\item[Health parameter] Numerical variable that encodes information about a physical phenomena that can be related to the person's health and can be measured through external sensors
         % TODO add reference to another paragraph
         % Blood pressure, weight and BMI, cholesterol, glucose, heart rate, exercise and sleep.
         % https://www.selfcare4me.com/en/parameters-what-do-you-want-to-measure/
-        \item[\PACKAGE] % TODO define this concept
-        \item[Request] Making a request means asking for a permission to access some data; a request is made by a third party and the target can be a single user's data (the third party wants to have access to the user's data) or aggregate data (the third party is interested in a huge number of data that has been anonymized by the system); a request can be accepted (third party gains access to the data that fits the request) or declined (third party has no access to that data)
-        \item[Threshold] Health parameters, as numerical variables, can be labled as \textit{ordinary} or \textit{critical} according to some intervals; these intervals are defined through thresholds that separate the \textit{ordinary} domain to the \textit{critical} one; thresholds are a domain property
+        %\item[\PACKAGE] % TODO define this concept
+        %\item[Request] Making a request means asking for a permission to access some data; a request is made by a third party and the target can be a single user's data (the third party wants to have access to the user's data) or aggregate data (the third party is interested in a huge number of data that has been anonymized by the system); a request can be accepted (third party gains access to the data that fits the request) or declined (third party has no access to that data)
+        %\item[Threshold] Health parameters, as numerical variables, can be labled as \textit{ordinary} or \textit{critical} according to some intervals; these intervals are defined through thresholds that separate the \textit{ordinary} domain to the \textit{critical} one; thresholds are a domain property
         % TODO add references to medical articles
-        \item[Timestamp] A timestamp\footnote{\texttt{https://en.wikipedia.org/wiki/Timestamp}} is a sequence of characters or encoded information identifying when a certain event occurred, usually giving date and time of day, sometimes accurate to a small fraction of a second
+        %\item[Timestamp] A timestamp\footnote{\texttt{https://en.wikipedia.org/wiki/Timestamp}} is a sequence of characters or encoded information identifying when a certain event occurred, usually giving date and time of day, sometimes accurate to a small fraction of a second
         %\item [Data Set]
         % FABIO prima di threshold ci conviene definire quali parametri raccogliere e cos'è un "set" di parametri per un utente, tipo vettore.OK
         %\item [Threshold] % In the context of \texttt{AutomatedSOS}, it refers to a particular boundary in health parameters space that divides the set of all ...
@@ -187,7 +173,7 @@
     \subsubsection{Abbreviations}
 
       \begin{description}
-        \item[S2B] % TODO fill this
+        \item[] % TODO fill this
       \end{description}
 
   \subsection{Revision history}
@@ -197,8 +183,8 @@
       \begin{tabular}{|c|l|}
         \hline
         \textbf{Version}                & \textbf{Log} \\ \hline
-        \texttt{v.0.0} &
-          Introduction sketch
+        \texttt{v.0} &
+          First version of RASD completed
         \\ \hline
       \end{tabular}
     \end{table}
@@ -276,10 +262,10 @@
     \subsubsection{Software interfaces}
     \subsubsection{Communication interfaces}
   \subsection{Functional requirements}
-%description of the functional requirements  
+%description of the functional requirements
 %\subsection{Use Cases} %related to functional requirements
-%\subsubsection{Sign in}     
-%Actor:Mark\\     
+%\subsubsection{Sign in}
+%Actor:Mark\\
 %Entry Condition: The application is installed on the smartphone and smartwatch\\
 %Flow of Events:
 %1. Mark click on "Create a new account" button in the homepage of the app.
@@ -289,7 +275,7 @@
 %5.The system create a DataSet for Mark with the data shared.
 %Exit Condition:A new account has been successfully created.\\
 %Exceptions:
-%1. The system find that Mark filled the field "Age" with 12. 
+%1. The system find that Mark filled the field "Age" with 12.
 %2. The system find that Mark filled the field "Email"  with an email that is non-existent or that has already been associated with another user.
 %3. The system find that Mark filled the field "Fiscal Code" with an expression not long 16 characters.
 %4. The system find that Mark filled the field "Password" with an expression shorter than 8 characters.
@@ -302,7 +288,7 @@
 %Flow of Events:
 %1. Phil opens the app on his smartphone.
 %2. Phil insert his email and password in the fields "Email" and "Password" in the homepage of Data4Help.
-%3. Phil Click on "Log In" button in the homepage of the app. 
+%3. Phil Click on "Log In" button in the homepage of the app.
 %Exit Condition: Phil is successfully logged in\\
 %Exceptions:
 %1. Phil has to re-insert the field "Email" if the system doesn't found the email address inserted in that field.
@@ -342,7 +328,7 @@
 %Exceptions:
 %with the domain assumption:no
 %Special Requirements:
-%The ambulance must be dispatched within 5 seconds from the time the helath parameters goes below goes below 
+%The ambulance must be dispatched within 5 seconds from the time the helath parameters goes below goes below
 
 
 
