@@ -108,7 +108,7 @@
 
     \subsubsection{World}
 
-      Our \textit{world} is composed of two main actors: users and third parties. Users are interestes in monitoring their health parameters and third parties are interested in developing services or researches that exploit the data gathered by the users. \texttt{Data4Help} is the service that acts as a bridge between these actors'needs. \\
+      Our \textit{world} is composed of two main types of actors: users and third parties. Users are interestes in monitoring their health parameters and third parties are interested in developing services or researches that exploit the data gathered by the users. \texttt{Data4Help} is the service that acts as a bridge between these actors'needs. \\
       Phenomena that occur in the \textit{world} and are related to our application domain are
       \begin{itemize}
         \item physical conditions of our users
@@ -118,18 +118,19 @@
       These phenomena exist in the \textit{world}, but cannot be observerd directly by our system.
 
     \subsubsection{Shared phenomena}
+    \label{sec:sharedp}
 
       In order to communicate with the \textit{world}, our system needs to share some aspects with it. We will list the aspects controlled by the world, but observable by the machine:
-      \begin{itemize}
-        \item physical parameters of the users, gathered through sensors on wereable devices
-        \item third parties requests to the system for the data they need
-        \item users'location, acquired through GPS signals
-      \end{itemize}
+      \begin{description}
+        \item[\texttt{S.1}] physical parameters of the users, gathered through sensors on wereable devices
+        \item[\texttt{S.2}] third parties requests to the system for the data they need
+        \item[\texttt{S.3}] users'location, acquired through GPS signals
+      \end{description}
       On the other hand, the aspects that occur in the machine, but are observable by the world are
-      \begin{itemize}
-        \item interfaces that organize the gathered data that can be filtered according to time or type of data
-        \item messages for the SOS system, that are sent in case of critical health of a user
-      \end{itemize}
+      \begin{description}
+        \item[\texttt{S.4}] interfaces that organize the gathered data that can be filtered according to time or type of data
+        \item[\texttt{S.5}] messages for the SOS system, that are sent in case of critical health of a user
+      \end{description}
 
   \subsection{Definitions, acronyms, abbreviations}
 
@@ -197,11 +198,11 @@
 
     This document uses the IEEE standards for requirement analysis documents as a guideline towards a clear and logical explanation of its contents:
     \begin{itemize}
-      \item Section~\ref{sec:intro} gives a brief introduction on the project to be developed and adds notes on references and revisions
-      \item Section~\ref{sec:overdesc} describes the world and the shared phenomena, by defining assumptions and constraints; it identifies also the goals and the main functions of the project
+      \item Section~\ref{sec:intro} gives a brief introduction on the project to be developed, by describing its goals and the environment in which it will be released; keeps track of the revision history
+      \item Section~\ref{sec:overdesc} describes the world and the shared phenomena, by defining assumptions and constraints; it identifies the main functions of the project
       \item Section~\ref{sec:specreq}, as the main part of this document, is about requirement analysis; it has also sections about interfaces of the system and software attributes
       \item Section~\ref{sec:alloy} contains the \texttt{Alloy} model that certifies correctness of goals implication by requirements and domain assumptions
-      \item Section~\ref{sec:effort} lists the overall modifications and additions to this document, ordered by date, as the hour counter of effort spent by each group member
+      \item Section~\ref{sec:effort} lists the work sessions that drove this project's development, ordered by date, as the hour counter of effort spent by each group member
     \end{itemize}
 
 \clearpage
@@ -209,18 +210,41 @@
 \label{sec:overdesc}
 
   \subsection{Product perspective}
+
+    \texttt{Data4Help} is a service oriented to data acquisition and data sharing. Its software nature rises the necessity to combine it with another service able to directly retrive raw data from the \textit{world}. Today we can find for sale multiple wearables  that can acquire data from users and make it readable from software side. \texttt{Data4Help} users should already own these devices in order to exploit the data acquisition functionality (Section~\ref{sec:sharedp}: \textbf{\texttt{S.1}}). Once the user registered to the service, its interface will gather the last data collected and organize it in a chart view, that can be filtered by data or type and rendered by the user interface (Section~\ref{sec:sharedp}: \textbf{\texttt{S.4}}; Section~\ref{sec:userinterfaces}).
+
+    It is mandatory for the user's wearable to provide a GPS signal, if the user wants to apply to the \texttt{AutomatedSOS} service. GPS will be used to track the user's location in case of health danger and the signal will be shared to the SOS service that already exists in the \textit{world} (Section~\ref{sec:sharedp}: \textbf{\texttt{S.3}}, \textbf{\texttt{S.5}}). This SOS service accepts messages that contain the GPS location of the person in health danger and an emergency log that \texttt{AutomatedSOS} generates from the acquired data. The log explains the suspected health danger and the data that passed the defined thresholds.
+    % TODO check the consistency of this in the future
+
+    Third party organization are interested in data gathering. In order to allow them to make requests for specific types of data, \texttt{Data4Help} provides a user interface that is in charge of composing their request, to make it understendable by the software (Section~\ref{sec:sharedp}: \textbf{\texttt{S.2}}; Section~\ref{sec:userinterfaces}). The interface provides all the possible options that the third party can compose in order to provide the closest data request to its needs.
+    % TODO add UML diagrams
+    % TODO add informal domain assumptions
+
   \subsection{Product functions}
+
+    \subsubsection{Profile management}
+
+    \subsubsection{Data gathering}
+
+    \subsubsection{Data management}
+
+    \subsubsection{Data sharing}
+
+    \subsubsection{Payment handling}
+
+    \subsubsection{SOS handling}
+
+
   \subsection{User characteristics}
 
-    \subsubsection{Actors}
+    The following list contains the actors that are involved in the system functions:
 
       \begin{description}
-        %\item \textbf{Visitor}:Someone who hasn't got an account of TrackMe and therefore must complete registration before having granted the access to TrackMe.
-        %visitor useful only if we create an adeguate use case (ex. first login)
-        % FABIO secondo me possiamo chiamarlo user e basta, perché altrimenti sembra che ci possa essere uno che usa l'applicazione senza essere registrato
-        \item [User] Person that has successfully created an account of TrackMe. She or He can exploit all the functionalities of the application
-        \item [Third Party] Entity that can request to Data4Help  the access  to either individual or group DataSets
-        %maybe split between Data4Help and AutomatedSOS user?
+        \item [User] Person interested in the \texttt{Data4Help} \textbf{data management} service; he/she is required to register to the \texttt{Data4Help} service in order to exploit its functionalities; he/she can also apply to the \texttt{AutomatedSOS} service; every user owns an appropriate device for \texttt{Data4Help} acquisition service that can monitor at least heartbeat and GPS location \\
+        % TODO occhio all'assunzione qua sopra
+        ex. \textit{an athlet that wants to monitor his/her physical status during sport activity, an old person that suffers from heart diseases or a sedentary worker that wants to keep track of his health parameters in the working hours}
+        \item [Third Party] Entity interested in the \texttt{Data4Help} \textbf{data sharing} service; it is required to register to the \texttt{Data4Help} service in order to exploit its functionalities; according to the scope of its requests, it may be interested on the data of a particular user or in aggregated chunks of data
+        ex. \textit{the physician of a person that suffers from heart diseases or a statistical institute}
       \end{description}
 
   \subsection{Assumptions, dependencies, constraints}
@@ -258,6 +282,7 @@
 
   \subsection{External interface requirements}
     \subsubsection{User interfaces}
+    \label{sec:userinterfaces}
     \subsubsection{Hardware interfaces}
     \subsubsection{Software interfaces}
     \subsubsection{Communication interfaces}
