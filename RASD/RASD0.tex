@@ -3,6 +3,7 @@
 \usepackage[utf8x]{inputenc}
 \usepackage{amsmath}
 \usepackage{graphicx}
+\usepackage{tabularx}
 
 \def \thisDocVersion {\texttt{v.0}}
 \def \PACKAGE {\texttt{Package}}
@@ -222,18 +223,73 @@
 
   \subsection{Product functions}
 
+    Here we present the major functions that our product will offer. Some of them will entirely be handled internally by our system, but for others it will rely on external services. In the latter case, we will specify that the system will not directly provide the service and we will add example systems that already exist in the \textit{world}, in order to guarantee the feasibility of the functions.
+
     \subsubsection{Profile management}
+
+      The system will provide a registration form at which users and third parties can apply. Once registered, they will have a uniquely identifiable account, provided the requested information for its creation (see Table~\ref{tab:login}). Once the account has been successfully created, its owner can exploit the system's functionalities.
+
+      Note that accounts for users and third parties must be distinguishable from the system perspective, as it should offer different functionalities to different account types, in order to reflect the account owners'needs.
+
+      \begin{table}[h!]
+        \centering
+        \begin{tabularx}{\linewidth}{|c|X|X|}
+          \hline
+          \textbf{Account type} & \textbf{Required information}                                       & \textbf{Optional information}                                                   \\ \hline
+          User                  & \textit{email, password, fiscal code, date of birth, weight, height}             & \textit{social status, address, hours of work per day, hours of sport per week} \\ \hline
+          Third party           & \textit{email, password, third party name, third party description} & \textit{website, research interests}                                            \\ \hline
+        \end{tabularx}
+        \caption{Example of login form information}
+        \label{tab:login}
+      \end{table}
 
     \subsubsection{Data gathering}
 
-    \subsubsection{Data management}
+      Data gathering is exploited through physical wearables that users wear and that can communicate with our software by API calls (ex. Google Fit API \cite{googlefitapi}). Data entries are identified with a timestamp and the owner user.
+
+      Collected data types depend on wearables. For example, the most common sensors for health parameters that we find on smart clothing \cite{sensors} are pulse, body temperature, electrocardiogram, myocardial and blood oxygen.
+
+      Data type handling should be implemented in a flexible and extensible way in the system, because wearables technologies change rapidly and our software should adapt in the least invasive way possible.
 
     \subsubsection{Data sharing}
 
+      \texttt{Data4Help} relies on an internal database for data storage. Once data has just been added to the system, only the user that produced it will have access. Data sharing is exploited by granting access to the stored data to third parties, if their requests have been accepted.
+
+      Third party requests are encoded in the system by filling a form that contains information like Table~\ref{tab:tprequest}. They can be accepted or rejected. In the former case the third party is granted access to the data, while in the latter it is not granted access.
+
+      \begin{table}[h!]
+        \centering
+        \begin{tabularx}{\linewidth}{|l|X|X|}
+          \hline
+          \textbf{Request type} & \textbf{Accept condition}                                               & \textbf{Filters}                                                                                                                           \\ \hline
+          Single-user           & Target user should accept the request through his/her account                                   & \textit{fiscal code of target user, from-date, to-date, data types (weight, heart rate, etc.), time granularity (seconds, minutes, hours)} \\ \hline
+          Anonymous-group       & Every user should have accepted the automatic sharing of requested data & \textit{size, from-date, to-date, data types (weight, heart rate, etc.), user characteristics (age interval, weight interval, etc.)}       \\ \hline
+        \end{tabularx}
+        \caption{Example of third party request form}
+        \label{tab:tprequest}
+      \end{table}
+
+    \subsubsection{Data management}
+
+      Once a user collected some data, he/she can organize it by changing the view options in the user interface. These options depend on the device the user is working on, but will always provide basic filters such as time interval or data type. Once filters have been selected by the user, the graphical interface will render a chart that organizes collected data according to them (see Section~\ref{sec:userinterfaces}).
+      % TODO maybe add something here on third parties
+
     \subsubsection{Payment handling}
+
+      Payment will entirely be handled from an external software system that should
+      \begin{itemize}
+        \item initialize payment processes
+        \item check if the payment is feasible and, if not, notify to our system
+        \item handle the payment operation
+        \item notify to our system if the operation has concluded correctly, otherwise notify the error occurred
+      \end{itemize}
+      There are plenty of payment handlers that exist in our \textit{world} and can be paired to our system (ex. PayPal API \cite{paypal}).
 
     \subsubsection{SOS handling}
 
+      This function is heavily dependant on the country in which the SOS will be handled. Our system will only communicate to the emergency service that already exists in the \textit{world} through automatic API calls (ex. RapidSOS Emergency system for US \cite{sos}).
+
+      Calls to SOS are handled by \texttt{AutomatedSOS} that signals users GPS position and health status feedback. Calls occur, if the user previously subscribed to \texttt{AutomatedSOS}, when his/her health parameters are below certain thresholds. The time between health danger detection and emergency call must be less than 5 seconds.
 
   \subsection{User characteristics}
 
@@ -243,7 +299,7 @@
         \item [User] Person interested in the \texttt{Data4Help} \textbf{data management} service; he/she is required to register to the \texttt{Data4Help} service in order to exploit its functionalities; he/she can also apply to the \texttt{AutomatedSOS} service; every user owns an appropriate device for \texttt{Data4Help} acquisition service that can monitor at least heartbeat and GPS location \\
         % TODO occhio all'assunzione qua sopra
         ex. \textit{an athlet that wants to monitor his/her physical status during sport activity, an old person that suffers from heart diseases or a sedentary worker that wants to keep track of his health parameters in the working hours}
-        \item [Third Party] Entity interested in the \texttt{Data4Help} \textbf{data sharing} service; it is required to register to the \texttt{Data4Help} service in order to exploit its functionalities; according to the scope of its requests, it may be interested on the data of a particular user or in aggregated chunks of data
+        \item [Third Party] Entity interested in the \texttt{Data4Help} \textbf{data sharing} service; it is required to register to the \texttt{Data4Help} service in order to exploit its functionalities; according to the scope of its requests, it may be interested on the data of a particular user or in aggregated chunks of data \\
         ex. \textit{the physician of a person that suffers from heart diseases or a statistical institute}
       \end{description}
 
@@ -387,21 +443,28 @@
 
   \bibitem{ieee29148} ISO/IEC/IEEE 29148 - Systems and software engineering — Life cycle processes — Requirements engineering
 
-  \bibitem{wereabledata} Collection and Processing of Data from Wrist Wearable Devices in Heterogeneous and Multiple-User Scenarios \\
+  \bibitem{wereabledata} Collection and Processing of Data from Wrist Wearable Devices in Heterogeneous and Multiple-User Scenarios\\
   \texttt{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5038811/}
+
+  \bibitem{sensors} Wearable Devices in Medical Internet of Things: Scientific Research and Commercially Available Devices\\
+  \texttt{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5334130/}
 
   \bibitem{googlefitapi} Google Fit API\\
   \texttt{https://developers.google.com/fit/overview}
 
+  \bibitem{paypal} PayPal API\\
+  \texttt{https://developer.paypal.com/docs/}
+
+  \bibitem{sos} RapidSOS Emergency API\\
+  \texttt{https://info.rapidsos.com/blog/product-spotlight-rapidsos-emergency-api}
+
   \bibitem{slides}
-  Slides of the course by Prof. Di Nitto
-  \\\texttt{https://beep.metid.polimi.it/}
+  Slides of the course by Prof. Di Nitto\\
+  \texttt{https://beep.metid.polimi.it/}
 
   \bibitem{latex_templates}
-  \LaTeX templates
-  \\\texttt{http://www.latextemplates.com/}
-  \\\texttt
-  {http://www.overleaf.com/latex/examples/title-page-with-logo/hrskypjpkrpd}
+  \LaTeX templates\\
+  \texttt{http://www.latextemplates.com/}
 
   %\bibitem{latexcompanion}
   %Michel Goossens, Frank Mittelbach, and Alexander Samarin.
