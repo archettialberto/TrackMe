@@ -1,9 +1,13 @@
 \documentclass[12pt]{article}
+
 \usepackage[english]{babel}
 \usepackage[utf8x]{inputenc}
 \usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage{tabularx}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{listings}
+\usepackage{alloy-style}
 
 \def \thisDocVersion {\texttt{v.0}}
 \def \PACKAGE {\texttt{Package}}
@@ -447,6 +451,8 @@
 \section{Formal analysis using Alloy}
 \label{sec:alloy}
 
+  \lstinputlisting[language=alloy]{model.als}
+
 \clearpage
 \section{Effort spent}
 \label{sec:effort}
@@ -481,6 +487,10 @@
   \bibitem{latex_templates}
   \LaTeX templates\\
   \texttt{http://www.latextemplates.com/}
+
+  \bibitem{latexalloy}
+  Alloy Latex Highlighting\\
+  \texttt{https://github.com/Angtrim/alloy-latex-highlighting}
 
   %\bibitem{latexcompanion}
   %Michel Goossens, Frank Mittelbach, and Alexander Samarin.
