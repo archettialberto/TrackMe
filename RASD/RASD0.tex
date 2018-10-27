@@ -308,14 +308,30 @@
     \subsubsection{Domain assumptions}
 
       \begin{description}
-        \item[\texttt{D1}] da 1
-        \item[\texttt{D2}] da 2
+        \item[\texttt{D.W1}] Signals processed by wearables are encoded correctly and represent the status of the \textit{world}
+        \item[\texttt{D.W2}] Given certain health parameters, it is possible to decide if a person is in health danger just by checking wether the parameters are above or below certain thresholds
+        %\item[\texttt{D.E1}] In the \textit{world} already exists a SOS system that is able to dispatch ambulances and accepts emergency calls through an API
+        %\item[\texttt{D.E2}] In the \textit{world} already exists a payment handler that is able to deliver money payments and accepts calls through an API
+        %\item[\texttt{D.E3}] In the \textit{world} already exist wearables that encode signals for health status; these encoded signals are accessible from the software side
+        % TODO questi 3 non credo siano assunzioni, ma dipendenze, quindi non li riscrivo
       \end{description}
-      %Ci conviene definirli  assieme ai goal
-      %D1-The chosen thresholds are enough to describe user health.\\
-      %D2-The Data collected by the external sensors and the GPS location are accurate enough.\\
-      %D3-There is at least one ambulance available when It is required by AutomatedSOS.\\
 
+    \subsubsection{Dependencies}
+
+      \texttt{Data4Help} relies on
+      \begin{itemize}
+        \item \textbf{payment handler}, to deal with payment of third parties'requests
+        \item \textbf{wearables}, to encode users'data
+      \end{itemize}
+      \texttt{AutomatedSOS} relies on
+      \begin{itemize}
+        \item \textbf{wearables}, to encode GPS signals and users'parameters
+        \item \textbf{SOS system}, for ambulance dispatching
+      \end{itemize}
+
+    \subsubsection{Constraints}
+
+      \texttt{AutomatedSOS} time performances are critical: the emergency call must be delivered no more than 5 seconds after the health danger detection, in order to have an ambulance dispatched from the SOS system as soon as possible. It is important to note again that \texttt{AutomatedSOS} is in charge only of the emergency call.
 
 \clearpage
 \section{Specific requirements}
