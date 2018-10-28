@@ -35,6 +35,7 @@
       \end{table}
 
     \subsubsection{Data gathering}
+    \label{sec:datagathering}
 
       Data gathering is exploited through physical wearables that users wear and that can communicate with our software by API calls (ex. Google Fit API \cite{googlefitapi}). Data entries are identified with a timestamp and the owner user.
 
@@ -66,10 +67,15 @@
       % TODO maybe add something here on third parties
 
     \subsubsection{Payment handling}
+    \label{sec:payment}
 
-      Payment will entirely be handled from an external software system that should
+      % TODO add notes on what our app is doing; this part does not really fit here, because it is a constraint
+
+      When third parties ask for data sharing or users apply to \texttt{AutomatedSOS}, they are asked for payment by the system. Payment details will be discussed by TrackMe and then the software will be updated according to their decisions.
+
+      Our system will only initialize payment requests as the effective payment operation will entirely be handled by an external software. This software should
       \begin{itemize}
-        \item initialize payment processes
+        \item instanciate payment processes
         \item check if the payment is feasible and, if not, notify to our system
         \item handle the payment operation
         \item notify to our system if the operation has concluded correctly, otherwise notify the error occurred
@@ -77,6 +83,7 @@
       There are plenty of payment handlers that exist in our \textit{world} and can be paired to our system (ex. PayPal API \cite{paypal}).
 
     \subsubsection{SOS handling}
+    \label{sec:sossystem}
 
       This function is heavily dependant on the country in which the SOS will be handled. Our system will only communicate to the emergency service that already exists in the \textit{world} through automatic API calls (ex. RapidSOS Emergency system for US \cite{sos}).
 
@@ -97,6 +104,7 @@
   \subsection{Assumptions, dependencies, constraints}
 
     \subsubsection{Domain assumptions}
+    \label{sec:domainassumptions}
 
       \begin{description}
         \item[World]
@@ -117,13 +125,13 @@
 
       \texttt{Data4Help} relies on
       \begin{itemize}
-        \item \textbf{payment handler}, to deal with payment of third parties'requests
-        \item \textbf{wearables}, to encode users'data
+        \item \textbf{payment handler}, to deal with payment of users and third parties, as discussed in Section~\ref{sec:payment}
+        \item \textbf{wearables}, to encode users'data (see Section~\ref{sec:datagathering})
       \end{itemize}
       \texttt{AutomatedSOS} relies on
       \begin{itemize}
         \item \textbf{wearables}, to encode GPS signals and users'parameters
-        \item \textbf{SOS system}, for ambulance dispatching
+        \item \textbf{SOS system}, for ambulance dispatching (see Section~\ref{sec:sossystem})
       \end{itemize}
 
     \subsubsection{Constraints}

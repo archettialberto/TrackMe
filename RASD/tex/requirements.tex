@@ -22,7 +22,51 @@
     \subsubsection{Hardware interfaces}
     \subsubsection{Software interfaces}
     \subsubsection{Communication interfaces}
+
   \subsection{Functional requirements}
+
+    \begin{description}
+      \item[Account handling]
+      \item[\texttt{R.A1}] The system shall allow users registration
+      \item[\texttt{R.A2}] The system shall allow third party registration
+      \item[\texttt{R.A3}] The system shall distinguish between user and third party accounts
+      \item[\texttt{R.A4}] The system shall guardantee account uniqueness by not allowing two account to have the same email
+      \item[\texttt{R.A6}] The system shall allow users and third parties to access their account (\textit{login}) only if they provide correct email and password
+      \item[\texttt{R.A7}] The system shall allow users and third parties to exploit \texttt{Data4Help} and \texttt{AutomatedSOS} functionalities only if they are \textit{logged in} their account
+
+      \item[Data encoding]
+      \item[\texttt{R.D1}] The system shall encode data received through wearables'sensors and store it internally\footnote{for example the system can store data into an internal database or can save it using a cloud service; the important aspect is that data must be retrivable in the future}
+      \item[\texttt{R.D2}] The system shall be able to retrive data previously stored on request
+      \item[\texttt{R.D3}] The system shall not erase data once it is stored internally
+      \item[\texttt{R.D4}] Once the system stored data, it shall allow access to that data only to the user account that was \textit{logged in} while the data was collected
+      \item[\texttt{R.D5}] The system shall be able to share the stored data to more than one account
+      \item[\texttt{R.D6}] The system shall be able to compose groups of data entries (\textit{aggregate data}) and anonymize them (every data entry in the group has no information about the providing user, such as fiscal code or email)
+
+      \item[Interfaces]
+      \item[\texttt{R.I1}] The system shall provide a registration form for users and third parties
+      \item[\texttt{R.I2}] The system shall provide an interface able to render data graphically allowing filters like time interval or data type
+      \item[\texttt{R.I3}] The system shall provide a request form to the third parties
+
+      \item[Data sharing requests]
+      \item[\texttt{R.R1}] The system shall allow third parties to ask for data sharing of a single user
+      \item[\texttt{R.R2}] The system shall ask the user to accept or decline every single-user request of data sharing by third parties that has him/her as target user
+      \item[\texttt{R.R3}] The system shall provide access to the target user data to the third party only if the user accepted the request of the third party, otherwise the system shall notify to the third party that the user declined the request
+      \item[\texttt{R.R4}] The system shall allow third parties to ask for data sharing of \textit{aggregate data}
+      \item[\texttt{R.R5}] The system shall be able to check if a request for \textit{aggregate data} by a third party can be properly anonymized (there shall be at least 1000 user data entries that fit the parameters of the request)
+      \item[\texttt{R.R6}] The system shall provide access to the \textit{aggregate data} to the third party only if the the request can be properly anonymized, otherwise the system shall notify the third party that its request cannot be properly anonymized
+      \item[\texttt{R.R7}] The system shall provide access to a third party to newly produced data if it fits the third party request
+      % TODO add refernce to the request structure, because this requirement is a bit ambiguous 
+
+      \item[SOS calls]
+      \item[\texttt{R.S1}] The system shall provide to the user an option to apply to \texttt{AutomatedSOS}
+      \item[\texttt{R.S2}] If user applied to \texttt{AutomatedSOS}, the system shall monitor his/her parameters in real time by checking wether they are above or below the thresholds\footnote{TBD
+      % TODO add reference
+      }
+      \item[\texttt{R.S3}] If user applied to \texttt{AutomatedSOS} and his/her health parameters are critical (above or below thresholds), the system shall send an emergency call to the SOS system
+      \item[\texttt{R.S4}] When the system sends an emergency call, it shall provide to the SOS system API user's GPS location and user's health status through his/her critical parameters encoding
+
+    \end{description}
+
 %description of the functional requirements
 %\subsection{Use Cases} %related to functional requirements
 %\subsubsection{Sign in}
