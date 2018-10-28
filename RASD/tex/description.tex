@@ -85,7 +85,7 @@
     \subsubsection{SOS handling}
     \label{sec:sossystem}
 
-      This function is heavily dependant on the country in which the SOS will be handled. Our system will only communicate to the emergency service that already exists in the \textit{world} through automatic API calls (ex. RapidSOS Emergency system for US \cite{sos}).
+      This function is heavily dependant on the country in which the SOS will be handled. Our system will only communicate to the external emergency service that already exists in the \textit{world} through automatic API calls (ex. RapidSOS Emergency system for US \cite{sos}).
 
       Calls to SOS are handled by \texttt{AutomatedSOS} that signals users GPS position and health status feedback. Calls occur, if the user previously subscribed to \texttt{AutomatedSOS}, when his/her health parameters are below certain thresholds. The time between health danger detection and emergency call must be less than 5 seconds.
 

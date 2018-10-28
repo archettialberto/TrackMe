@@ -2,14 +2,25 @@
 \label{sec:specreq}
 
 \subsection{Scenarios:}
-%  \subsubsection{Scenario 1:}
-%Luke is a 65 years old man that after 40 years of  working at the post office finally got retired.Because of the sedentary nature of his work he is worried that he may suffer a stroke.Therefore Luke downloads AutomatedSOS,create an account and shares with it his age,weight,heartbeat and GPS location. From now if he will unfortunately suffer a stroke the app within 5 seconds will call an ambulance.
+\subsubsection{Scenario 1:}
+Luke is a 65 years old man that after 40 years of  working at the post office finally got retired.Because of the sedentary nature of his work he is worried that he may suffer a stroke.\\ Therefore Luke downloads the app AutomatedSOS, the system allows him to create an account only after having filled all the required user information(see Table 1). From now on the system will check Luke's health parameters and  if these are below the thresholds(ex.due to a stroke) within 5 seconds an external emergency service, providing the GPS location and health status feedback of the Luke,will be called by AutomatedSOS.
 
-%\subsubsection{Scenario 2:}
-%The franchise BodySlim is opening a new  gym in Milan near Parco Sempione;the most relevant aspect that characterize it, is the timetable:open 365 days, 8 hours per day. In order to maximize the revenue the management would like to know in which time of the day the potential customers made exercise. In order to have a reliable sample BodySlim create a third party account and asked Data4Help to provide a sample of 2000 individuals with particular characteristics: age between 20 and 60,at least once a week they are running in Parco Sempione(this can be checked with GPS position).Now looking at the most common hours chosen for running by these individuals the manager can easily identify the most profitable hours in which the gym should be opened.
+\subsubsection{Scenario 2:}
+The franchise BodySlim is opening a new gym in Milan near Parco Sempione;the most relevant aspect that characterize it, is the timetable:open 365 days, 8 hours per day. In order to maximize the revenue the management would like to know in which time of the day the potential customers made exercise. A reliable sample can be obtained from Data4Help, therefore BodySlim create a third party account filling all the required third party information (see Table 1). Then the franchise make an anonymous-group request for 2000 individuals with particular characteristics: age between 20 and 60,at least once a week they are running in Parco Sempione(this can be checked with GPS position) to Data4Help. The app will search in his internal database if at least 2000 of his user's Datasets fit the requests and therefore the system immediately shares the required information with BodySlim without asking to the user the consent .Now looking at the most common hours chosen for running by these individuals the manager can easily identify the most profitable hours in which the gym should be opened. Otherwise if the research is not successfully, Data4Help denied the request of BodySlim which has to find another way to obtain a reliable sample.
 
-%\subsubsection{Scenario 3}
-%FastandEasy,car-sharing company, has a business model based on how much time the user rent one of his car in a week. After 5 years the society has to decide whether change this model with a new one based on the kilometers travelled in a week or keep going with the old one. In order to take the right decision is decided to ask the user to share their GPS location with the company for 3 months. Because of this is a temporary solution it will be a waste of money for FastandEasy to implement his own system for picking up these data. Therefore the company creates a third party account of Data4Help and asks the GPS location only of the users of the car-sharing society. This is a request for specific DataSets therefore before giving the data, Data4Help will ask directly to the user which can deny or approve it. After 3 months looking at the GPS location the company can compute the possible earnings of the new model,compare them with the old ones and finally make a decision.
+\subsubsection{Scenario 3}
+FastAndEasy a car-sharing company, has a business model based on how much time his users rent one of his car in a week. After 5 years the society has to decide whether change this model with a new one based on the kilometers travelled in a week or keep going with the old one. In order to take the right decision the FastAndEasy needs to know the  GPS location of all of his users when they are driving his cars(so not 24 hours a day) for 3 months. Because of this is a temporary solution it will be a waste of money for the car-sharing company to implement his own system for picking up these data. Therefore FastAndEasy creates a third party account of Data4Help filling all the required third party information (see Table 1) and asks to the app to provide the GPS location only of his users(which can be identified by the fiscal code).This is a Single-user(Table 2) request therefore  Data4Help will ask directly to the specified users whether accept or deny it.\\ Indeed only for the users who accept the request the app will grant the access to their GPS location to the company which  looking at the data collected after 3 months can compute the possible earnings of the new model,compare them with the old ones and finally make a decision.
+
+\subsubsection{Scenario 4}
+Jack is a policeman that has decided to spend his holidays in a spa called "BeautySPA" which allow him to loss 15 kg thanks to fitness activity and a healthy diet.In order to understand if this treatment is efficient over time the spa and Jack decides that user's health parameters like height,weight and body temperature must be monitored. Therefore the policeman and BeautySPA create respectively a user and a third party account of Data4Help and the system ,after checking that all the required information (see Table 1)are properly added, allow them to exploit all Data4Help functionalities. Indeed  BeautySPA immediately apply for the three Jack's health parameters to the app. The app recognize this as a single-user request(see Table 2)  so asks to Jack the authorization whether to provide them to the spa or not. Obviously he accept and therefore Data4Help make available these data. Unfortunately after just 1 month the policeman has already had a weight increase of 6 kg. So in order to better understand which may be the reasons the spa asks more health parameters such as blood oxygen and heartbeat to Data4Help which again,before sharing these data with BeautySPA, will ask the authorization of the user.
+
+%\subsubsection{Scenario 5}
+%Rose has just discovered that is expecting a daughter. Harold, her gynecologist, needs to keep monitoring bloody ossygen,electrocardiogram and pulse in order to understand if the pregnancy is proceeding well or not. Therefore he creates a third party account of Data4Help and after the system has checked if the required information(see Table 1) has been correctly inserted, he requires these data to the app. According to the single-user request(see Table 2)  policy Data4Help asks to Rose the consensus for sharing these data. Rose,which really care about her daughter's health, immediately gave the authorization to the app that can make them available to her gynecologist. Nine months later the beautiful and healthy Marie is born;her motherRose which is worried about her privacy, wouldn't like to share his personal data anymore so decides to unsubscribe to Data4Help. The system after having received the request, delete her Dataset and her account. From now on neither the gynecologist nor Data4Help will be able to access to Rose's data.
+
+
+
+
+
 
     %\subsubsection{Allow a Third Party to access at a speficy DataSet prior User Authorization}
     %	\subsubsection{Allow a Third Party to access at  group of anonymous DataSets made by at least 1000 individuals}
@@ -59,7 +70,7 @@
 
       \item[SOS calls]
       \item[\texttt{R.S1}] The system shall provide to the user an option to apply to \texttt{AutomatedSOS}
-      \item[\texttt{R.S2}] If user applied to \texttt{AutomatedSOS}, the system shall monitor his/her parameters in real time by checking wether they are above or below the thresholds\footnote{TBD
+      \item[\texttt{R.S2}] If user applied to \texttt{AutomatedSOS}, the system shall monitor his/her parameters in real time by checking whether they are above or below the thresholds\footnote{TBD
       % TODO add reference
       }
       \item[\texttt{R.S3}] If user applied to \texttt{AutomatedSOS} and his/her health parameters are critical (above or below thresholds), the system shall send an emergency call to the SOS system
@@ -68,73 +79,121 @@
     \end{description}
 
 %description of the functional requirements
-%\subsection{Use Cases} %related to functional requirements
-%\subsubsection{Sign in}
-%Actor:Mark\\
-%Entry Condition: The application is installed on the smartphone and smartwatch\\
-%Flow of Events:
-%1. Mark click on "Create a new account" button in the homepage of the app.
-%2. Mark fills all the mandatory fields("Age","Name","Surname","Email","Sex","Password","Fiscal Code").
-%3. Mark insert in the fields "Shared Data" the data that he want to share with the app.
-%4. Mark clicks on the "Confirm" button.
-%5.The system create a DataSet for Mark with the data shared.
-%Exit Condition:A new account has been successfully created.\\
-%Exceptions:
-%1. The system find that Mark filled the field "Age" with 12.
-%2. The system find that Mark filled the field "Email"  with an email that is non-existent or that has already been associated with another user.
-%3. The system find that Mark filled the field "Fiscal Code" with an expression not long 16 characters.
-%4. The system find that Mark filled the field "Password" with an expression shorter than 8 characters.
-%All exceptions are handled notifying the issue to Mark and taking back the Flow of Events to the point 2.
-%Special Requirements:\\
+\subsection{Use Cases} %related to functional requirements
+\subsubsection{Sign up of User}
+%      \begin{table}[h!]
+%    \centering
+%\begin{tabularx}{\linewidth}{|l|X|X|}
+%          \hline
+%          \textbf{Name} & Sign in of User\\
+%	\hline
+%	\textbf{Actors} & User \\
+%	\hline
+%	\textbf{Entry Condition} & Data4Help is downloaded on the smartphone \\
+%	\hline
+%	\textbf{Flow of Events} & 1. User click on "Create a new account" button in the homepage of the app.\\
+%					2. User fills all the mandatory fields("Age","Name","Surname","Email","Sex","Password","Fiscal 		%					Code").\\
+%					3. User insert in the fields "Shared Data" the data that he want to share with the app.\\
+%					4. User clicks on the "Confirm" button.\\
+%					5. The system create a DataSet for the User in his internal database.\\
+%	\hline
+%	\textbf{Exit Condition} & The User account has been successfully created. \\
+%	\hline
+%	\textbf{Exceptions} & 
+%					%1. The system find that User filled the field "Age" with 12.
+%					1. The system finds that User filled the field "Email"  with an email that is non-existent or that has 		%					already been associated with another user.\\
+%					2. The system finds that User filled the field "Fiscal Code" with an expression not long 16 								characters.\\
+%					3. The system finds that User filled the field "Password" with an expression shorter than 8 								characters.\\
+%					All exceptions are handled notifying the issue to the User and taking back the Flow of Events to the 						point 2.\\
 
-%\subsubsection{Log In}
-%Actor: Phil\\
-%Entry Condition: Phil has already created an account
-%Flow of Events:
-%1. Phil opens the app on his smartphone.
-%2. Phil insert his email and password in the fields "Email" and "Password" in the homepage of Data4Help.
-%3. Phil Click on "Log In" button in the homepage of the app.
-%Exit Condition: Phil is successfully logged in\\
-%Exceptions:
-%1. Phil has to re-insert the field "Email" if the system doesn't found the email address inserted in that field.
-%2. Phil has to re-insert the field "Password" if the system doesn't found the password inserted in that field.
-%3. Phil has to re-insert both the fields and "Email" "Password" and  if the system found both the email and the password inserted by Phil but these refers to 2 different users.
-%\\
-%Special Requirements:\\
-
-
-%\subsubsection{Asking an individual DataSet request}
-%Actor:Bakery,Fabio\\
-%Entry Condition:Bakery has already a third party account and is already log in in Data4Help.\\
-%Flow of Events:
-%1. Bakery clicks on the button "Request Individual DataSet}
-%2. Bakery insert the Fiscal Code of Fabio in the field "Fiscal Code" of the Individual Request page.
-%3. Bakery insert the data of Fabio which it would like to access.
-%4. The system asks Fabio whether he accept or decline to share the specified data with Bakery
-%5. Fabio answer clicking in the field "Yes" in the myworld page.
-%\\
-%Exit Condition: Data requested are available for Bakery   \\
-%Exceptions:
-%1. Bakery has to re-insert the field "Fiscal Code" if the system doesn't found the fiscal code inserted in that field.
-%2. System discovers that at the moment Bakery asks the data, Fabio hasn't shared the requested data with Data4Help. Therefore Bakery has to insert a new fiscal code(a new user is needed).
-%3. Bakery has to insert a new fiscal code because Fabio declined the request. (a new user is needed).
-%Special Requirements:\\
+    %    \hline
+        %\end{tabularx}
+       
+        
+      %\end{table}
+Actor:User\\
+Entry Condition: Data4Help is downloaded on the smartphone\\
+Flow of Events:\\
+1. User click on "Create a new account" button in the homepage of the app.\\
+2. User fills all the mandatory fields("Age","Name","Surname","Email","Sex","Password","Fiscal Code").\\
+3. User insert in the fields "Shared Data" the data that he want to share with the app.\\
+4. User clicks on the "Confirm" button.\\
+5. The system create a DataSet for the User in his internal database.\\
+Exit Condition:The account has been successfully created.\\
+Exceptions:\\
+%1. The system find that User filled the field "Age" with 12.
+1. The system finds that User filled the field "Email"  with an email that is non-existent or that has already been associated with another user.\\
+2. The system finds that User filled the field "Fiscal Code" with an expression not long 16 characters.\\
+3. The system finds that User filled the field "Password" with an expression shorter than 8 characters.\\
+All exceptions are handled notifying the issue to the User and taking back the Flow of Events to the point 2.\\
 
 
+\subsubsection{Log In}
+Actor:User\\
+Entry Condition: User has already created an account\\
+Flow of Events:\\
+1. User opens the app on his smartphone.\\
+2. User insert his email in the field "Email" in the homepage of Data4Help.\\
+3  User insert his password in the field "Password" in the homepage of Data4Help.\\
+4. User Click on "Log In" button in the homepage of the app.\\
+Exit Condition: User is successfully logged in\\
+Exceptions:\\
+1. The system doesn't find the email address inserted in the field "Email" in his internal DataBase. In this case the Flow of Events has to be executed again from step 2. \\
+2. The system doesn't find the password inserted in the field "Passwrodl" in his internal DataBase. In this case the Flow of Events has to be executed again from step 3. \\
+3. The system find both the email and the password inserted by User but these refers to 2 different users. In this case the Flow of Events has to be executed again from step 2. \\
 
-%\subsubsection{Call an ambulance}
-%Actor:Ambulance,Andrew\\
-%Entry Condition:Andrew health parameters are below threshold\\
-%Flow of Events:
-%1. The system request an ambulance
-%2. The ambulance is sent to the location of the customer(Domain assumption) .
-%\\
-%Exit Condition: Data requested are available for Bakery   \\
-%Exceptions:
-%with the domain assumption:no
-%Special Requirements:
-%The ambulance must be dispatched within 5 seconds from the time the helath parameters goes below goes below
+\subsubsection{Accept Single-User request}
+Actor:Third party and User\\
+Entry Condition:Third party and User have already created respectively a third party and a user account and they are already log in in Data4Help.\\
+Flow of Events:\\
+1. Third party clicks on the button "Single-User Request".\\
+2. Third party inserts the Fiscal Code of the User in the field "Fiscal Code" of the Single-User Request page.\\
+3. Third party lists to the system the data of User which it would like to access filling the field "Data Required" in the Single-User Request page.\\
+4. The system asks to the User whether he accepts or denies to share those specified data with the Third party.\\
+5. User answers clicking in the field "Yes" in the his homepage.\\
+6. The system make available the data for the third party.\\
+Exit Condition: Third party can exploit the data \\
+Exceptions:\\
+1. The system doesn't find the fiscal code inserted by third party in the field "Field Code" in his internal database.In this case the Flow of Events has to be executed again from step 2. \\
+2. The system discovers that the User has denied the request therefore Data4Help notifies this information to the third party which won't have access to the required data.The third party can make a new Single-User request referred to a new User:in this case the flow of events has to executed again from the first step.\\
 
+\subsubsection{Call an ambulance}
+Actor:User,SOS System(see 2.2.6 section)\\
+Entry Condition:User's health parameters exceedes thresholds\\
+Flow of Events:\\
+1. The system collects GPS location and health status parameters of the User from his internal database.\\
+2. The system makes an emergency calls to SOS System by providing GPS location and health status feedback of the User.\\
+3. The SOS System accepts the call and dispatches the ambulance to the User location.\\
+4. The SOS System notifies the system when the ambulance arrives at User Location.\\
+Exit Condition: The ambulance is taking care of the User. \\
+Exceptions:\\
+Special Requirements:\\
+The system has to collect the GPS location,health parameter of the User and make the emergency call to SOS System within five seconds from the time the health parameters exceedes thresholds.\\
+
+\subsubsection{Accept Anonymous-Group request}
+Actor:Third Party\\
+Entry Condition:Third party has already created a third party account and is already log in in Data4Help.\\
+Flow of Events:\\
+1. Third party clicks on the button "Anonymous-Group Request".\\
+2. Third party lists to the system which data requires filling the field "Data Required" in the Anonymous-Group request page.\\
+3. The system looks for, in his internal database, the User's Datasets  which fit with the request made by the third party.\\
+4. The system aggregate the data found and anonymize them. \\
+4. The system provides the anonymous data to the third party.\\
+Exit Condition: Third party can exploit the data \\
+Exceptions:\\
+1. The data cannot be anonymized  by the system becauseit doesn't find at least 1000 User Datasets which match with the third party request. Therefore the system cannot grant access to the data to the third party and has to notify her this information .The third party can make a new Anonymous-Group request asking for a new set of data:in this case the flow of events has to executed again from the first step.\\
+
+\subsubsection{Show Data previously acquired}
+Actor:User\\
+Entry Condition:User has already created a User account and is already log in in Data4Help.\\
+Flow of Events:\\
+1. User clicks on the button "Data Management".\\
+2. User decides which filter has to be applied to his DataSet filling the field "Filters" in the Data Management page.\\
+3. The system organize the User's DataSet following the User's instructions.\\
+4. The system show to the User these data thanks to a graphical interface. \\
+Exit Condition: User can see his data in the specified way\\
+Exceptions:\\
+1. The system hasn't gathered any data yet because the user has just created an account. Thanks to the graphical interface the system notifies the user that no data can be shown. Only after having collected some data the User can specified filters:the flow of events must be executed from the first step.\\
 
 
 
