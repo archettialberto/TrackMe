@@ -1,0 +1,142 @@
+\section{Introduction}
+\label{sec:intro}
+
+  \subsection{Purpose}
+
+      \subsubsection{Project description}
+
+        TrackMe wants to develop a software-based service that allows individual users to collect health data, called \texttt{Data4Help}. This data can be retrived from the system and visualized according to different filters by a user interface. \\
+        The system allows third parties registration. Third parties can request access to users'collected data in two ways:
+
+        \begin{description}
+          \item [\textbf{Single-person data}] After the the third party makes a request to the system for a single user data sharing (providing for example the fiscal code of the user), the system asks the user for authorization; if positively provided, the third party is granted access to the user's data
+          \item [\textbf{Amonymous-group data}] Thirs parties can be interested in big amounts of data, but not in who are the people that are providing it; the system, once the request by the third party is sent, checks if the data can be effectively anonymized (it must find at least 1000 people that match the third party request) and, if positively evaluated, grants access to the anonymized data to the third party that requested it
+        \end{description}
+
+        Third parties can subscribe to new data and receive it as soon as it is collected by the system.
+
+        Another service that TrackMe wants to develop is \texttt{AutomatedSOS}, built on \texttt{Data4Help}. This service analyzes users'data and calls a SOS whenever data exceedes the basic health parameters. For this particular purpose, system performances will be a critical aspect to be taken into account, because even the slightest delay matters in critical health situations.
+
+      \subsubsection{Goals}
+
+        Here we present the goals that will be reached once the project is completed:
+
+        \begin{description}
+          \item[\texttt{G.U1}] Users can collect, store and manage their health data
+          \item[\texttt{G.U2}] Users can choose to have their health monitored; if their health is critical, an ambulance will be dispatched
+          \item[\texttt{G.T1}] Third parties can ask single users for their health data sharing
+          \item[\texttt{G.T2}] Third parties can request access to anonymized data that comes from groups of people
+          \item[\texttt{G.T3}] Third parties can subscribe to new data and receive it as soon it is produced
+        \end{description}
+
+    %This is the Requirement Analysis and Specification Document (RASD) of \texttt{Data4Help} and \texttt{AutomatedSOS} services, commissioned by TrackMe company. We will specify goals, domain assumptions, requirements, interfaces and high-level models using \texttt{UML} and \texttt{Alloy} languages of the systems that will be produced. This is an important step in software development, because identifying from the starts the correct scope, the constraints and the overall structure of our products is the key to produce mantainable and secure software that correctly responds to the stakeholder's needs. \\
+    %The audience of this document is very wide. It includes
+    %\begin{itemize}
+    %  \item stakeholders, as it acts as a contract that certifies what is required to our final product in order to satisfy their needs
+    %  \item developers that will be guided by this document's prescriptions
+    %  \item testers that are asked to verify the correspondence between the implementation and the requirements
+    %  \item managers, in order to keep track of the project development
+    %\end{itemize}
+
+    %Requirement analysis and elicitation is an iterative process. This is the version \thisDocVersion\ of the RASD document. See section~\ref{sec:revhistory} for more details on revision history.
+
+  \subsection{Scope}
+
+    \subsubsection{World}
+
+      Our \textit{world} is composed of two main types of actors: users and third parties. Users are interestes in monitoring their health parameters and third parties are interested in developing services or researches that exploit the data gathered by the users. \texttt{Data4Help} is the service that acts as a bridge between these actors'needs. \\
+      Phenomena that occur in the \textit{world} and are related to our application domain are
+      \begin{itemize}
+        \item physical conditions of our users
+        \item third parties projects
+        \item SOS system that is able to dispatch ambulances
+      \end{itemize}
+      These phenomena exist in the \textit{world}, but cannot be observerd directly by our system.
+
+    \subsubsection{Shared phenomena}
+    \label{sec:sharedp}
+
+      In order to communicate with the \textit{world}, our system needs to share some aspects with it. We will list the aspects controlled by the world, but observable by the machine:
+      \begin{description}
+        \item[\texttt{S.1}] physical parameters of the users, gathered through sensors on wereable devices
+        \item[\texttt{S.2}] third parties requests to the system for the data they need
+        \item[\texttt{S.3}] users'location, acquired through GPS signals
+      \end{description}
+      On the other hand, the aspects that occur in the machine, but are observable by the world are
+      \begin{description}
+        \item[\texttt{S.4}] interfaces that organize the gathered data that can be filtered according to time or type of data
+        \item[\texttt{S.5}] messages for the SOS system, that are sent in case of critical health of a user
+      \end{description}
+
+  \subsection{Definitions, acronyms, abbreviations}
+
+    \subsubsection{Definitions}
+    \label{sec:definitions}
+
+      \begin{description}
+        \item[]
+        %\item[(To have) access to the data] A user has access to the data if he produced it i.e. if the data was
+        % TODO add reference
+        %while logged in the user's profile; a third party has access to the data if retrived by the system through external sensors
+        %\item[Anonymized data] Data is said to be anonymized if it has no information about the user that produced it; a set of data (also known as aggregate data or group of data) is said to be anonymized if it contains only anonymized data and its cardinality (number of elements contained in it) is greater or equal to $1000$
+        %\item[Data] Information about health parameters that has been retrived by the S2B through sensors while logged in a user profile; data belongs to that user and he/she can retrive it from the system; data tuples are identified by the owner user and the acquisition timestamp
+        %\item[Data fits the request] Data is said to fit a particular request if the following holds:\\
+        %1. if the request is accepted but not revoked by the target user, then it would be shared between the user and the third party that made the request \\
+        %2. if the request has been accepted and after revoked by the user, then it would not be shared between the user and the third party i.e. the third party cannot retrive the data it asked
+        %\item[Health parameter] Numerical variable that encodes information about a physical phenomena that can be related to the person's health and can be measured through external sensors
+        % TODO add reference to another paragraph
+        % Blood pressure, weight and BMI, cholesterol, glucose, heart rate, exercise and sleep.
+        % https://www.selfcare4me.com/en/parameters-what-do-you-want-to-measure/
+        %\item[\PACKAGE] % TODO define this concept
+        %\item[Request] Making a request means asking for a permission to access some data; a request is made by a third party and the target can be a single user's data (the third party wants to have access to the user's data) or aggregate data (the third party is interested in a huge number of data that has been anonymized by the system); a request can be accepted (third party gains access to the data that fits the request) or declined (third party has no access to that data)
+        %\item[Threshold] Health parameters, as numerical variables, can be labled as \textit{ordinary} or \textit{critical} according to some intervals; these intervals are defined through thresholds that separate the \textit{ordinary} domain to the \textit{critical} one; thresholds are a domain property
+        % TODO add references to medical articles
+        %\item[Timestamp] A timestamp\footnote{\texttt{https://en.wikipedia.org/wiki/Timestamp}} is a sequence of characters or encoded information identifying when a certain event occurred, usually giving date and time of day, sometimes accurate to a small fraction of a second
+        %\item [Data Set]
+        % FABIO prima di threshold ci conviene definire quali parametri raccogliere e cos'è un "set" di parametri per un utente, tipo vettore.OK
+        %\item [Threshold] % In the context of \texttt{AutomatedSOS}, it refers to a particular boundary in health parameters space that divides the set of all ...
+      \end{description}
+      % \textbf{DataSet}=Set of all data shared by the user with TrackMe.\\
+      % FABIO ho pensato ad un modo per aggirare il problema della scelta dell'utente di poter cambiare i permessi sulle sue condivisioni: domani ti spiego e ridefiniamo Data Set se ti va bene l'idea.OK
+      %\textbf{Threshold}=It refers to a limit for a Health parameter. If crossed implies that the user needs help. \\
+      % TODO end filling this
+
+    \subsubsection{Acronyms}
+
+      \begin{description}
+        \item[] % TODO fill this
+      \end{description}
+
+    \subsubsection{Abbreviations}
+
+      \begin{description}
+        \item[] % TODO fill this
+      \end{description}
+
+  \subsection{Revision history}
+
+  \label{sec:revhistory}
+    \begin{table}[!h]
+      \begin{tabular}{|c|l|}
+        \hline
+        \textbf{Version}                & \textbf{Log} \\ \hline
+        \texttt{v.0} &
+          First version of RASD completed
+        \\ \hline
+      \end{tabular}
+    \end{table}
+
+  \subsection{Reference documents}
+
+    See References for details on the consulted documents.
+
+  \subsection{Document structure}
+
+    This document uses the IEEE standards for requirement analysis documents as a guideline towards a clear and logical explanation of its contents:
+    \begin{itemize}
+      \item Section~\ref{sec:intro} gives a brief introduction on the project to be developed, by describing its goals and the environment in which it will be released; keeps track of the revision history
+      \item Section~\ref{sec:overdesc} describes the world and the shared phenomena, by defining assumptions and constraints; it identifies the main functions of the project
+      \item Section~\ref{sec:specreq}, as the main part of this document, is about requirement analysis; it has also sections about interfaces of the system and software attributes
+      \item Section~\ref{sec:alloy} contains the \texttt{Alloy} model that certifies correctness of goals implication by requirements and domain assumptions
+      \item Section~\ref{sec:effort} lists the work sessions that drove this project's development, ordered by date, as the hour counter of effort spent by each group member
+    \end{itemize}

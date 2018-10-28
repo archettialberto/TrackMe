@@ -1,0 +1,134 @@
+\section{Overall description}
+\label{sec:overdesc}
+
+  \subsection{Product perspective}
+
+    \texttt{Data4Help} is a service oriented to data acquisition and data sharing. Its software nature rises the necessity to combine it with another service able to directly retrive raw data from the \textit{world}. Today we can find for sale multiple wearables  that can acquire data from users and make it readable from software side. \texttt{Data4Help} users should already own these devices in order to exploit the data acquisition functionality (Section~\ref{sec:sharedp}: \textbf{\texttt{S.1}}). Once the user registered to the service, its interface will gather the last data collected and organize it in a chart view, that can be filtered by data or type and rendered by the user interface (Section~\ref{sec:sharedp}: \textbf{\texttt{S.4}}; Section~\ref{sec:userinterfaces}).
+
+    It is mandatory for the user's wearable to provide a GPS signal, if the user wants to apply to the \texttt{AutomatedSOS} service. GPS will be used to track the user's location in case of health danger and the signal will be shared to the SOS service that already exists in the \textit{world} (Section~\ref{sec:sharedp}: \textbf{\texttt{S.3}}, \textbf{\texttt{S.5}}). This SOS service accepts messages that contain the GPS location of the person in health danger and an emergency log that \texttt{AutomatedSOS} generates from the acquired data. The log explains the suspected health danger and the data that passed the defined thresholds.
+    % TODO check the consistency of this in the future
+
+    Third party organization are interested in data gathering. In order to allow them to make requests for specific types of data, \texttt{Data4Help} provides a user interface that is in charge of composing their request, to make it understendable by the software (Section~\ref{sec:sharedp}: \textbf{\texttt{S.2}}; Section~\ref{sec:userinterfaces}). The interface provides all the possible options that the third party can compose in order to provide the closest data request to its needs.
+    % TODO add UML diagrams
+    % TODO add informal domain assumptions
+
+  \subsection{Product functions}
+
+    Here we present the major functions that our product will offer. Some of them will entirely be handled internally by our system, but for others it will rely on external services. In the latter case, we will specify that the system will not directly provide the service and we will add example systems that already exist in the \textit{world}, in order to guarantee the feasibility of the functions.
+
+    \subsubsection{Profile management}
+
+      The system will provide a registration form at which users and third parties can apply. Once registered, they will have a uniquely identifiable account, provided the requested information for its creation (see Table~\ref{tab:login}). Once the account has been successfully created, its owner can exploit the system's functionalities.
+
+      Note that accounts for users and third parties must be distinguishable from the system perspective, as it should offer different functionalities to different account types, in order to reflect the account owners'needs.
+
+      \begin{table}[h!]
+        \centering
+        \begin{tabularx}{\linewidth}{|c|X|X|}
+          \hline
+          \textbf{Account type} & \textbf{Required information}                                       & \textbf{Optional information}                                                   \\ \hline
+          User                  & \textit{email, password, fiscal code, date of birth, weight, height}             & \textit{social status, address, hours of work per day, hours of sport per week} \\ \hline
+          Third party           & \textit{email, password, third party name, third party description} & \textit{website, research interests}                                            \\ \hline
+        \end{tabularx}
+        \caption{Example of login form information}
+        \label{tab:login}
+      \end{table}
+
+    \subsubsection{Data gathering}
+
+      Data gathering is exploited through physical wearables that users wear and that can communicate with our software by API calls (ex. Google Fit API \cite{googlefitapi}). Data entries are identified with a timestamp and the owner user.
+
+      Collected data types depend on wearables. For example, the most common sensors for health parameters that we find on smart clothing \cite{sensors} are pulse, body temperature, electrocardiogram, myocardial and blood oxygen.
+
+      Data type handling should be implemented in a flexible and extensible way in the system, because wearables technologies change rapidly and our software should adapt in the least invasive way possible.
+
+    \subsubsection{Data sharing}
+
+      \texttt{Data4Help} relies on an internal database for data storage. Once data has just been added to the system, only the user that produced it will have access. Data sharing is exploited by granting access to the stored data to third parties, if their requests have been accepted.
+
+      Third party requests are encoded in the system by filling a form that contains information like Table~\ref{tab:tprequest}. They can be accepted or rejected. In the former case the third party is granted access to the data, while in the latter it is not granted access.
+
+      \begin{table}[h!]
+        \centering
+        \begin{tabularx}{\linewidth}{|l|X|X|}
+          \hline
+          \textbf{Request type} & \textbf{Accept condition}                                               & \textbf{Filters}                                                                                                                           \\ \hline
+          Single-user           & Target user should accept the request through his/her account                                   & \textit{fiscal code of target user, from-date, to-date, data types (weight, heart rate, etc.), time granularity (seconds, minutes, hours)} \\ \hline
+          Anonymous-group       & Every user should have accepted the automatic sharing of requested data & \textit{size, from-date, to-date, data types (weight, heart rate, etc.), user characteristics (age interval, weight interval, etc.)}       \\ \hline
+        \end{tabularx}
+        \caption{Example of third party request form}
+        \label{tab:tprequest}
+      \end{table}
+
+    \subsubsection{Data management}
+
+      Once a user collected some data, he/she can organize it by changing the view options in the user interface. These options depend on the device the user is working on, but will always provide basic filters such as time interval or data type. Once filters have been selected by the user, the graphical interface will render a chart that organizes collected data according to them (see Section~\ref{sec:userinterfaces}).
+      % TODO maybe add something here on third parties
+
+    \subsubsection{Payment handling}
+
+      Payment will entirely be handled from an external software system that should
+      \begin{itemize}
+        \item initialize payment processes
+        \item check if the payment is feasible and, if not, notify to our system
+        \item handle the payment operation
+        \item notify to our system if the operation has concluded correctly, otherwise notify the error occurred
+      \end{itemize}
+      There are plenty of payment handlers that exist in our \textit{world} and can be paired to our system (ex. PayPal API \cite{paypal}).
+
+    \subsubsection{SOS handling}
+
+      This function is heavily dependant on the country in which the SOS will be handled. Our system will only communicate to the emergency service that already exists in the \textit{world} through automatic API calls (ex. RapidSOS Emergency system for US \cite{sos}).
+
+      Calls to SOS are handled by \texttt{AutomatedSOS} that signals users GPS position and health status feedback. Calls occur, if the user previously subscribed to \texttt{AutomatedSOS}, when his/her health parameters are below certain thresholds. The time between health danger detection and emergency call must be less than 5 seconds.
+
+  \subsection{User characteristics}
+
+    The following list contains the actors that are involved in the system functions:
+
+      \begin{description}
+        \item [User] Person interested in the \texttt{Data4Help} \textbf{data management} service; he/she is required to register to the \texttt{Data4Help} service in order to exploit its functionalities; he/she can also apply to the \texttt{AutomatedSOS} service; every user owns an appropriate device for \texttt{Data4Help} acquisition service that can monitor at least heartbeat and GPS location \\
+        % TODO occhio all'assunzione qua sopra
+        ex. \textit{an athlet that wants to monitor his/her physical status during sport activity, an old person that suffers from heart diseases or a sedentary worker that wants to keep track of his health parameters in the working hours}
+        \item [Third Party] Entity interested in the \texttt{Data4Help} \textbf{data sharing} service; it is required to register to the \texttt{Data4Help} service in order to exploit its functionalities; according to the scope of its requests, it may be interested on the data of a particular user or in aggregated chunks of data \\
+        ex. \textit{the physician of a person that suffers from heart diseases or a statistical institute}
+      \end{description}
+
+  \subsection{Assumptions, dependencies, constraints}
+
+    \subsubsection{Domain assumptions}
+
+      \begin{description}
+        \item[World]
+        \item[\texttt{D.W1}] Signals processed by wearables are encoded correctly and represent the status of the \textit{world}
+        \item[\texttt{D.W2}] Given certain health parameters\footnote{TBD
+        % TODO reference this
+        }, it is possible to decide if a person is in health danger just by checking wether the parameters are above or below certain thresholds
+        \item[Existing systems]
+        \item[\texttt{D.E1}] In the \textit{world} already exists a SOS system that is able to dispatch ambulances and accepts emergency calls through an API
+        \item[\texttt{D.E2}] In the \textit{world} already exists a payment handler that is able to deliver money payments and accepts calls through an API
+        \item[\texttt{D.E3}] In the \textit{world} already exist wearables that encode signals for health status; these encoded signals are accessible from the software side
+        % TODO questi 3 non credo siano assunzioni, forse si possono togliere
+        \item[Legal constraints]
+        \item[\texttt{D.L1}] Acquired data can be sold to third parties
+      \end{description}
+
+    \subsubsection{Dependencies}
+
+      \texttt{Data4Help} relies on
+      \begin{itemize}
+        \item \textbf{payment handler}, to deal with payment of third parties'requests
+        \item \textbf{wearables}, to encode users'data
+      \end{itemize}
+      \texttt{AutomatedSOS} relies on
+      \begin{itemize}
+        \item \textbf{wearables}, to encode GPS signals and users'parameters
+        \item \textbf{SOS system}, for ambulance dispatching
+      \end{itemize}
+
+    \subsubsection{Constraints}
+
+      \texttt{AutomatedSOS} time performances are critical: the emergency call must be delivered no more than 5 seconds after the health danger detection, in order to have an ambulance dispatched from the SOS system as soon as possible. It is important to note again that \texttt{AutomatedSOS} is in charge only of the emergency call.
+
+      \texttt{Data4Help} acquires data through external devices owned by other companies, so it must be legally authorized to sell the data it acquires. In this document we assume that there are no legal issues for the selling activity, as TrackMe will develop contracts with the wearables companies in order to solve this issue.
+      % TODO ricontrollare questo
