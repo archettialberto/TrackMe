@@ -284,7 +284,8 @@ Jack is a policeman that has decided to spend his holidays in a spa called "Beau
       \end{table}
 
   \subsection{Performance requirements}
-\textbf{AutomatedSOS} implements a very important function:monitoring the human health; in this field having a lower time response can save a life.\\ Therefore, when the system detects than at least one of the health parameters exceedes the thresholds (user is in health danger),it must collect all the required data(GPS location and user's health status) and send them through an emergency call to an external service(SOS System) within 5 seconds.
+\textbf{AutomatedSOS} implements a very important function:monitoring the human health; in this field having a lower time response can save a life.\\ Therefore, when the system detects than at least one of the health parameters exceedes the thresholds (user is in health danger),it must collect all the required data(GPS location and user's health status) and send them through an emergency call to an external service(SOS System) within 5 seconds.\\
+Moreover Data4Help has to send every 1 second the required data to the subscribed third parties(both for Single-User requests and for Anonymous-Group requests) in order to grant them accurate enough data.
   \subsection{Design constraints}
     \subsubsection{Standards compliance}
     \subsubsection{Hardware limitations}
@@ -293,5 +294,6 @@ Jack is a policeman that has decided to spend his holidays in a spa called "Beau
     \subsubsection{Reliability}
     \subsubsection{Availability}
     \subsubsection{Security}
+The system requires the users(both Data4Help and AutomatedSOS) and third Parties(only in Data4Help), in order to exploit all the functionalities of the app and avoid unauthorized access(both Data4Help and AutomatedSOS), to authenticate through username and password which are stored
     \subsubsection{Mantainability}
     \subsubsection{Portability}
