@@ -58,7 +58,7 @@ Jack is a policeman that has decided to spend his holidays in a spa called "Beau
 
       \item[Interfaces]
       \item[\texttt{R.I1}] The system shall provide a registration form for users and third parties
-      \item[\texttt{R.I2}] The system shall provide an interface able to render data graphically allowing filters like time interval or data type
+      \item[\texttt{R.I2}] The system shall provide to the user an interface able to render data graphically, allowing filters like time interval or data type
       \item[\texttt{R.I3}] The system shall provide a request form to the third parties
 
       \item[Data sharing requests]
@@ -69,7 +69,7 @@ Jack is a policeman that has decided to spend his holidays in a spa called "Beau
       \item[\texttt{R.R5}] The system shall be able to check if a request for \textit{aggregate data} by a third party can be properly anonymized (there shall be at least 1000 user data entries that fit the parameters of the request)
       \item[\texttt{R.R6}] The system shall provide access to the \textit{aggregate data} to the third party only if the the request can be properly anonymized, otherwise the system shall notify the third party that its request cannot be properly anonymized
       \item[\texttt{R.R7}] The system shall provide access to a third party to newly produced data if it fits the third party request
-      % TODO add refernce to the request structure, because this requirement is a bit ambiguous 
+      % TODO add refernce to the request structure, because this requirement is a bit ambiguous
 
       \item[SOS calls]
       \item[\texttt{R.S1}] The system shall provide to the user an option to apply to \texttt{AutomatedSOS}
@@ -83,6 +83,7 @@ Jack is a policeman that has decided to spend his holidays in a spa called "Beau
 
 %description of the functional requirements
 \subsection{Use Cases} %related to functional requirements
+<<<<<<< HEAD
 %\subsubsection{Sign up of User}
      \begin{table}[h!]
    \centering
@@ -279,6 +280,122 @@ Jack is a policeman that has decided to spend his holidays in a spa called "Beau
 	
 	\hline
 	\textbf{Exceptions} & 1 The system hasn't gathered any data yet because the user has just created an account. 
+=======
+\subsubsection{Sign up of User}
+%      \begin{table}[h!]
+%    \centering
+%\begin{tabularx}{\linewidth}{|l|X|X|}
+%          \hline
+%          \textbf{Name} & Sign in of User\\
+%	\hline
+%	\textbf{Actors} & User \\
+%	\hline
+%	\textbf{Entry Condition} & Data4Help is downloaded on the smartphone \\
+%	\hline
+%	\textbf{Flow of Events} & 1. User click on "Create a new account" button in the homepage of the app.\\
+%					2. User fills all the mandatory fields("Age","Name","Surname","Email","Sex","Password","Fiscal 		%					Code").\\
+%					3. User insert in the fields "Shared Data" the data that he want to share with the app.\\
+%					4. User clicks on the "Confirm" button.\\
+%					5. The system create a DataSet for the User in his internal database.\\
+%	\hline
+%	\textbf{Exit Condition} & The User account has been successfully created. \\
+%	\hline
+%	\textbf{Exceptions} &
+%					%1. The system find that User filled the field "Age" with 12.
+%					1. The system finds that User filled the field "Email"  with an email that is non-existent or that has 		%					already been associated with another user.\\
+%					2. The system finds that User filled the field "Fiscal Code" with an expression not long 16 								characters.\\
+%					3. The system finds that User filled the field "Password" with an expression shorter than 8 								characters.\\
+%					All exceptions are handled notifying the issue to the User and taking back the Flow of Events to the 						point 2.\\
+
+    %    \hline
+        %\end{tabularx}
+
+
+      %\end{table}
+Actor:User\\
+Entry Condition: Data4Help is downloaded on the smartphone\\
+Flow of Events:\\
+1. User click on "Create a new account" button in the homepage of the app.\\
+2. User fills all the mandatory fields("Age","Name","Surname","Email","Sex","Password","Fiscal Code").\\
+3. User insert in the fields "Shared Data" the data that he want to share with the app.\\
+4. User clicks on the "Confirm" button.\\
+5. The system create a DataSet for the User in his internal database.\\
+Exit Condition:The account has been successfully created.\\
+Exceptions:\\
+%1. The system find that User filled the field "Age" with 12.
+1. The system finds that User filled the field "Email"  with an email that is non-existent or that has already been associated with another user.\\
+2. The system finds that User filled the field "Fiscal Code" with an expression not long 16 characters.\\
+3. The system finds that User filled the field "Password" with an expression shorter than 8 characters.\\
+All exceptions are handled notifying the issue to the User and taking back the Flow of Events to the point 2.\\
+
+
+\subsubsection{Log In}
+Actor:User\\
+Entry Condition: User has already created an account\\
+Flow of Events:\\
+1. User opens the app on his smartphone.\\
+2. User insert his email in the field "Email" in the homepage of Data4Help.\\
+3  User insert his password in the field "Password" in the homepage of Data4Help.\\
+4. User Click on "Log In" button in the homepage of the app.\\
+Exit Condition: User is successfully logged in\\
+Exceptions:\\
+1. The system doesn't find the email address inserted in the field "Email" in his internal DataBase. In this case the Flow of Events has to be executed again from step 2. \\
+2. The system doesn't find the password inserted in the field "Passwrodl" in his internal DataBase. In this case the Flow of Events has to be executed again from step 3. \\
+3. The system find both the email and the password inserted by User but these refers to 2 different users. In this case the Flow of Events has to be executed again from step 2. \\
+
+\subsubsection{Accept Single-User request}
+Actor:Third party and User\\
+Entry Condition:Third party and User have already created respectively a third party and a user account and they are already log in in Data4Help.\\
+Flow of Events:\\
+1. Third party clicks on the button "Single-User Request".\\
+2. Third party inserts the Fiscal Code of the User in the field "Fiscal Code" of the Single-User Request page.\\
+3. Third party lists to the system the data of User which it would like to access filling the field "Data Required" in the Single-User Request page.\\
+4. The system asks to the User whether he accepts or denies to share those specified data with the Third party.\\
+5. User answers clicking in the field "Yes" in the his homepage.\\
+6. The system make available the data for the third party.\\
+Exit Condition: Third party can exploit the data \\
+Exceptions:\\
+1. The system doesn't find the fiscal code inserted by third party in the field "Field Code" in his internal database.In this case the Flow of Events has to be executed again from step 2. \\
+2. The system discovers that the User has denied the request therefore Data4Help notifies this information to the third party which won't have access to the required data.The third party can make a new Single-User request referred to a new User:in this case the flow of events has to executed again from the first step.\\
+
+\subsubsection{Call an ambulance}
+Actor:User,SOS System(see 2.2.6 section)\\
+Entry Condition:User's health parameters exceedes thresholds\\
+Flow of Events:\\
+1. The system collects GPS location and health status parameters of the User from his internal database.\\
+2. The system makes an emergency calls to SOS System by providing GPS location and health status feedback of the User.\\
+3. The SOS System accepts the call and dispatches the ambulance to the User location.\\
+4. The SOS System notifies the system when the ambulance arrives at User Location.\\
+Exit Condition: The ambulance is taking care of the User. \\
+Exceptions:\\
+Special Requirements:\\
+The system has to collect the GPS location,health parameter of the User and make the emergency call to SOS System within five seconds from the time the health parameters exceedes thresholds.\\
+
+\subsubsection{Accept Anonymous-Group request}
+Actor:Third Party\\
+Entry Condition:Third party has already created a third party account and is already log in in Data4Help.\\
+Flow of Events:\\
+1. Third party clicks on the button "Anonymous-Group Request".\\
+2. Third party lists to the system which data requires filling the field "Data Required" in the Anonymous-Group request page.\\
+3. The system looks for, in his internal database, the User's Datasets  which fit with the request made by the third party.\\
+4. The system aggregate the data found and anonymize them. \\
+4. The system provides the anonymous data to the third party.\\
+Exit Condition: Third party can exploit the data \\
+Exceptions:\\
+1. The data cannot be anonymized  by the system becauseit doesn't find at least 1000 User Datasets which match with the third party request. Therefore the system cannot grant access to the data to the third party and has to notify her this information .The third party can make a new Anonymous-Group request asking for a new set of data:in this case the flow of events has to executed again from the first step.\\
+
+\subsubsection{Show Data previously acquired}
+Actor:User\\
+Entry Condition:User has already created a User account and is already log in in Data4Help.\\
+Flow of Events:\\
+1. User clicks on the button "Data Management".\\
+2. User decides which filter has to be applied to his DataSet filling the field "Filters" in the Data Management page.\\
+3. The system organize the User's DataSet following the User's instructions.\\
+4. The system show to the User these data thanks to a graphical interface. \\
+Exit Condition: User can see his data in the specified way\\
+Exceptions:\\
+1. The system hasn't gathered any data yet because the user has just created an account. Thanks to the graphical interface the system notifies the user that no data can be shown. Only after having collected some data the User can specified filters:the flow of events must be executed from the first step.\\
+>>>>>>> 5ca427f08575ec9f13b371e124fe2eb80ae0a9ee
 
 				Thanks to the graphical interface the system notifies the user that no data can be shown.
 
