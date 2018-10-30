@@ -76,7 +76,7 @@ Jack is a policeman that has decided to spend his holidays in a spa called "Beau
 
     \end{description}
 
-
+%TODO Special requirements for 5 second instead of Constraint(section 2.4.3)
 
 %\subsubsection{Sign up of User}
      \begin{table}[h!]
@@ -282,7 +282,7 @@ Jack is a policeman that has decided to spend his holidays in a spa called "Beau
         \hline
       \end{tabularx}
       \end{table}
-
+%everything referred to the system
   \subsection{Performance requirements}
 \textbf{AutomatedSOS} implements a very important function:monitoring the human health; in this field having a lower time response can save a life.\\ Therefore, when the system detects than at least one of the health parameters exceedes the thresholds (user is in health danger),it must collect all the required data(GPS location and user's health status) and send them through an emergency call to an external service(SOS System) within 5 seconds.\\
 Moreover Data4Help has to send every 1 second the required data to the subscribed third parties(both for Single-User requests and for Anonymous-Group requests) in order to grant them accurate enough data.
@@ -294,8 +294,13 @@ Moreover Data4Help has to send every 1 second the required data to the subscribe
     \subsubsection{Reliability}
     \subsubsection{Availability}
     \subsubsection{Security}
-The system requires the users(both Data4Help and AutomatedSOS) and third Parties(only in Data4Help), in order to exploit all the functionalities of the app and avoid unauthorized access, to authenticate through email and password.\\ These 2 credentials and all the Data collected by the system has to be securely stored in the internal database.\\ Moreover as  requirement \texttt{R.D6} says for privacy issues the third parties, which make an Anonymous-Group request, must not be able to link data collected to the users that produced them.
+The system requires the users(both Data4Help and AutomatedSOS) and third Parties(only in Data4Help), in order to exploit all the functionalities of the app and avoid unauthorized access, to authenticate through email and password.\\ These 2 credentials and all the Data collected by the system has to be securely stored in the internal database.\\ Moreover as  requirement \texttt{R.D6} says for privacy issues for all the Anonymous-Group requests the system must not allow the third parties to link data collected to the users that produced them.
     \subsubsection{Mantainability}
+In case of failure the system must be able to recover within 1 second otherwise in case of user's health problem AutomatedSOS won't respect the constraint descibed in section 2.4.3 and therefore the user will be in a critical situation.\\
+Moreove, Data4Help, as section 2.2.2 says, has to collect data through multiple physical wearables devices therefore 
+Data type handling should be implemented by the system in a flexible and extensible way, because wearables technologies change rapidly and our software should adapt in the least invasive way possible.
+
+ %Constraint vs Special requirement for 5 seconds
     \subsubsection{Portability}
 
 
