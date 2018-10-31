@@ -292,12 +292,15 @@ Moreover Data4Help has to send every 1 second the required data to the subscribe
     \subsubsection{Any other constraint}
   \subsection{Software system attributes}
     \subsubsection{Reliability}
-    \subsubsection{Availability}
+The sofware is expected to work for 
+In DD phase must be implemented 
+    \subsubsection{Availability}%
+The system is expected to be available for 99.99 of the time but in case of failure it must be able to recover within 1 second otherwise in case of user's health problem AutomatedSOS won't respect the constraint descibed in section 2.4.3 and therefore the user will be in a critical situation.\\ There 2 different situations which may result in a failure:failed components or due to unexecpected increasing in the requests. In both of these cases a distributed architecture is an optimal solution:indeed in case of failure one of the redundant component can replace the one offline and in case of high demand a load balancing between redundant component can minimize the probability of failure of the system and also improve the performances.
     \subsubsection{Security}
 The system requires the users(both Data4Help and AutomatedSOS) and third Parties(only in Data4Help), in order to exploit all the functionalities of the app and avoid unauthorized access, to authenticate through email and password.\\ These 2 credentials and all the Data collected by the system has to be securely stored in the internal database.\\ Moreover as  requirement \texttt{R.D6} says for privacy issues for all the Anonymous-Group requests the system must not allow the third parties to link data collected to the users that produced them.
+%payment? 
     \subsubsection{Mantainability}
-In case of failure the system must be able to recover within 1 second otherwise in case of user's health problem AutomatedSOS won't respect the constraint descibed in section 2.4.3 and therefore the user will be in a critical situation.\\
-Moreove, Data4Help, as section 2.2.2 says, has to collect data through multiple physical wearables devices therefore 
+Data4Help, as section 2.2.2 says, has to collect data through multiple physical wearables devices therefore 
 Data type handling should be implemented by the system in a flexible and extensible way, because wearables technologies change rapidly and our software should adapt in the least invasive way possible.
 
  %Constraint vs Special requirement for 5 seconds
