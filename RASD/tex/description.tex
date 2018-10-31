@@ -50,9 +50,11 @@
 
       Collected data types depend on wearables. For example, the most common sensors for health parameters that we find on smart clothing \cite{sensors} are pulse, body temperature, electrocardiogram, myocardial and blood oxygen.
 
+      Data type handling should be implemented in a flexible and extensible way in the system, because wearables technologies change rapidly and our software should adapt in the least invasive way possible.
+
     \subsubsection{Data sharing}
 
-      \texttt{Data4Help} relies on an internal database for data storage. Once data has just been added to the system, only the user that produced it will have access. Data sharing is exploited by granting access to the stored data to third parties, if their requests have been accepted.
+      \texttt{Data4Help} relies on an internal database for data storage. Once data has just been added to the system, only the user that produced it will have access. Data sharing is exploited by granting access to a copy of required data to third parties, if their requests have been accepted. Third parties can retrive these data by downloading them from their inteface.
 
       Third party requests are encoded in the system by filling a form that contains information like Table~\ref{tab:tprequest}. They can be accepted or rejected. In the former case the third party is granted access to the data, while in the latter it is not granted access.
 
