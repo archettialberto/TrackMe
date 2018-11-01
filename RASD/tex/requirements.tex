@@ -30,9 +30,40 @@ Jack is a policeman that has decided to spend his holidays in a spa called "Beau
 
   \subsection{External interface requirements}
     \subsubsection{User interfaces}
+   \label{sec:userinterfaces}
+
+\begin{figure}[h!]
+\begin{subfigure}[b]{0.5\linewidth}
+      \includegraphics[width=\linewidth]{login.png}
+  \caption{Homepage}
+  \end{subfigure}
+\end{figure}
+\begin{figure}[h!]
+  \centering
+  \begin{subfigure}[b]{0.4\linewidth}
+    \includegraphics[width=\linewidth]{registration_tp.png}
+    \caption{Registration of the Third Party}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.4\linewidth}
+    \includegraphics[width=\linewidth]{registration_user.png}
+    \caption{Registration of the User}
+  \end{subfigure}
+\end{figure}
+\begin{figure}
+  \begin{subfigure}[b]{0.4\linewidth}
+    \includegraphics[width=\linewidth]{user_settings.png}
+    \caption{User setting}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.4\linewidth}
+    \includegraphics[width=\linewidth]{user_sidebar.png}
+    \caption{User sidebar}
+  \end{subfigure}
+
+\end{figure}
 
 
-    \label{sec:userinterfaces}
+
+ 
     \subsubsection{Hardware interfaces}
     \subsubsection{Software interfaces}
     \subsubsection{Communication interfaces}
@@ -353,13 +384,13 @@ The system is expected to be available for 99.99 \% of the time but in case of f
     \subsubsection{Security}
 The system requires the users(both Data4Help and AutomatedSOS) and third Parties(only in Data4Help), in order to exploit all the functionalities of the app and avoid unauthorized access, to authenticate through email and password.\\ These 2 credentials and all the Data collected by the system has to be securely stored in the internal database.\\ Moreover as  requirement \texttt{R.D6} says for privacy issues for all the Anonymous-Group requests the system must not allow the third parties to link data collected to the users that produced them.
 %payment? 
-    \subsubsection{Mantainability}
+    \subsubsection{Maintainability}
 Data4Help, as \ref{sec:datagathering} says, has to collect data through multiple physical wearables devices therefore 
 Data type handling should be implemented by the system in a flexible and extensible way, because wearables technologies change rapidly and our software should adapt in the least invasive way possible.
 
  %Constraint vs Special requirement for 5 seconds
     \subsubsection{Portability}
-The system has to gather user's data through multiple devices as \ref{sec:datagathering} says. Therefore this product function, related to Data Gathering, must be implemented in such a way that different physical wearables can send data to the app.
+The system has to gather user's data through multiple devices as \ref{sec:datagathering} says. Therefore, must be guarantee that different physical wearables can easily send data to this product function for example thanks to some form of abstraction. In this way I will also have a significant cost reduction and an improvement in maintainability of the system.
 
 
 
