@@ -30,17 +30,6 @@
           \item[\texttt{G.T3}] Third parties can subscribe to new data and receive it as soon as it is produced
         \end{description}
 
-    %This is the Requirement Analysis and Specification Document (RASD) of \texttt{Data4Help} and \texttt{AutomatedSOS} services, commissioned by TrackMe company. We will specify goals, domain assumptions, requirements, interfaces and high-level models using \texttt{UML} and \texttt{Alloy} languages of the systems that will be produced. This is an important step in software development, because identifying from the starts the correct scope, the constraints and the overall structure of our products is the key to produce mantainable and secure software that correctly responds to the stakeholder's needs. \\
-    %The audience of this document is very wide. It includes
-    %\begin{itemize}
-    %  \item stakeholders, as it acts as a contract that certifies what is required to our final product in order to satisfy their needs
-    %  \item developers that will be guided by this document's prescriptions
-    %  \item testers that are asked to verify the correspondence between the implementation and the requirements
-    %  \item managers, in order to keep track of the project development
-    %\end{itemize}
-
-    %Requirement analysis and elicitation is an iterative process. This is the version \thisDocVersion\ of the RASD document. See section~\ref{sec:revhistory} for more details on revision history.
-
   \subsection{Scope}
 
     \subsubsection{World}
@@ -71,50 +60,31 @@
         \item[\texttt{S.6}] payment requests
       \end{description}
 
-  \subsection{Definitions, acronyms, abbreviations}
+  \subsection{Definitions}
+  \label{sec:definitions}
 
-    \subsubsection{Definitions}
-    \label{sec:definitions}
-
+    \begin{description}
+      \item[Data] Set of values of qualitative or quantitative variables\footnote{https://en.wikipedia.org/wiki/Data}; in the context of \texttt{Data4Help} we will refer to quantitative variables concerning health parameters (Section~\ref{sec:datagathering})
       \begin{description}
-
-        \item[Request] Third parties can ask the system for some data sharing through requests; requests are encoded through filling a form; the system, provided that the request is satisfiable, grants the third party access to the requested data (see Section~\ref{sec:datasharing}) 
-        \item[Third party] Actor interested in collecting data from a single user or from an anonymous group of users (see Section~\ref{sec:usercharacteristics}) % TODO add ref to the section
-        \item[User] Actor interested in his/her health data collecting and managing; a user can also be interested in automating SOS calls whenever his health status becomes critical (see Section~\ref{sec:usercharacteristics}) % TODO add ref to the section
-
-        %\item[Anonymized data] Data is said to be anonymized if it has no information about the user that produced it; a set of data (also known as aggregate data or group of data) is said to be anonymized if it contains only anonymized data and its cardinality (number of elements contained in it) is greater or equal to $1000$
-        %\item[Data] Information about health parameters that has been retrived by the S2B through sensors while logged in a user profile; data belongs to that user and he/she can retrive it from the system; data tuples are identified by the owner user and the acquisition timestamp
-        %\item[Data fits the request] Data is said to fit a particular request if the following holds:\\
-        %1. if the request is accepted but not revoked by the target user, then it would be shared between the user and the third party that made the request \\
-        %2. if the request has been accepted and after revoked by the user, then it would not be shared between the user and the third party i.e. the third party cannot retrive the data it asked
-        %\item[Health parameter] Numerical variable that encodes information about a physical phenomena that can be related to the person's health and can be measured through external sensors
-        % TODO add reference to another paragraph
-        % Blood pressure, weight and BMI, cholesterol, glucose, heart rate, exercise and sleep.
-        % https://www.selfcare4me.com/en/parameters-what-do-you-want-to-measure/
-        %\item[\PACKAGE] % TODO define this concept
-        %\item[Request] Making a request means asking for a permission to access some data; a request is made by a third party and the target can be a single user's data (the third party wants to have access to the user's data) or aggregate data (the third party is interested in a huge number of data that has been anonymized by the system); a request can be accepted (third party gains access to the data that fits the request) or declined (third party has no access to that data)
-        %\item[Threshold] Health parameters, as numerical variables, can be labled as \textit{ordinary} or \textit{critical} according to some intervals; these intervals are defined through thresholds that separate the \textit{ordinary} domain to the \textit{critical} one; thresholds are a domain property
-        % TODO add references to medical articles
-        %\item[Timestamp] A timestamp\footnote{\texttt{https://en.wikipedia.org/wiki/Timestamp}} is a sequence of characters or encoded information identifying when a certain event occurred, usually giving date and time of day, sometimes accurate to a small fraction of a second
-        %\item [Data Set]
-        % FABIO prima di threshold ci conviene definire quali parametri raccogliere e cos'è un "set" di parametri per un utente, tipo vettore.OK
-        %\item [Threshold] % In the context of \texttt{AutomatedSOS}, it refers to a particular boundary in health parameters space that divides the set of all ...
+        \item[Anonymous data] \textit{data entry} that doesn't contain information about the user from which it was produced; a \textit{data set} is said to be anonymized if it contains only anonymous \textit{data entries} and its cardinality is greater or equal than 1000
+        \item[Data entry] Tuple that corresponds to the user's parameters in a particular moment
+        \item[Data set] Set of \textit{data entries}; depending on the context, it can identify a set of entries all belonging to a single user or or a set of anonymous entries belonging to more that 1000 users; a \textit{data set}, among all \textit{data} that the system is storing, can be identified and constructed according to the filters of a third party request (Section~\ref{sec:datasharing})
       \end{description}
-      % \textbf{DataSet}=Set of all data shared by the user with TrackMe.\\
-      % FABIO ho pensato ad un modo per aggirare il problema della scelta dell'utente di poter cambiare i permessi sulle sue condivisioni: domani ti spiego e ridefiniamo Data Set se ti va bene l'idea.OK
-      %\textbf{Threshold}=It refers to a limit for a Health parameter. If crossed implies that the user needs help. \\
-      % TODO end filling this
+      \item[Request] Third parties can ask the system for some data sharing through requests; requests are encoded through filling a form; the system, provided that the request is satisfiable, grants the third party access to the requested data (Section~\ref{sec:datasharing})
+      \item[Third party] Actor interested in collecting data from a single user or from an anonymous group of users (Section~\ref{sec:usercharacteristics})
+      \item[Threshold] Numerical values related to a particular health parameter; they act as boundaries between the domain of critical health status and normal health status
+      \item[User] Actor interested in his/her health data collecting and managing; a user can also be interested in automating SOS calls whenever his health status becomes critical (Section~\ref{sec:usercharacteristics})
 
-    \subsubsection{Acronyms}
+      % TODO check this reference https://www.selfcare4me.com/en/parameters-what-do-you-want-to-measure/
+    \end{description}
 
-      \begin{description}
-        \item[] % TODO fill this
-      \end{description}
-
-    \subsubsection{Abbreviations}
+  \subsection{Acronyms and abbreviations}
 
       \begin{description}
-        \item[] % TODO fill this
+        \item[API] Application Programming Interface
+        \item[Data] Whenever the context refers to generic groups of \textit{data entries}, the terms \textit{data} and \textit{data set} are interchangeable
+        \item[System] Software product that TrackMe wants to develop; can be interchanged with \textit{S2B}
+        \item[S2B] Software To Be
       \end{description}
 
   \subsection{Revision history}
@@ -130,9 +100,7 @@
       \end{tabular}
     \end{table}
 
-  \subsection{Reference documents}
-
-    See References for details on the consulted documents.
+  %\subsection{Reference documents} %See References for details on the consulted documents. % TODO decide whether to leave this or delete it
 
   \subsection{Document structure}
 
@@ -142,6 +110,6 @@
       \item Section~\ref{sec:overdesc} describes the world and the shared phenomena, by defining assumptions and constraints; it identifies the main functions of the project
       \item Section~\ref{sec:specreq}, as the main part of this document, is about requirement analysis; it has also sections about interfaces of the system and software attributes
       \item Section~\ref{sec:alloy} contains the \texttt{Alloy} model that certifies correctness of goals implication by requirements and domain assumptions
-      \item Section~\ref{sec:effort} lists the work sessions that drove this project's development, ordered by date, as the hour counter of effort spent by each group member
       \item Section~\ref{sec:graph} contains graphics, like UML diagrams, that help for a better understand of the system structure
+      \item Section~\ref{sec:effort} lists the work sessions that drove this project's development, ordered by date, as the hour counter of effort spent by each group member
     \end{itemize}
