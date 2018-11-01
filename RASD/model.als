@@ -2,36 +2,40 @@ open util/integer
 open util/time
 open util/boolean
 
-sig User {}
+sig User {
+	myData : some DataEntry
+}
+
+sig DataType {
+	threshold : one Int
+}
 
 sig DataEntry {
-	threshold : one Int,
-	user : one User,
+	timestamp : one Int,
+	type : one DataType,
 	value : one Int,
 	location : one GPSLocation
+} {
+	timestamp > 0
 }
-
-sig SOSSystem {
-	emergencies : SOSCall -> DataEntry
-}
-
-sig SOSCall {}
 
 sig GPSLocation {}
 
-
-fact CallIfAboveThreshold {
-	all de : DataEntry | de.value > de.threshold implies (
-		one emergency : SOSSystem.emergencies | (
-			one target : SOSCall -> de| target = emergency
-		)
-	)
+fact UniqueDataEntries {
+	all u : User| all disj de, de' : u.myData | de.timestamp != de'.timestamp
 }
 
-fact OneThresholdForDataEntries {
-	all disj de1, de2 : DataEntry |de1.threshold = de2.threshold
+fact NoDataEntryWithoutUser {
+	all de : DataEntry | some u : User | de in u.myData
+}
+
+pred addDataEntry(u, u' : User, de : DataEntry) {
+	u'.myData = u.myData + de
 }
 
 pred show{}
 
-run show for 4 but 2 DataEntry
+run addDataEntry for 3 but exactly 1 User, exactly 3 DataEntry
+
+//run show for 2
+//run show for 4 but exactly 4 DataEntry, exactly 2 User

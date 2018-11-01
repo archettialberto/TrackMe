@@ -53,6 +53,7 @@
 
 
     \subsubsection{Data sharing}
+    \label{sec:datasharing}
 
       \texttt{Data4Help} relies on an internal database for data storage. Once data has just been added to the system, only the user that produced it will have access. Data sharing is exploited by granting access to a copy of required data to third parties, if their requests have been accepted. Third parties can retrive these data by downloading them from their inteface.
 
@@ -99,6 +100,7 @@
       Calls to SOS are handled by \texttt{AutomatedSOS} that signals users GPS position and health status feedback. Calls occur, if the user previously subscribed to \texttt{AutomatedSOS}, when his/her health parameters are below certain thresholds. The time between health danger detection and emergency call must be less than 5 seconds.
 
   \subsection{User characteristics}
+  \label{sec:usercharacteristics}
 
     The following list contains the actors that are involved in the system functions:
 
@@ -143,7 +145,7 @@
         \item \textbf{SOS system}, for ambulance dispatching (see Section~\ref{sec:sossystem})
       \end{itemize}
 
-    \subsubsection{Constraints}     
+    \subsubsection{Constraints}
 
       \texttt{Data4Help} acquires data through external devices owned by other companies, so it must be legally authorized to sell the data it acquires. In this document we assume that there are no legal issues for the selling activity, as TrackMe will develop contracts with the wearables companies in order to solve this issue.
       % TODO ricontrollare questo
