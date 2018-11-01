@@ -1,5 +1,8 @@
 \section{Specific requirements}
+\subsection{Special Requirements}
 \label{sec:specreq}
+ \texttt{AutomatedSOS} time performances are critical: the emergency call must be delivered no more than 5 seconds after the health danger detection, in order to have an ambulance dispatched from the SOS system as soon as possible. It is important to note again that \texttt{AutomatedSOS} is in charge only of the emergency call.
+
 %TODO:Decide where put this section
 \subsection{Scenarios}
 \subsubsection{Scenario 1}
@@ -27,6 +30,8 @@ Jack is a policeman that has decided to spend his holidays in a spa called "Beau
 
   \subsection{External interface requirements}
     \subsubsection{User interfaces}
+
+
     \label{sec:userinterfaces}
     \subsubsection{Hardware interfaces}
     \subsubsection{Software interfaces}
@@ -53,7 +58,8 @@ Jack is a policeman that has decided to spend his holidays in a spa called "Beau
 
       \item[Interfaces]
       \item[\texttt{R.I1}] The system shall provide a registration form for users and third parties
-      \item[\texttt{R.I2}] The system shall provide to the user an interface able to render data graphically, allowing filters like time interval or data type
+%TODO in case there are no data?
+\item[\texttt{R.I2}] The system shall provide to the user an interface able to render data graphically, allowing filters like time interval or data type
       \item[\texttt{R.I3}] The system shall provide a request form to the third parties
 
       \item[Data sharing requests]
@@ -196,7 +202,7 @@ Jack is a policeman that has decided to spend his holidays in a spa called "Beau
 	\hline
 	\textbf{Actors} & User and SOS System\\
 	\hline
-	\textbf{Entry Condition} & User's health parameters exceedes thresholds\\
+	\textbf{Entry Condition} & User has actived AutomatedSOS and his health parameters exceedes thresholds\\
 	\hline
 	\textbf{Flow of Events} & 1.The system collects GPS location and health status parameters of the User from his internal 						database.
 
@@ -282,6 +288,31 @@ Jack is a policeman that has decided to spend his holidays in a spa called "Beau
         \hline
       \end{tabularx}
       \end{table}
+
+ \begin{table}[h!]
+   \centering
+    \begin{tabularx}{\linewidth}{|X|X|}
+%|X| let to go in a new line on a cell
+         \hline
+         \textbf{Use Case ID} & \textbf{Name}  \\
+	\hline
+	1 & Sign in of User in Data4Help\\
+	\hline
+	2 & Log in of User\\
+	\hline
+	3 & Accept Single-User request\\
+	\hline
+	4 & Call an Ambulance\\
+	\hline
+	5 & Accept Anonymous-Group request\\
+	\hline
+	6 & Show Data Previously Acquired\\
+	\hline
+
+	\end{tabularx}
+\caption{Traceability Matrix}
+      \end{table}
+
  \begin{table}[h!]
    \centering
     \begin{tabularx}{\linewidth}{|X|X|X|X|}
@@ -289,15 +320,17 @@ Jack is a policeman that has decided to spend his holidays in a spa called "Beau
          \hline
          \textbf{Raw ID} & \textbf{Goal ID} & \textbf{Req ID} & \textbf{Use Case ID} \\
 	\hline
-	r1 & \texttt{G.U.1} & \texttt{R.A1}  \newline \texttt{R.A3}  \newline \texttt{R.A4} \newline \texttt{R.I.2}& \texttt{3.3.1} \\
+	r1 & \texttt{G.U.1} & \texttt{R.A1}  \newline \texttt{R.A3}  \newline \texttt{R.A4} \newline \texttt{R.I.2}& \texttt{1} \\
 	\hline
-	r2 & \texttt{G.U.1} & \texttt{R.A3}  \newline \texttt{R.A6}  \newline \texttt{R.A7} & \texttt{3.3.2}  \\
+	r2 & \texttt{G.U.1} & \texttt{R.A3}  \newline \texttt{R.A6}  \newline \texttt{R.A7} & \texttt{2}  \\
 	\hline
-	r3 & \texttt{G.T.1} & \texttt{R.A3}  \newline \texttt{R.I.3}  \newline \texttt{R.R.1} \newline \texttt{R.R.2} \newline \texttt{R.R.3}& \texttt{3.3.3}  \\
+	r3 & \texttt{G.T.1} & \texttt{R.A3}  \newline \texttt{R.I.3}  \newline \texttt{R.R.1} \newline \texttt{R.R.2} \newline \texttt{R.R.3}& \texttt{3}  \\
 \hline
-r4 & \texttt{G.U2} & \texttt{R.S1} \newline  \texttt{R.S2} \newline \texttt{R.S3}\newline \texttt{R.S4} & \texttt{3.3.4}   \\
+r4 & \texttt{G.U2} & \texttt{R.S1} \newline  \texttt{R.S2} \newline \texttt{R.S3}\newline \texttt{R.S4} & \texttt{4}   \\
 \hline
-r5 & \texttt{G.T2} & \texttt{R.A3} \newline  \texttt{R.D2} \newline \texttt{R.D5}\newline \texttt{R.D6}  \newline \texttt{R.I.3} \newline \texttt{R.R4}  \newline \texttt{R.R5}  \newline \texttt{R.R6} & \texttt{3.3.4}   \\
+r5 & \texttt{G.T2} & \texttt{R.A3} \newline  \texttt{R.D2} \newline \texttt{R.D5}\newline \texttt{R.D6}  \newline \texttt{R.I.3} \newline \texttt{R.R4}  \newline \texttt{R.R5}  \newline \texttt{R.R6} & \texttt{5}   \\
+\hline
+r6 & \texttt{G.U1} & \texttt{R.A3} \newline \texttt{R.A7} \newline  \texttt{R.I2} \newline  \texttt{R.D2} & \texttt{6}   \\
 \hline
 	\end{tabularx}
       \end{table}
@@ -315,18 +348,18 @@ The sofware is expected to work continuously for 24 hours a day despite small de
 Moreover as section 3.6.4 says, the sofware changes during time, so each time the software is modified is necessary to check the consequences on the reliability.
 
     \subsubsection{Availability}
-The system is expected to be available for 99.99 \% of the time but in case of failure it must be able to recover within 1 second otherwise in case of user's health problem AutomatedSOS won't respect the constraint descibed in \ref{sec:constraints} and therefore the user will be in a critical situation.\\ There 2 different situations which may result in a failure:failed components or due to unexecpected increasing in the requests. \\At this level of abstraction is not strickly required but in both of these cases a distributed architecture is an optimal solution:indeed in case of failure one of the redundant component can replace the one offline and in case of high demand a load balancing between redundant component can minimize the probability of failure of the system and also improve the performances.
+The system is expected to be available for 99.99 \% of the time but in case of failure it must be able to recover within 1 second otherwise in case of user's health problem AutomatedSOS won't respect the constraint descibed in \ref{sec:specreq} and therefore the user will be in a critical situation.\\ There 2 different situations which may result in a failure:failed components or due to unexecpected increasing in the requests. \\At this level of abstraction is not strickly required but in both of these cases a distributed architecture is an optimal solution:indeed in case of failure one of the redundant component can replace the one offline and in case of high demand a load balancing between redundant component can minimize the probability of failure of the system.
 
     \subsubsection{Security}
 The system requires the users(both Data4Help and AutomatedSOS) and third Parties(only in Data4Help), in order to exploit all the functionalities of the app and avoid unauthorized access, to authenticate through email and password.\\ These 2 credentials and all the Data collected by the system has to be securely stored in the internal database.\\ Moreover as  requirement \texttt{R.D6} says for privacy issues for all the Anonymous-Group requests the system must not allow the third parties to link data collected to the users that produced them.
 %payment? 
     \subsubsection{Mantainability}
-Data4Help, as section 2.2.2 says, has to collect data through multiple physical wearables devices therefore 
+Data4Help, as \ref{sec:datagathering} says, has to collect data through multiple physical wearables devices therefore 
 Data type handling should be implemented by the system in a flexible and extensible way, because wearables technologies change rapidly and our software should adapt in the least invasive way possible.
 
  %Constraint vs Special requirement for 5 seconds
     \subsubsection{Portability}
-
+The system has to gather user's data through multiple devices as \ref{sec:datagathering} says. Therefore this product function, related to Data Gathering, must be implemented in such a way that different physical wearables can send data to the app.
 
 
 
