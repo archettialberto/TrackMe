@@ -1,5 +1,3 @@
-\def \umlclasspath {img/RequirementLevelClassDiagram.jpg}
-
 \section{Overall description}
 \label{sec:overdesc}
 
@@ -8,18 +6,8 @@
     \texttt{Data4Help} is a service oriented to data acquisition and data sharing. Its software nature rises the necessity to combine it with another service able to directly retrive raw data from the \textit{world}. Today we can find for sale multiple wearables  that can acquire data from users and make it readable from software side. \texttt{Data4Help} users should already own these devices in order to exploit the data acquisition functionality (Section~\ref{sec:sharedp}: \textbf{\texttt{S.1}}). Once the user registered to the service, its interface will gather the last data collected and organize it in a chart view, that can be filtered by data or type and rendered by the user interface (Section~\ref{sec:sharedp}: \textbf{\texttt{S.4}}; Section~\ref{sec:userinterfaces}).
 
     It is mandatory for the user's wearable to provide a GPS signal, if the user wants to apply to the \texttt{AutomatedSOS} service. GPS will be used to track the user's location in case of health danger and the signal will be shared to the SOS service that already exists in the \textit{world} (Section~\ref{sec:sharedp}: \textbf{\texttt{S.3}}, \textbf{\texttt{S.5}}). This SOS service accepts messages that contain the GPS location of the person in health danger and an emergency log that \texttt{AutomatedSOS} generates from the acquired data. The log explains the suspected health danger and the data that passed the defined thresholds.
-    % TODO check the consistency of this in the future
 
     Third party organization are interested in data gathering. In order to allow them to make requests for specific types of data, \texttt{Data4Help} provides a user interface that is in charge of composing their request, to make it understendable by the software (Section~\ref{sec:sharedp}: \textbf{\texttt{S.2}}; Section~\ref{sec:userinterfaces}). The interface provides all the possible options that the third party can compose in order to provide the closest data request to its needs.
-    % TODO add UML diagrams
-    % TODO add informal domain assumptions
-
-    \begin{figure}[h!]
-      \centering
-      \includegraphics[width=\linewidth]{\umlclasspath}
-      \caption{Requirement level UML class diagram}
-      \label{fig:umlclass}
-    \end{figure}
 
   \subsection{Product functions}
 
@@ -79,9 +67,7 @@
     \subsubsection{Payment handling}
     \label{sec:payment}
 
-      % TODO add notes on what our app is doing; this part does not really fit here, because it is a constraint
-
-      When third parties ask for data sharing or users apply to \texttt{AutomatedSOS}, they are asked for payment by the system. Payment details will be discussed by TrackMe and then the software will be updated according to their decisions.
+      When third parties initialize requests, they are asked for payment by the system. Payment details are defined by TrackMe policy, so they won't be discussed in this document.
 
       Our system will only initialize payment requests as the effective payment operation will entirely be handled by an external software. This software should
       \begin{itemize}
@@ -105,7 +91,7 @@
     The following list contains the actors that are involved in the system functions:
 
       \begin{description}
-        \item [User] Person interested in the \texttt{Data4Help} \textbf{data management} service; he/she is required to register to the \texttt{Data4Help} service in order to exploit its functionalities; he/she can also apply to the \texttt{AutomatedSOS} service; every user owns an appropriate device for \texttt{Data4Help} acquisition service that can monitor at least heartbeat and GPS location \\
+        \item [User] Person interested in the \texttt{Data4Help} \textbf{data management} service; he/she is required to register to the \texttt{Data4Help} service in order to exploit its functionalities; he/she can also apply to the \texttt{AutomatedSOS} service; every user owns an appropriate device for \texttt{Data4Help} acquisition service that can monitor at least GPS location \\
         % TODO occhio all'assunzione qua sopra
         ex. \textit{an athlet that wants to monitor his/her physical status during sport activity, an old person that suffers from heart diseases or a sedentary worker that wants to keep track of his health parameters in the working hours}
         \item [Third Party] Entity interested in the \texttt{Data4Help} \textbf{data sharing} service; it is required to register to the \texttt{Data4Help} service in order to exploit its functionalities; according to the scope of its requests, it may be interested on the data of a particular user or in aggregated chunks of data \\
@@ -120,8 +106,9 @@
       \begin{description}
         \item[World]
         \item[\texttt{D.W1}] Signals processed by wearables are encoded correctly and represent the status of the \textit{world}
-        \item[\texttt{D.W2}] Given certain health parameters\footnote{TBD
-        % TODO reference this
+        \item[\texttt{D.W2}] Given certain health parameters\footnote{
+        Section~\ref{sec:datagathering} discusses which parameters are current wearables able to detect; we won't discuss regarding which parameters should be taken into account to determine the health status of an individual and which thresholds should be defined, as it is a topic strictly related to medical research
+        % TODO reference this or add articles
         }, it is possible to decide if a person is in health danger just by checking wether the parameters are above or below certain thresholds
         \item[Existing systems]
         \item[\texttt{D.E1}] In the \textit{world} already exists a SOS system that is able to dispatch ambulances and accepts emergency calls through an API
