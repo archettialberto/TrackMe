@@ -1,5 +1,5 @@
 \section{Specific requirements}
-
+\label{sec:specreq}
   \subsection{External interface requirements}
     \subsubsection{User interfaces}
     \label{sec:userinterfaces}
@@ -53,14 +53,15 @@
 
   \subsection{Scenarios}
 
-    \subsubsection{Stroke detection} % FABIO ho fatto alcune correzioni allo scenario 1. Visto che è la parte della quale ti sei occupato tu, preferisco non procedere e chiederti prima se ti vanno bene; ho cambiato qualcosina nel testo e corretto un paio di sviste grammaticali
+\subsubsection{Stroke detection} % FABIO ho fatto alcune correzioni allo scenario 1. Visto che è la parte della quale ti sei occupato tu, preferisco non procedere e chiederti prima se ti vanno bene; ho cambiato qualcosina nel testo e corretto un paio di sviste grammaticali
     \label{sec:}
 
       Luke is a 65 years old man that after 40 years of work at the post office finally got retired. Because of the sedentary nature of his work he is worried that he may suffer a stroke.\\
-      In order to monitor his health parameters, % FABIO tolto last week; cambiato today in "fater some days" per rimanere generico
-      he downloads the \texttt{Data4Help} app. The system allows him to create an account after filling all the required information(see Table~\ref{tab:login}). The system explicitly asks Luke if he wants to join the \texttt{AutomatedSOS} service and Luke accepts. The system will now on check in real time Luke's health parameters. % FABIO potremmo aggiungere che ha un braccialetto col battito cardiaco, altrimenti non si capisce bene come faccia il sistema a rilevare i suoi parametri
+      In order to monitor his health parameters, % FABIO tolto last week; cambiato today in "after some days" per rimanere generico
+      he downloads the \texttt{Data4Help} app. The system allows him to create an account after filling all the required information(see Table~\ref{tab:login}). The system explicitly asks Luke if he wants to join the \texttt{AutomatedSOS} service and Luke accepts sharing his heartbeat and myocardial with the app. The system will now on check in real time Luke's health parameters that will be collected through his smartwatch. % FABIO potremmo aggiungere che ha un braccialetto col battito cardiaco, altrimenti non si capisce bene come faccia il sistema a rilevare i suoi parametri
 
       After some days Luke's health parameters exceede thresholds because of a stroke: the system recognizes immediatly the critical situation and forwards in less than 5 seconds an emergency notification to SOS system, providing the Luke's GPS location and health status feedback.
+
 
     \subsubsection{Scenario 2}
 
@@ -76,19 +77,21 @@
     \subsubsection{Scenario 4}
 
     Jack is a policeman that has decided to spend his holidays in a spa called "BeautySPA" which allow him to loss 15 kg thanks to fitness activity and a healthy diet.In order to understand if this treatment is efficient over time the spa and Jack decides that user's health parameters like height,weight and body temperature must be monitored. Therefore the policeman and BeautySPA create respectively a user and a third party account of Data4Help and the system ,after checking that all the required information (see Table 1)are properly added, allow them to exploit all Data4Help functionalities. Indeed  BeautySPA immediately apply for the three Jack's health parameters to the app. The app recognize this as a single-user request(see Table 2)  so asks to Jack the authorization whether to provide them to the spa or not. Obviously he accept and therefore Data4Help make available these data. Unfortunately after just 1 month the policeman has already had a weight increase of 6 kg. So in order to better understand which may be the reasons the spa asks more health parameters such as blood oxygen and heartbeat to Data4Help which again,before sharing these data with BeautySPA, will ask the authorization of the user.
-    %\subsubsection{Scenario 3}
-    %FastAndEasy, a car-sharing company, has a business model based on how much time his users rent one of his car in a week. After 5 years the society has to decide whether change this model with a new one based on the kilometers travelled in a week or keep going with the old one. In order to take the right decision FastAndEasy needs to know the GPS location of all of his users when they are driving his cars(so not 24 hours a day) for 3 months. Because of this is a temporary solution it will be a waste of money for the car-sharing company to implement his own system for picking up these data. Therefore FastAndEasy creates a third party account of Data4Help filling all the required third party information (see Table 1) and asks to the app to provide the GPS location only of his users(which can be identified by the fiscal code). This is a Single-user(Table 2) request therefore  Data4Help will ask directly to the specified users whether accept or deny it.\\ Indeed only for the users who accept the request the app will grant the access to their GPS location to the company which,  looking at the data collected after 3 months, can compute the possible earnings of the new model,compare them with the old ones and finally make a decision.
+
+\subsubsection{Scenario 5}
+%Paul is studying Telecommunication Engineering at Politecnico di Milano and would like to partecipate at the PolimiRun therefore he is training twice a week since January(the PolimiRun occurs in May). He decides to create a User Account sharing heartbeat and blody ossygen with Data4Help. The system checks that all the required information are properly added then it starts to collect the two user data entries creating a Dataset for the student. At the end of April Paul is worried that despite all the efforts the PoliRun is too harsh for him so decides to  
+
+    \subsubsection{Scenario 6}
+    FastAndEasy, a car-sharing company, has a business model based on how much time his users rent one of his car in a week. After 5 years the society has to decide whether change this model with a new one based on the kilometers travelled in a week or keep going with the old one. In order to take the right decision FastAndEasy needs to know the GPS location of all of his users when they are driving his cars(so not 24 hours a day) for 3 months. Because of this is a temporary solution it will be a waste of money for the car-sharing company to implement his own system for picking up these data. Therefore FastAndEasy creates a third party account of Data4Help filling all the required third party information (see Table 1) and asks to the app to provide the GPS location only of his users(which can be identified by the fiscal code). This is a Single-user(Table 2) request therefore  Data4Help will ask directly to the specified users whether accept or deny it.\\ Indeed only for the users who accept the request the app will grant the access to their GPS location to the company which,  looking at the data collected after 3 months, can compute the possible earnings of the new model,compare them with the old ones and finally make a decision.
 
 
-    %\subsubsection{Allow a Third Party to access at a speficy DataSet prior User Authorization}
-    %	\subsubsection{Allow a Third Party to access at  group of anonymous DataSets made by at least 1000 individuals}
-    %check whether the data fits with the request of the third party
-    %	\subsubsection{Activation of AutomatedSOS must be granted in case of need}
 
   \subsection{Use cases}
 
 
-    \subsubsection{Use case 1} % FABIO diamo un nome specifico agli use cases e agli scenari?
+% FABIO diamo un nome specifico agli use cases e agli scenari?
+%ALBERTO Per gli use cases è già nella tabella 3 e in ogni use case c'è già il campo  nome
+
       \begin{table}[h!]
         \centering
         \begin{tabularx}{\linewidth}{|c|X|}
@@ -124,7 +127,6 @@
         \end{tabularx}
       \end{table}
 
-    \subsubsection{}
       \begin{table}[h!]
         \centering
         \begin{tabularx}{\linewidth}{|c|X|}
@@ -160,7 +162,7 @@
         \end{tabularx}
       \end{table}
 
-    \subsubsection{}
+
 
       \begin{table}[h!]
         \centering
@@ -198,7 +200,6 @@
         \end{tabularx}
       \end{table}
 
-    \subsubsection{}
 
       \begin{table}[h!]
         \centering
@@ -227,7 +228,7 @@
         \end{tabularx}
       \end{table}
 
-    \subsubsection{}
+   
 
       \begin{table}[h!]
         \centering
@@ -263,7 +264,7 @@
 
 
 
-    \subsubsection{Show Data previously acquired}
+
 
       \begin{table}[h!]
         \centering
