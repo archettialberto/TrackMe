@@ -15,7 +15,7 @@
 
     \subsubsection{Profile management}
 
-      The system will provide a registration form at which users and third parties can apply. Once registered, they will have a uniquely identifiable account, provided the requested information for its creation (see Table~\ref{tab:login}). Once the account has been successfully created, its owner can exploit the system's functionalities.
+      The system will provide a registration form at which users and third parties can apply. Once registered, they will have a uniquely identifiable account, provided the requested information for its creation (Table~\ref{tab:login}). Once the account has been successfully created, its owner can exploit the system's functionalities.
 
       Note that accounts for users and third parties must be distinguishable from the system perspective, as it should offer different functionalities to different account types, in order to reflect the account owners'needs.
 
@@ -52,8 +52,8 @@
         \begin{tabularx}{\linewidth}{|l|X|X|}
           \hline
           \textbf{Request type} & \textbf{Accept condition}                                               & \textbf{Filters}                                                                                                                           \\ \hline
-          Single-user           & Target user should accept the request through his/her account                                   & \textit{fiscal code of target user, from-date, to-date, data types (weight, heart rate, etc.), time granularity (seconds, minutes, hours)} \\ \hline
-          Anonymous-group       & Every user should have accepted the automatic sharing of requested data & \textit{size, from-date, to-date, data types (weight, heart rate, etc.), user characteristics (age interval, weight interval, etc.)}       \\ \hline
+          Single user           & Target user should accept the request through his/her account                                   & \textit{fiscal code of target user, from-date, to-date, data types (weight, heart rate, etc.), time granularity (seconds, minutes, hours)} \\ \hline
+          Anonymous       & Every user should have accepted the automatic sharing of requested data & \textit{size, from-date, to-date, data types (weight, heart rate, etc.), user characteristics (age interval, weight interval, etc.)}       \\ \hline
         \end{tabularx}
         \caption{Example of third party request form}
         \label{tab:tprequest}
@@ -133,6 +133,7 @@
       \end{itemize}
 
     \subsubsection{Constraints}
+    \label{sec:constraints}
 
       \texttt{Data4Help} acquires data through external devices owned by other companies, so it must be legally authorized to sell the data it acquires. In this document we assume that there are no legal issues for the selling activity, as TrackMe will develop contracts with the wearables companies in order to solve this issue.
       % TODO ricontrollare questo
