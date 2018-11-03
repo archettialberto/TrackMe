@@ -1,3 +1,7 @@
+\newcommand{\fetchmock}[1] {img/mockup/#1.jpg}
+\def \imgwidth {.65\linewidth}
+\def \pagwidth {.5\linewidth}
+
 \section{Specific requirements}
 \label{sec:specreq}
 
@@ -7,6 +11,137 @@
     \label{sec:userinterfaces}
 
       We will present the mockups of \texttt{Data4Help} app with \texttt{AutomatedSOS} options for users. Filters and forms fields are presented only for illustrative purposes: they may change in future releases or in the final product. These mockups are intended only to give an idea of what the graphical interface of our system will be like.
+
+      \begin{figure}[h!]
+        \begin{minipage}[b]{\pagwidth}
+          \centering
+          \includegraphics[width=\imgwidth]{\fetchmock{homepage}}
+          \caption{Login screen}
+          \label{fig:homepage}
+        \end{minipage}
+        \begin{minipage}[b]{\pagwidth}
+          \centering
+          \includegraphics[width=\imgwidth]{\fetchmock{u_registration}}
+          \caption{User registration form}
+          \label{fig:u_registration}
+        \end{minipage}
+        \begin{minipage}[b]{\pagwidth}
+          \centering
+        \end{minipage}
+        \begin{minipage}[b]{\pagwidth}
+          \centering
+        \end{minipage}
+      \end{figure}
+
+      \clearpage
+
+      \begin{figure}[h!]
+        \begin{minipage}[b]{\pagwidth}
+          \centering
+          \includegraphics[width=\imgwidth]{\fetchmock{u_data}}
+          \caption{User default screen}
+          \label{fig:u_data}
+          \vspace{4ex}
+        \end{minipage}
+        \begin{minipage}[b]{\pagwidth}
+          \centering
+          \includegraphics[width=\imgwidth]{\fetchmock{u_sidebar}}
+          \caption{User sidebar}
+          \label{fig:u_sidebar}
+          \vspace{4ex}
+        \end{minipage}
+        \begin{minipage}[b]{\pagwidth}
+          \centering
+          \includegraphics[width=\imgwidth]{\fetchmock{u_filters}}
+          \caption{Graphical interface filters}
+          \label{fig:u_filters}
+        \end{minipage}
+        \begin{minipage}[b]{\pagwidth}
+          \centering
+          \includegraphics[width=\imgwidth]{\fetchmock{u_request}}
+          \caption{User request}
+          \label{fig:u_request}
+        \end{minipage}
+      \end{figure}
+
+      \clearpage
+
+      \begin{figure}[h!]
+        \begin{minipage}[b]{\pagwidth}
+          \centering
+          \includegraphics[width=\imgwidth]{\fetchmock{u_options}}
+          \caption{User options}
+          \label{fig:u_options}
+          \vspace{4ex}
+        \end{minipage}
+        \begin{minipage}[b]{\pagwidth}
+          \centering
+          \includegraphics[width=\imgwidth]{\fetchmock{u_permissions}}
+          \caption{User permissions}
+          \label{fig:u_permissions}
+          \vspace{4ex}
+        \end{minipage}
+        \begin{minipage}[b]{\pagwidth}
+          \centering
+          \includegraphics[width=\imgwidth]{\fetchmock{u_anonym}}
+          \caption{Anonymous sharing types}
+          \label{fig:u_anonym}
+        \end{minipage}
+        \begin{minipage}[b]{\pagwidth}
+          \centering
+          \includegraphics[width=\imgwidth]{\fetchmock{tp_registration}}
+          \caption{Third party registration}
+          \label{fig:tp_registration}
+        \end{minipage}
+      \end{figure}
+
+      \clearpage
+
+      \begin{figure}[h!]
+        \begin{minipage}[b]{\pagwidth}
+          \centering
+          \includegraphics[width=\imgwidth]{\fetchmock{tp_data}}
+          \caption{Third party default screen}
+          \label{fig:tp_data}
+          \vspace{4ex}
+        \end{minipage}
+        \begin{minipage}[b]{\pagwidth}
+          \centering
+          \includegraphics[width=\imgwidth]{\fetchmock{tp_sidebar}}
+          \caption{Third party sidebar}
+          \label{fig:tp_sidebar}
+          \vspace{4ex}
+        \end{minipage}
+        \begin{minipage}[b]{\pagwidth}
+          \centering
+          \includegraphics[width=\imgwidth]{\fetchmock{tp_requests}}
+          \caption{Third party requests}
+          \label{fig:tp_requests}
+        \end{minipage}
+        \begin{minipage}[b]{\pagwidth}
+          \centering
+          \includegraphics[width=\imgwidth]{\fetchmock{tp_options}}
+          \caption{Third party options}
+          \label{fig:tp_options}
+        \end{minipage}
+      \end{figure}
+
+      \begin{figure}[ht!]
+        \begin{minipage}[b]{\pagwidth}
+          \centering
+          \includegraphics[width=\imgwidth]{\fetchmock{tp_sreq}}
+          \caption{Single user request form}
+          \label{fig:tp_sreq}
+          \vspace{4ex}
+        \end{minipage}
+        \begin{minipage}[b]{\pagwidth}
+          \centering
+          \includegraphics[width=\imgwidth]{\fetchmock{tp_areq}}
+          \caption{Anonymous request form}
+          \label{fig:tp_areq}
+          \vspace{4ex}
+        \end{minipage}
+      \end{figure}
 
     %\subsubsection{Hardware interfaces} % FABIO ho tolto hardware e communication interfaces, tanto una non c'è e l'altra è già spiegata in Software interfaces
 
@@ -106,9 +241,8 @@
 
       At the end of April Paul wants to check if the PoliRun is beyond his physical capacities. After the login phase, he filters his data through the graphical interface, by limiting the rendering to blood ossygen and heartbeat weekly entries from January to April. The system retrieves the required data and renders it. Paul sees the impressive physical improvement during the four months (blood oxygen increase, heartbeat per minute reduced) and states that the PolimiRun is absolutely realistic for him.
 
-    \subsubsection{Anonymous Group Request}
+    \subsubsection{Multiple single user requests}
 
-      %ALBERTO controlla se ti torna usare la posizione GPS in questo modo
       FastAndEasy, a car sharing company, has a business model based on how much time its clients rent one car in a week. After five years of activity, the society has to decide whether to change this model with a kilometers-based one or keeping the old time-based one. In order to take the right decision, FastAndEasy needs to know the GPS location of all of its clients while they are driving cars for the next three months. Because of this time-limited solution it would be a waste of money to implement a new system from scratch for picking up these data. FastAndEasy decides to rely on \texttt{Data4Help} and creates a third party account. It asks through multiple third party request forms the GPS location of its clients, identified by fiscal code. Many of them accept the request, forwarded by \texttt{Data4Help}, after FastAndEasy confirmation.
 
       After three months, FastAndEasy brings the collected data to the Board of Directors. They can now compute the possible earnings of the new model and compare them with the old ones, in order to take a decision about the business model.
@@ -428,7 +562,7 @@
 
     \subsubsection{Hardware limitations}
 
-      The smartphone app version of \texttt{Data4Help} requires Android/iOS operating system, GPS location and 3G/4G connectivity to the smartphone on which it is installed, in order to exploit its basic functionalities. Moreover it is necessary that each user has his/her own wearables, able to collect data types that the he/she wants to monitor (Section~\ref{sec:datagathering}).
+      The smartphone app version of \texttt{Data4Help} requires Android/iOS operating system, GPS location and 3G/4G connectivity to the smartphone on which it is installed, in order to exploit its basic functionalities. Moreover it is necessary that each user has his/her own wearables, able to collect data types that they want to monitor (Section~\ref{sec:datagathering}).
 
     %\subsubsection{Any other constraint}
     %TODO Superfluo?
