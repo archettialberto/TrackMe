@@ -1,6 +1,35 @@
 \newcommand{\fetchmock}[1] {img/mockup/#1.jpg}
 \def \imgwidth {.65\linewidth}
 \def \pagwidth {.5\linewidth}
+\newcommand{\uclist}[1] {
+  \setlist{nolistsep}
+  \begin{enumerate}[noitemsep]
+    #1
+  \end{enumerate}
+}
+\newcommand{\usecase}[8] {
+  \begin{table}[h!]
+  \centering
+    \begin{tabularx}{\linewidth}{|c|X|}
+      \hline
+      \textbf{ID}               & \texttt{UC.#1} \\ \hline
+      \textbf{Name}             & #2 \\ \hline
+      \textbf{Actors}           & #3 \\ \hline
+      \textbf{Entry Condition}  & #4 \\ \hline
+      \textbf{Flow of Events}   & #5 \\ \hline
+      \textbf{Exit Condition}   & #6 \\ \hline
+      \textbf{Exceptions}       & #7 \\ \hline
+    \end{tabularx}
+    \caption*{#8}
+    \label{tab:uc#1}
+  \end{table}
+}
+
+\def \ucnameA {}
+\def \ucnameA {}
+\def \ucnameA {}
+\def \ucnameA {}
+\def \ucnameA {}
 
 \section{Specific requirements}
 \label{sec:specreq}
@@ -249,376 +278,159 @@
 
   \subsection{Use cases}
 
-
-        \begin{table}[h!]
-        \centering
-        \begin{tabularx}{\linewidth}{|c|X|}
-          \hline
-          \textbf{Name} & Sign in of User in Data4Help\\
-        	\hline
-        	\textbf{Actors} & User \\
-        	\hline
-        	\textbf{Entry Condition} & Data4Help is downloaded on the smartphone \\
-        	\hline
-        	\textbf{Flow of Events} & 1.User click on "Register" button in the login screen of the app.
-
-        					2.User fills all the mandatory fields("Age", "Name", "Surname", "Email", "Sex", "Password", "Fiscal 							Code").
-
-        					3.User insert in the Anonymous sharing permissions page the data that he want to share with 						the app.
-
-        					4.User clicks on the "Confirm" button.
-
-        					5.The system create a DataSet for the User in his internal database.\\
-        	\hline
-        	\textbf{Exit Condition} & The User account has been successfully created. \\
-        	\hline
-        	\textbf{Exceptions} &
-        					%1. The system find that User filled the field "Age" with 12.
-        					1.The system finds that User filled the field "Email"  with an email that is non-existent or that has 							already been associated with another user.
-
-        					2.The system finds that User filled the field "Fiscal Code" with an expression not long 16 								characters.
-
-        					3.The system finds that User filled the field "Password" with an expression shorter than 8 								characters.
-
-        					All exceptions are handled notifying the issue to the User and taking back the \textbf{Flow of 							Events} to the point 2.\\
-       
-   \hline
-
-        \end{tabularx}
-
-      \end{table}
-
-
- \begin{table}[h!]
-        \centering
-        \begin{tabularx}{\linewidth}{|c|X|}
-          \hline
-          \textbf{Name} & Sign in of Third party in Data4Help\\
-        	\hline
-        	\textbf{Actors} & Third party \\
-        	\hline
-        	\textbf{Entry Condition} & Data4Help is downloaded on the smartphone \\
-        	\hline
-        	\textbf{Flow of Events} & 1.Third party click on "Register" button in the login screen of the app.
-
-        					2.Third party fills all the mandatory fields("Email","Password","Name", "Interests", "Descriptions").
-
-        					3.Third party click on "Register" button in the third party registration page.
-					
-					4.The system store in his internal database the all the the third party's information.\\
-
-        	\hline
-        	\textbf{Exit Condition} & The third party account has been successfully created. \\
-        	\hline
-        	\textbf{Exceptions} &
- 
-        					1.The system finds that third party filled the field "Email"  with an email that is non-existent or 						that has already been associated with another account.
-
-        					2.The system finds that third party filled the field "Password" with an expression shorter than 8 							characters.
-
-        					All exceptions are handled notifying the issue to the third party and taking back the \textbf{Flow 					of Events} to the point 2.\\
-         
- \hline
-       
- \end{tabularx}
-     
- \end{table}
-
-
-      \begin{table}[h!]
-        \centering
-        \begin{tabularx}{\linewidth}{|c|X|}
-          \hline
-
-          \textbf{Name} & Log in of User \\
-        	\hline
-
-        	\textbf{Actors} & User \\
-        	\hline
-
-        	\textbf{Entry Condition} & User has already created an account\\
-        	\hline
-
-        	\textbf{Flow of Events} & 1.User opens the app on his smartphone.
-
-        					2.User insert his email in the field "Email" in the homepage of Data4Help.
-
-        					3.User insert his password in the field "Password" in the homepage of Data4Help.
-
-        					4.User Click on "Login" button in the login page of the app.\\
-        	\hline
-
-        	\textbf{Exit Condition} & User is successfully Logged in and can exploit all the functionalities of the app. \\
-        	\hline
-
-        	\textbf{Exceptions} & 1.The system doesn't find the email address inserted in the field "Email" in his internal DataBase.
-
-        				In this case the \textbf{Flow of Events} has to be executed again from step 2.
-
-        				2.The system doesn't find the password inserted in the field "Password" in his internal DataBase.
-
-        				 In this case the \textbf{Flow of Events} has to be executed again from step 3.
-
-        				3.The system find both the email and the password inserted by User but these refers to 2 different 						users.
-
-        				In this case the \textbf{Flow of Events} has to be executed again from step 2. \\
-         
- \hline
-
-        \end{tabularx}
-
-      \end{table}
-
-
-
-      \begin{table}[h!]
-        \centering
-        \begin{tabularx}{\linewidth}{|c|X|}
-          \hline
-
-          \textbf{Name} & Accept Single-User request\\
-        	\hline
-
-        	\textbf{Actors} & Third party and User \\
-        	\hline
-
-        	\textbf{Entry Condition} & Third party and User have already created respectively a third party and a user account and they 							are already logged in in Data4Help.\\
-        	\hline
-
-        	\textbf{Flow of Events} & 1.Third party clicks on the button "Single-User Request".
-
-        					2.Third party inserts the Fiscal Code of the User in the field "Fiscal Code" of the Single-User 							Request page.
-
-        					3.Third party lists to the system the data of the User which it would like to access filling the field 						"Data types" in the Single-User Request page.
-
-					4.The Third party clicks on the "Confirm" button.
-
-        					5.The system asks to the User whether he accepts or denies to share those specified data with 						the Third party.
-
-        					6.User answers clicking in the field "Accept" in his My data page.
-
-        					7.The system make available the data for the third party.\\
-        	\hline
-
-        	\textbf{Exit Condition} & Third party can exploit the data \\
-        	\hline
-
-        	\textbf{Exceptions} & 1.The system doesn't find the fiscal code inserted by third party in the field "Field Code" in his 						internal database.
-
-        				In this case the \textbf{Flow of Events} has to be executed again from step 2.
-
-        				2.The system discovers that the User has denied the request therefore Data4Help notifies this 						information to the third party which won't have access to the required data.
-
-        				The third party can 	make a new Single-User request referred to a new User: in this case the 							\textbf{Flow of Events} has to executed again from the first step.\\
-
-         
- \hline
-        
-\end{tabularx}
-
-      \end{table}
-
-
-      \begin{table}[h!]
-        \centering
-        \begin{tabularx}{\linewidth}{|c|X|}
-          \hline
-
-          \textbf{Name} & Call an ambulance\\
-        	\hline
-
-        	\textbf{Actors} & User and SOS System\\
-        	\hline
-
-        	\textbf{Entry Condition} & User has actived AutomatedSOS and his health parameters exceedes thresholds\\
-        	\hline
-
-        	\textbf{Flow of Events} & 1.The system collects GPS location and health status parameters of the User from his internal 						database.
-
-        					2.The system makes an emergency call to SOS System by providing GPS location and health 							status feedback of the User.
-
-        					3.The SOS System accepts the call and dispatches the ambulance to the User location.
-
-        					4.The SOS System notifies the system when the ambulance arrives at User Location.\\
-        	\hline
-
-        	\textbf{Exit Condition} & The ambulance is taking care of the User. \\
-        	\hline
-
-        	\textbf{Exceptions} & \\
-        	\hline
-
-        	\textbf{Special Requirements} & 1.The system has to collect the GPS location,health parameters of the User and make the 							emergency call to SOS System within five seconds from the time the health parameters 							exceedes thresholds.\\
-      
-    \hline
-      
-  \end{tabularx}
-    
-  \end{table}
-
-
-
-      \begin{table}[h!]
-        \centering
-        \begin{tabularx}{\linewidth}{|c|X|}
-          \hline
-
-          \textbf{Name} & Accept Anonymous-Group request\\
-        	\hline
-
-        	\textbf{Actors} & Third Party\\
-        	\hline
-
-        	\textbf{Entry Condition} & Third party has already created a third party account and is already logged in in Data4Help.\\
-        	\hline
-
-        	\textbf{Flow of Events} &
-        					1.Third party clicks on the button "Anonymous-Group Request".
-
-					2.Third party specify the size of the sample of users needed and the time until these data has to 						available to her.
-
-        					3.Third party lists to the system which data requires filling the field "Data types" in the 							Anonymous-Group request page.
-
-        					4.The system looks for, in his internal database, the User's Datasets  which fit with the request 						made by the third party.
-
-        					5.The system aggregate the data found and anonymize them.
-
-        					6.The system provides the anonymous data to the third party.\\
-        	\hline
-
-        	\textbf{Exit Condition} & Third party can exploit the data \\
-
-        	\hline
-
-        	\textbf{Exceptions} & 1.The data cannot be anonymized  by the system because it doesn't find at least 1000 							User Datasets which match with the third party request. Therefore the system cannot 							grant access to the data to the third party and has to notify her this information .
-
-        				The third party can make a new Anonymous-Group request asking for a new set of data: 							in this case the \textbf{Flow of Events} has to be executed again from the first step.\\
-
-      
-    \hline
-     
-   \end{tabularx}
-  
+    \usecase % user registration
+      {1}
+      {User registers to \texttt{Data4Help}}
+      {User}
+      {\texttt{Data4Help} app downloaded on user's smartphone}
+      {\uclist{
+        \item User clicks on \texttt{Register} button of the login screen (Figure~\ref{fig:homepage})
+        \item User fills the registration form (Figure~\ref{fig:u_registration})
+        \item User checks which data types he/she intends to anonymously share to third parties (Figure~\ref{fig:u_anonym})
+        \item User checks whether he/she wants to apply to \texttt{AutomatedSOS} system
+        \item User clicks \texttt{Register} button of the registration form
+        \item The system creates a \texttt{Data4Help} account for the user
+      }}
+      {User's account has been successfully created and added to the system database}
+      {\uclist{
+        \item[2] The field \texttt{email} is invalid or corresponds to an email that already exists in the system database; the field \texttt{fiscal code} is not valid; the \texttt{password} fields don't correspond. The system notifies the issue to the user and the \textbf{Flow of Events} returns to 2, erasing invalid fields
+      }}
+      {}
+
+    \usecase % tp registration
+      {2}
+      {Third party registers to \texttt{Data4Help}}
+      {Third party}
+      {\texttt{Data4Help} software downloaded on third party's device}
+      {\uclist{
+        \item Third party clicks on \texttt{Register} button of the login screen (Figure~\ref{fig:homepage})
+        \item Third party fills the registration form (Figure~\ref{fig:tp_registration})
+        \item Third party clicks \texttt{Register} button of the registration form
+        \item The system creates a \texttt{Data4Help} account for the third party
+      }}
+      {Third party's account has been successfully created and added to the system database}
+      {\uclist{
+        \item[3] The field \texttt{email} is invalid or corresponds to an email that already exists in the system database; the \texttt{password} fields don't correspond. The system notifies the issue to the third party and the \textbf{Flow of Events} returns to 2, erasing invalid fields
+      }}
+      {}
+
+    \usecase % user login
+      {3}
+      {User logs in \texttt{Data4Help}$^*$}
+      {User}
+      {User has already created an account}
+      {\uclist{
+        \item User fills \texttt{email} and \texttt{password} fields of the login screen (Figure~\ref{fig:homepage})
+        \item User clicks on \texttt{Login} button
+      }}
+      {User is successfully logged in the system and can exploit all the system services; the graphical interfaces moves to the default screen (Figure~\ref{fig:u_data})}
+      {\uclist{
+        \item[2] The field \texttt{email} is invalid or doesn't corresponds to an email that already exists in the system database; the \texttt{password} field doesn't correspond to the one paired with the email. The system notifies the issue to the user and the \textbf{Flow of Events} returns to 1
+      }}
+      {$^*$ The use case \textit{Third party logs in }\texttt{Data4Help} is equivalent to this one, by changing \textit{user} with \textit{third party}}
+
+    \usecase % call ambulance
+      {4}
+      {Call an ambulance}
+      {SOS System, User}
+      {User subscribed to \texttt{AutomatedSOS}, his/her health parameters exceede thresholds}
+      {\uclist{
+        \item The system retrives the user's data entry which parameters exceeded thresholds from the database
+        \item The system composes a SOS message with the GPS location of the user and the critical parameters contained in the data entry
+        \item The system forwards to the SOS system the SOS message in less than 5 seconds
+        \item The SOS system accepts the message
+      }}
+      {The SOS system succesfully received the SOS message; the ambulance dispatchment is beyond the system's scope}
+      {\uclist{
+        \item[4] The SOS system is not reachable; \textbf{Flow of Events} rollbacked to 3
+      }}
+      {}
+
+    \usecase % single user request
+      {5}
+      {Accept a single user request}
+      {Third party, User}
+      {Third party and user have already created respectively a third party and a user account and they are already logged in the system}
+      {\uclist{
+        \item Third party opens the sidebar (Figure~\ref{fig:tp_sidebar})
+        \item Third party clicks on \texttt{My requests} button
+        \item Third party fills the form for a single user request (Figure~\ref{fig:tp_sreq}), adding user's fiscal code
+        \item Third party clicks the \texttt{Confirm} button
+        \item The system receives the request by the third party and forwards a notification to the user
+        \item User clicks on the notification and opens the request information (Figure~\ref{fig:u_request})
+        \item User clicks the \texttt{Accept} button
+        \item The system receives user's renponse and shares requested data to the third party
+      }}
+      {Third party can exploit user's requested data}
+      {\uclist{
+        \item[4] The system doesn't find any user whose fiscal code correspond to the one inserted by the third party; \textbf{Flow of Events} rollbacked to 3
+        \item[7] User declines the request; the system notifies to the third party that is not allowed to exploit user's data
+      }}
+      {}
+
+    \usecase % anonymous group request
+      {6}
+      {Accept an anonymous group request}
+      {Third Party}
+      {Third party has already created an account and it's already logged in the system}
+      {\uclist{
+        \item Third party opens the sidebar (Figure~\ref{fig:tp_sidebar})
+        \item Third party clicks on \texttt{My requests} button
+        \item Third party fills the form for an anonymous group request (Figure~\ref{fig:tp_areq}); it selects the data set size (at least 1000)
+        \item Third party clicks the \texttt{Confirm} button
+        \item The system fetches from the databse a quantity of data entries equal to the data set size selected by the third party; all of the data entries match the request filters
+        \item The system anonymizes the data entries and composes an anonymous data set
+        \item The system shares the data set to the third party
+      }}
+      {Third party can exploit requested data}
+      {\uclist{
+        \item[5] The system doesn't find enough data entries that match the request filters; the system notifies to the third party that its request cannot be fulfilled
+      }}
+      {}
+
+    \usecase % graphical filters
+      {7}
+      {Show and filter acquired data}
+      {User}
+      {User has already created an account and he/she is already logged in the system}
+      {\uclist{
+        \item User opens the sidebar (Figure~\ref{fig:u_sidebar})
+        \item User clicks on \texttt{My data} button
+        \item User clicks on \texttt{Filter type} button and ticks which filter types he/she want to visualize (Figure~\ref{fig:u_filters})
+        \item User selects the time period of the data visualization
+        \item The system processes user's request and renders the new data chart
+      }}
+      {User can see the data he/she requested according to the specified filter}
+      {\uclist{
+        \item[5] User inserted a non valid time period; the system notifies the user of the error; \textbf{Flow of Events} rollbacked to 4
+      }}
+      {}
+
+    \begin{table}[h!]
+      \centering
+      \begin{tabularx}{.8\linewidth}{|X|X|X|X|}
+        \hline
+        \textbf{Raw ID} & \textbf{Goal ID} & \textbf{Req ID} & \textbf{Use Case ID} \\ \hline
+        \texttt{r1} & \texttt{G.U1} & \texttt{R.A1}, \texttt{R.A3}, \texttt{R.A4}, \texttt{R.I1} & \texttt{UC.1} \\
+        \hline
+        \texttt{r2} & \texttt{G.T1}, \texttt{G.T2}, \texttt{G.T3} & \texttt{R.A2}, \texttt{R.A3}, \texttt{R.A4}, \texttt{R.I1} & \texttt{UC.2} \\
+        \hline
+        \texttt{r3} & \texttt{G.U1} & \texttt{R.A3}, \texttt{R.A6}, \texttt{R.A7} & \texttt{UC.3} \\
+        \hline
+        \texttt{r4} & \texttt{G.T1} & \texttt{R.A3}, \texttt{R.I3}, \texttt{R.R1}, \texttt{R.R2}, \texttt{R.R3}& \texttt{UC.4}  \\
+        \hline
+        \texttt{r5} & \texttt{G.U2} & \texttt{R.S1},  \texttt{R.S2}, \texttt{R.S3}, \texttt{R.S4} & \texttt{UC.5} \\
+        \hline
+        \texttt{r6} & \texttt{G.T2} & \texttt{R.A3},  \texttt{R.D2}, \texttt{R.D5}, \texttt{R.D6}, \texttt{R.I3}, \texttt{R.R4}, \texttt{R.R5}, \texttt{R.R6} & \texttt{UC.6}   \\
+        \hline
+        \texttt{r7} & \texttt{G.U1} & \texttt{R.A3}, \texttt{R.A7},  \texttt{R.I2},  \texttt{R.D2} & \texttt{UC.7}   \\
+        \hline
+      \end{tabularx}
+      \caption{Traceability matrix}
+      \label{tab:tracmatrix}
     \end{table}
 
-
-
-
-
-      \begin{table}[h!]
-        \centering
-        \begin{tabularx}{\linewidth}{|c|X|}
-          \hline
-
-          \textbf{Name} & Show Data previously acquired\\
-        	\hline
-
-        	\textbf{Actors} & User\\
-        	\hline
-
-        	\textbf{Entry Condition} & User has already created a User account and is already logged in in Data4Help.\\
-        	\hline
-
-        	\textbf{Flow of Events} &
-        					1.User clicks on the button "My data" in the User sidebar.
-
-        					2.User decides which filter has to be applied to his DataSet filling the fields "Filters".
-
-        					3.The system organize the User's DataSet following the User's instructions.
-
-        					4.The system show to the User these data thanks to a graphical interface. \\
-        	\hline
-
-        	\textbf{Exit Condition} & User can see his data in the specified way\\
-
-        	\hline
-
-        	\textbf{Exceptions} & 1 The system hasn't gathered any data yet because the user has just created an account.
-
-        				Hence the system notifies the user that no data can be shown.
-
-        				Only after having collected some data the User can specified filters:the \textbf{Flow of Events} must 					be executed from the first step.\\
-
-          \hline
-
-     
-   \end{tabularx}
-     
- \end{table}
-
-
-
-      \begin{table}[h!]
-        \centering
-        \begin{tabularx}{\linewidth}{|X|X|}
-          %|X| let to go in a new line on a cell
-          \hline
-
-          \textbf{Use Case ID} & \textbf{Name}  \\
-        	\hline
-
-        	1 & Sign in of User in Data4Help\\
-        	\hline
-
-	2 & Sign in of Third party in Data4Help\\
-        	\hline
-
-        	3 & Log in of User\\
-        	\hline
-
-        	4 & Accept Single-User request\\
-        	\hline
-
-        	5 & Call an Ambulance\\
-        	\hline
-
-        	6 & Accept Anonymous-Group request\\
-        	\hline
-
-        	7 & Show Data Previously Acquired\\
-          \hline
-
-  	  
-  \end{tabularx}
-     
-   \caption{Traceability Matrix}
-   
-   \end{table}
-
-
-
-      \begin{table}[h!]
-        \centering
-        \begin{tabularx}{\linewidth}{|X|X|X|X|}
-          %|X| let to go in a new line on a cell
-          \hline
-          \textbf{Raw ID} & \textbf{Goal ID} & \textbf{Req ID} & \textbf{Use Case ID} \\
-          \hline
-
-	        r1 & \texttt{G.U.1} & \texttt{R.A1}  \newline \texttt{R.A3}  \newline \texttt{R.A4} \newline \texttt{R.I.1}& \texttt{1} \\
-          \hline
-
-	        r2 & \texttt{G.T.1}  \newline \texttt{G.T.2} \newline \texttt{G.T.3}& \texttt{R.A2}  \newline \texttt{R.A3}  \newline \texttt{R.A4} \newline \texttt{R.I.1} & \texttt{2} \\
-          \hline
-
-	        r3 & \texttt{G.U.1} & \texttt{R.A3}  \newline \texttt{R.A6}  \newline \texttt{R.A7} & \texttt{3}  \\
-	         \hline
-
-	        r4 & \texttt{G.T.1} & \texttt{R.A3}  \newline \texttt{R.I.3}  \newline \texttt{R.R.1} \newline \texttt{R.R.2} \newline \texttt{R.R.3}& \texttt{4}  \\
-          \hline
-
-          r5 & \texttt{G.U2} & \texttt{R.S1} \newline  \texttt{R.S2} \newline \texttt{R.S3}\newline \texttt{R.S4} & \texttt{5}   \\
-          \hline
-
-          r6 & \texttt{G.T2} & \texttt{R.A3} \newline  \texttt{R.D2} \newline \texttt{R.D5}\newline \texttt{R.D6}  \newline \texttt{R.I.3} \newline \texttt{R.R4}  \newline \texttt{R.R5}  \newline \texttt{R.R6} & \texttt{6}   \\
-          \hline
-
-          r7 & \texttt{G.U1} & \texttt{R.A3} \newline \texttt{R.A7} \newline  \texttt{R.I2} \newline  \texttt{R.D2} & \texttt{7}   \\
-          \hline
-
-      \end{tabularx}
-      \end{table}
-      %everything referred to the system
+  \clearpage
   \subsection{Performance requirements}
   \label{sec:performance}
 
