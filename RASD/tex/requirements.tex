@@ -249,31 +249,38 @@
 
   \subsection{Use cases}
 
-      \begin{table}[h!]
+        \begin{table}[h!]
         \centering
         \begin{tabularx}{\linewidth}{|c|X|}
-          \hline\\
+          \hline
           \textbf{Name} & Sign in of User in Data4Help\\
-        	\hline\\
+        	\hline
         	\textbf{Actors} & User \\
-        	\hline\\
+        	\hline
         	\textbf{Entry Condition} & Data4Help is downloaded on the smartphone \\
-        	\hline\\
-        	\textbf{Flow of Events} & 1.User click on "Create a new User account" button in the homepage of the app.\\
-        					2.User fills all the mandatory fields("Age", "Name", "Surname", "Email", "Sex", "Password", "FiscalCode").\\
-        					3.User insert in the fields "Shared Data" the data that he want to share with the app.\\
-        					4.User clicks on the "Confirm" button.\\
+        	\hline
+        	\textbf{Flow of Events} & 1.User click on "Register" button in the login screen of the app.
+
+        					2.User fills all the mandatory fields("Age", "Name", "Surname", "Email", "Sex", "Password", "Fiscal 							Code").
+
+        					3.User insert in the Anonymous sharing permissions page the data that he want to share with 						the app.
+
+        					4.User clicks on the "Confirm" button.
+
         					5.The system create a DataSet for the User in his internal database.\\
-        	\hline\\
+        	\hline
         	\textbf{Exit Condition} & The User account has been successfully created. \\
-        	\hline\\
+        	\hline
         	\textbf{Exceptions} &
         					%1. The system find that User filled the field "Age" with 12.
-        					1.The system finds that User filled the field "Email"  with an email that is non-existent or that has already been associated with another user.\\
-        					2.The system finds that User filled the field "Fiscal Code" with an expression not long 16 characters.\\
-        					3.The system finds that User filled the field "Password" with an expression shorter than 8 characters.\\
-        					All exceptions are handled notifying the issue to the User and taking back the \textbf{Flow of Events} to the point 2.\\
-          \hline\\
+        					1.The system finds that User filled the field "Email"  with an email that is non-existent or that has 							already been associated with another user.
+
+        					2.The system finds that User filled the field "Fiscal Code" with an expression not long 16 								characters.
+
+        					3.The system finds that User filled the field "Password" with an expression shorter than 8 								characters.
+
+        					All exceptions are handled notifying the issue to the User and taking back the \textbf{Flow of 							Events} to the point 2.\\
+          \hline
         \end{tabularx}
       \end{table}
 
@@ -297,7 +304,7 @@
 
         					3.User insert his password in the field "Password" in the homepage of Data4Help.
 
-        					4.User Click on "Log In" button in the homepage of the app.\\
+        					4.User Click on "Login" button in the login page of the app.\\
         	\hline
 
         	\textbf{Exit Condition} & User is successfully Logged in and can exploit all the functionalities of the app. \\
@@ -311,7 +318,7 @@
 
         				 In this case the \textbf{Flow of Events} has to be executed again from step 3.
 
-        				3.The system find both the email and the password inserted by User but these refers to 2 different users.
+        				3.The system find both the email and the password inserted by User but these refers to 2 different 						users.
 
         				In this case the \textbf{Flow of Events} has to be executed again from step 2. \\
           \hline
@@ -336,25 +343,27 @@
 
         	\textbf{Flow of Events} & 1.Third party clicks on the button "Single-User Request".
 
-        					2.Third party inserts the Fiscal Code of the User in the field "Fiscal Code" of the Single-User 								Request page.
+        					2.Third party inserts the Fiscal Code of the User in the field "Fiscal Code" of the Single-User 							Request page.
 
-        					3.Third party lists to the system the data of the User which it would like to access filling the field 							"DataRequired" in the Single-User Request page.
+        					3.Third party lists to the system the data of the User which it would like to access filling the field 						"Data types" in the Single-User Request page.
 
-        					4.The system asks to the User whether he accepts or denies to share those specified data with the 					Third party.
+					4.The Third party clicks on the "Confirm" button.
 
-        					5.User answers clicking in the field "Yes" in his homepage.
+        					5.The system asks to the User whether he accepts or denies to share those specified data with 						the Third party.
 
-        					6.The system make available the data for the third party.\\
+        					6.User answers clicking in the field "Accept" in his My data page.
+
+        					7.The system make available the data for the third party.\\
         	\hline
 
         	\textbf{Exit Condition} & Third party can exploit the data \\
         	\hline
 
-        	\textbf{Exceptions} & 1.The system doesn't find the fiscal code inserted by third party in the field "Field Code" in his internal 				database.
+        	\textbf{Exceptions} & 1.The system doesn't find the fiscal code inserted by third party in the field "Field Code" in his 						internal database.
 
         				In this case the \textbf{Flow of Events} has to be executed again from step 2.
 
-        				2.The system discovers that the User has denied the request therefore Data4Help notifies this 							information to the third party which won't have access to the required data.
+        				2.The system discovers that the User has denied the request therefore Data4Help notifies this 						information to the third party which won't have access to the required data.
 
         				The third party can 	make a new Single-User request referred to a new User: in this case the 							\textbf{Flow of Events} has to executed again from the first step.\\
 
@@ -416,13 +425,15 @@
         	\textbf{Flow of Events} &
         					1.Third party clicks on the button "Anonymous-Group Request".
 
-        					2.Third party lists to the system which data requires filling the field "Data Required" in the 							Anonymous-Group request page.
+					2.Third party specify the size of the sample of users needed and the time until these data has to 						available to her.
 
-        					3.The system looks for, in his internal database, the User's Datasets  which fit with the request 						made by the third party.
+        					3.Third party lists to the system which data requires filling the field "Data types" in the 							Anonymous-Group request page.
 
-        					4.The system aggregate the data found and anonymize them.
+        					4.The system looks for, in his internal database, the User's Datasets  which fit with the request 						made by the third party.
 
-        					5.The system provides the anonymous data to the third party.\\
+        					5.The system aggregate the data found and anonymize them.
+
+        					6.The system provides the anonymous data to the third party.\\
         	\hline
 
         	\textbf{Exit Condition} & Third party can exploit the data \\
@@ -431,7 +442,7 @@
 
         	\textbf{Exceptions} & 1.The data cannot be anonymized  by the system because it doesn't find at least 1000 							User Datasets which match with the third party request. Therefore the system cannot 							grant access to the data to the third party and has to notify her this information .
 
-        						The third party can make a new Anonymous-Group request asking for a new set of data: 							in this case the \textbf{Flow of Events} has to be executed again from the first step.\\
+        				The third party can make a new Anonymous-Group request asking for a new set of data: 							in this case the \textbf{Flow of Events} has to be executed again from the first step.\\
 
           \hline
         \end{tabularx}
@@ -456,9 +467,9 @@
         	\hline
 
         	\textbf{Flow of Events} &
-        					1.User clicks on the button "Data Management".
+        					1.User clicks on the button "My data" in the User sidebar.
 
-        					2.User decides which filter has to be applied to his DataSet filling the field "Filters" in the Data 						Management page.
+        					2.User decides which filter has to be applied to his DataSet filling the fields "Filters".
 
         					3.The system organize the User's DataSet following the User's instructions.
 
@@ -471,9 +482,9 @@
 
         	\textbf{Exceptions} & 1 The system hasn't gathered any data yet because the user has just created an account.
 
-        				Thanks to the graphical interface the system notifies the user that no data can be shown.
+        				Hence the system notifies the user that no data can be shown.
 
-        				Only after having collected some data the User can specified filters:the \textbf{Flow of Events} must be 				executed from the first step.\\
+        				Only after having collected some data the User can specified filters:the \textbf{Flow of Events} must 					be executed from the first step.\\
 
           \hline
 
