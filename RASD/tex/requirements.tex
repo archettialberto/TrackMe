@@ -7,7 +7,7 @@
     #1
   \end{enumerate}
 }
-\newcommand{\usecase}[8] {
+\newcommand{\usecase}[9] {
   \begin{table}[h!]
   \centering
     \begin{tabularx}{\linewidth}{|c|X|}
@@ -19,8 +19,9 @@
       \textbf{Flow of Events}   & #5 \\ \hline
       \textbf{Exit Condition}   & #6 \\ \hline
       \textbf{Exceptions}       & #7 \\ \hline
+      \textbf{Special Requirements}  & #8\\ \hline
     \end{tabularx}
-    \caption*{#8}
+    \caption*{#9}
     \label{tab:uc#1}
   \end{table}
 }
@@ -280,7 +281,7 @@
 
     \usecase % user registration
       {1}
-      {User registers to \texttt{Data4Help}}
+      {Sign in of User to \texttt{Data4Help}}
       {User}
       {\texttt{Data4Help} app downloaded on user's smartphone}
       {\uclist{
@@ -293,13 +294,17 @@
       }}
       {User's account has been successfully created and added to the system database}
       {\uclist{
-        \item[2] The field \texttt{email} is invalid or corresponds to an email that already exists in the system database; the field \texttt{fiscal code} is not valid; the \texttt{password} fields don't correspond. The system notifies the issue to the user and the \textbf{Flow of Events} returns to 2, erasing invalid fields
+        \item[1] The field \texttt{email} is invalid or corresponds to an email that already exists in the system database; the field \texttt{fiscal code} is not valid; the \texttt{password} fields don't correspond. 
+
+The system notifies the issue to the user and the \textbf{Flow of Events} returns to 2, erasing invalid fields
       }}
       {}
+      {}
+
 
     \usecase % tp registration
       {2}
-      {Third party registers to \texttt{Data4Help}}
+      {Sign in of Third party to \texttt{Data4Help}}
       {Third party}
       {\texttt{Data4Help} software downloaded on third party's device}
       {\uclist{
@@ -310,13 +315,17 @@
       }}
       {Third party's account has been successfully created and added to the system database}
       {\uclist{
-        \item[3] The field \texttt{email} is invalid or corresponds to an email that already exists in the system database; the \texttt{password} fields don't correspond. The system notifies the issue to the third party and the \textbf{Flow of Events} returns to 2, erasing invalid fields
+        \item[1] The field \texttt{email} is invalid or corresponds to an email that already exists in the system database; the \texttt{password} fields don't correspond. 
+
+The system notifies the issue to the third party and the \textbf{Flow of Events} returns to 2, erasing invalid fields
       }}
       {}
+      {}	
+
 
     \usecase % user login
       {3}
-      {User logs in \texttt{Data4Help}$^*$}
+      {Log in of User in \texttt{Data4Help}$^*$}
       {User}
       {User has already created an account}
       {\uclist{
@@ -325,9 +334,13 @@
       }}
       {User is successfully logged in the system and can exploit all the system services; the graphical interfaces moves to the default screen (Figure~\ref{fig:u_data})}
       {\uclist{
-        \item[2] The field \texttt{email} is invalid or doesn't corresponds to an email that already exists in the system database; the \texttt{password} field doesn't correspond to the one paired with the email. The system notifies the issue to the user and the \textbf{Flow of Events} returns to 1
+        \item The system discovers that field \texttt{email} is invalid or doesn't corresponds to an email that already exists in the system database.
+        \item The system discovers that field  \texttt{password} doesn't correspond to the one paired with the email.
+
+ The system notifies the issue to the user and the \textbf{Flow of Events} returns to 1
       }}
-      {$^*$ The use case \textit{Third party logs in }\texttt{Data4Help} is equivalent to this one, by changing \textit{user} with \textit{third party}}
+{}
+      {$^*$ The use case \textit{Log in of Third party} in \texttt{Data4Help} is equivalent to this one, by changing \textit{user} with \textit{third party}}
 
     \usecase % call ambulance
       {4}
@@ -337,14 +350,16 @@
       {\uclist{
         \item The system retrives the user's data entry which parameters exceeded thresholds from the database
         \item The system composes a SOS message with the GPS location of the user and the critical parameters contained in the data entry
-        \item The system forwards to the SOS system the SOS message in less than 5 seconds
+        \item The system forwards to the SOS system the SOS message % in less than 5 seconds
         \item The SOS system accepts the message
       }}
       {The SOS system succesfully received the SOS message; the ambulance dispatchment is beyond the system's scope}
       {\uclist{
-        \item[4] The SOS system is not reachable; \textbf{Flow of Events} rollbacked to 3
+        \item[1] The SOS system is not reachable; \textbf{Flow of Events} rollbacked to 3
       }}
+{The system has to make the call to SOSSystem within 5 seconds from the moment when it detectes that the user is in health danger}
       {}
+
 
     \usecase % single user request
       {5}
@@ -359,16 +374,18 @@
         \item The system receives the request by the third party and forwards a notification to the user
         \item User clicks on the notification and opens the request information (Figure~\ref{fig:u_request})
         \item User clicks the \texttt{Accept} button
-        \item The system receives user's renponse and shares requested data to the third party
+        \item The system receives user's response and shares requested data to the third party
       }}
       {Third party can exploit user's requested data}
       {\uclist{
-        \item[4] The system doesn't find any user whose fiscal code correspond to the one inserted by the third party; \textbf{Flow of Events} rollbacked to 3
-        \item[7] User declines the request; the system notifies to the third party that is not allowed to exploit user's data
+        \item[1] The system doesn't find any user whose fiscal code correspond to the one inserted by the third party; \textbf{Flow of Events} rollbacked to 3
+        \item[2] User declines the request; the system notifies to the third party that is not allowed to exploit user's data
       }}
+      {}     
       {}
+ 
 
-    \usecase % anonymous group request
+   \usecase % anonymous group request
       {6}
       {Accept an anonymous group request}
       {Third Party}
@@ -384,8 +401,9 @@
       }}
       {Third party can exploit requested data}
       {\uclist{
-        \item[5] The system doesn't find enough data entries that match the request filters; the system notifies to the third party that its request cannot be fulfilled
+        \item[1] The system doesn't find enough data entries that match the request filters; the system notifies to the third party that its request cannot be fulfilled
       }}
+      {}
       {}
 
     \usecase % graphical filters
@@ -402,9 +420,11 @@
       }}
       {User can see the data he/she requested according to the specified filter}
       {\uclist{
-        \item[5] User inserted a non valid time period; the system notifies the user of the error; \textbf{Flow of Events} rollbacked to 4
+        \item[1] User inserted a non valid time period; the system notifies the user of the error; \textbf{Flow of Events} rollbacked to 4
       }}
       {}
+      {}
+
 
     \begin{table}[h!]
       \centering
