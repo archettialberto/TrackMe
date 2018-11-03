@@ -280,9 +280,49 @@
         					3.The system finds that User filled the field "Password" with an expression shorter than 8 								characters.
 
         					All exceptions are handled notifying the issue to the User and taking back the \textbf{Flow of 							Events} to the point 2.\\
-          \hline
+       
+   \hline
+
         \end{tabularx}
+
       \end{table}
+
+
+ \begin{table}[h!]
+        \centering
+        \begin{tabularx}{\linewidth}{|c|X|}
+          \hline
+          \textbf{Name} & Sign in of Third party in Data4Help\\
+        	\hline
+        	\textbf{Actors} & Third party \\
+        	\hline
+        	\textbf{Entry Condition} & Data4Help is downloaded on the smartphone \\
+        	\hline
+        	\textbf{Flow of Events} & 1.Third party click on "Register" button in the login screen of the app.
+
+        					2.Third party fills all the mandatory fields("Email","Password","Name", "Interests", "Descriptions").
+
+        					3.Third party click on "Register" button in the third party registration page.
+					
+					4.The system store in his internal database the all the the third party's information.\\
+
+        	\hline
+        	\textbf{Exit Condition} & The third party account has been successfully created. \\
+        	\hline
+        	\textbf{Exceptions} &
+ 
+        					1.The system finds that third party filled the field "Email"  with an email that is non-existent or 						that has already been associated with another account.
+
+        					2.The system finds that third party filled the field "Password" with an expression shorter than 8 							characters.
+
+        					All exceptions are handled notifying the issue to the third party and taking back the \textbf{Flow 					of Events} to the point 2.\\
+         
+ \hline
+       
+ \end{tabularx}
+     
+ \end{table}
+
 
       \begin{table}[h!]
         \centering
@@ -321,8 +361,11 @@
         				3.The system find both the email and the password inserted by User but these refers to 2 different 						users.
 
         				In this case the \textbf{Flow of Events} has to be executed again from step 2. \\
-          \hline
+         
+ \hline
+
         \end{tabularx}
+
       \end{table}
 
 
@@ -367,8 +410,11 @@
 
         				The third party can 	make a new Single-User request referred to a new User: in this case the 							\textbf{Flow of Events} has to executed again from the first step.\\
 
-          \hline
-        \end{tabularx}
+         
+ \hline
+        
+\end{tabularx}
+
       \end{table}
 
 
@@ -402,9 +448,12 @@
         	\hline
 
         	\textbf{Special Requirements} & 1.The system has to collect the GPS location,health parameters of the User and make the 							emergency call to SOS System within five seconds from the time the health parameters 							exceedes thresholds.\\
-          \hline
-        \end{tabularx}
-      \end{table}
+      
+    \hline
+      
+  \end{tabularx}
+    
+  \end{table}
 
 
 
@@ -444,9 +493,12 @@
 
         				The third party can make a new Anonymous-Group request asking for a new set of data: 							in this case the \textbf{Flow of Events} has to be executed again from the first step.\\
 
-          \hline
-        \end{tabularx}
-      \end{table}
+      
+    \hline
+     
+   \end{tabularx}
+  
+    \end{table}
 
 
 
@@ -488,8 +540,10 @@
 
           \hline
 
-        \end{tabularx}
-      \end{table}
+     
+   \end{tabularx}
+     
+ \end{table}
 
 
 
@@ -505,24 +559,30 @@
         	1 & Sign in of User in Data4Help\\
         	\hline
 
-        	2 & Log in of User\\
+	2 & Sign in of Third party in Data4Help\\
         	\hline
 
-        	3 & Accept Single-User request\\
+        	3 & Log in of User\\
         	\hline
 
-        	4 & Call an Ambulance\\
+        	4 & Accept Single-User request\\
         	\hline
 
-        	5 & Accept Anonymous-Group request\\
+        	5 & Call an Ambulance\\
         	\hline
 
-        	6 & Show Data Previously Acquired\\
+        	6 & Accept Anonymous-Group request\\
+        	\hline
+
+        	7 & Show Data Previously Acquired\\
           \hline
 
-  	    \end{tabularx}
-        \caption{Traceability Matrix}
-      \end{table}
+  	  
+  \end{tabularx}
+     
+   \caption{Traceability Matrix}
+   
+   \end{table}
 
 
 
@@ -534,22 +594,25 @@
           \textbf{Raw ID} & \textbf{Goal ID} & \textbf{Req ID} & \textbf{Use Case ID} \\
           \hline
 
-	        r1 & \texttt{G.U.1} & \texttt{R.A1}  \newline \texttt{R.A3}  \newline \texttt{R.A4} \newline \texttt{R.I.2}& \texttt{1} \\
+	        r1 & \texttt{G.U.1} & \texttt{R.A1}  \newline \texttt{R.A3}  \newline \texttt{R.A4} \newline \texttt{R.I.1}& \texttt{1} \\
           \hline
 
-	        r2 & \texttt{G.U.1} & \texttt{R.A3}  \newline \texttt{R.A6}  \newline \texttt{R.A7} & \texttt{2}  \\
+	        r2 & \texttt{G.T.1}  \newline \texttt{G.T.2} \newline \texttt{G.T.3}& \texttt{R.A2}  \newline \texttt{R.A3}  \newline \texttt{R.A4} \newline \texttt{R.I.1} & \texttt{2} \\
+          \hline
+
+	        r3 & \texttt{G.U.1} & \texttt{R.A3}  \newline \texttt{R.A6}  \newline \texttt{R.A7} & \texttt{3}  \\
 	         \hline
 
-	        r3 & \texttt{G.T.1} & \texttt{R.A3}  \newline \texttt{R.I.3}  \newline \texttt{R.R.1} \newline \texttt{R.R.2} \newline \texttt{R.R.3}& \texttt{3}  \\
+	        r4 & \texttt{G.T.1} & \texttt{R.A3}  \newline \texttt{R.I.3}  \newline \texttt{R.R.1} \newline \texttt{R.R.2} \newline \texttt{R.R.3}& \texttt{4}  \\
           \hline
 
-          r4 & \texttt{G.U2} & \texttt{R.S1} \newline  \texttt{R.S2} \newline \texttt{R.S3}\newline \texttt{R.S4} & \texttt{4}   \\
+          r5 & \texttt{G.U2} & \texttt{R.S1} \newline  \texttt{R.S2} \newline \texttt{R.S3}\newline \texttt{R.S4} & \texttt{5}   \\
           \hline
 
-          r5 & \texttt{G.T2} & \texttt{R.A3} \newline  \texttt{R.D2} \newline \texttt{R.D5}\newline \texttt{R.D6}  \newline \texttt{R.I.3} \newline \texttt{R.R4}  \newline \texttt{R.R5}  \newline \texttt{R.R6} & \texttt{5}   \\
+          r6 & \texttt{G.T2} & \texttt{R.A3} \newline  \texttt{R.D2} \newline \texttt{R.D5}\newline \texttt{R.D6}  \newline \texttt{R.I.3} \newline \texttt{R.R4}  \newline \texttt{R.R5}  \newline \texttt{R.R6} & \texttt{6}   \\
           \hline
 
-          r6 & \texttt{G.U1} & \texttt{R.A3} \newline \texttt{R.A7} \newline  \texttt{R.I2} \newline  \texttt{R.D2} & \texttt{6}   \\
+          r7 & \texttt{G.U1} & \texttt{R.A3} \newline \texttt{R.A7} \newline  \texttt{R.I2} \newline  \texttt{R.D2} & \texttt{7}   \\
           \hline
 
       \end{tabularx}
