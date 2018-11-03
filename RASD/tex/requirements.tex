@@ -629,6 +629,7 @@
     \end{description}
 
   \subsection{Design constraints}
+    % TODO forse questa intera sezione si può togliere
 
     \subsubsection{Standards compliance}
 
@@ -644,34 +645,28 @@
   \subsection{Software system attributes}
 
     \subsubsection{Reliability}
+    \label{sec:reliability}
 
-      The sofware is expected to work continuously for 24 hours per day. Negligible deviations are accepted.
+      The system shall guarantee reliability $R = 1 - F$ ($F =$ probability of failure) as close as possible to 1. This is a very important aspect for \texttt{AutomatedSOS}, that needs fast and reliable communication with the SOS system. A possible way to decrease $F$ is to open two channels of communication that rely on different technologies with the SOS system: one via internet and the other via SMS. In this way we can decrease the overall $F$ to $F_{internet} \cdot F_{SMS}$, assuming that they are independent.
 
-      Moreover as section 3.6.4 says, the sofware changes during time, so each time the software is modified is necessary to check the consequences on the reliability.
+      There are two major situations which may result in an \textit{internal} system failure: components failure or unexecpected increase of communication traffic. At this level of abstraction is not strictly required, but in both of these cases a distributed architecture is the optimal solution: components redundancy and load balancing minimize the probability of these failures.
 
     \subsubsection{Availability}
 
-      The system is expected to be available for 99.99\% of the time. In case of failure it must be able to recover within 1 second otherwise in case of user's health problem AutomatedSOS won't respect the constraint descibed in \ref{sec:performance} and therefore the user will be in a critical situation.
-
- There 2 different situations which may result in a failure:failed components or due to unexecpected increasing in the requests.
-
-At this level of abstraction is not strickly required but in both of these cases a distributed architecture is an optimal solution:indeed in case of failure one of the redundant component can replace the one offline and in case of high demand a load balancing between redundant component can minimize the probability of failure of the system.
+      The system is expected to be available 99.99\% of the time. In case of failure (Section~\ref{sec:reliability}) it shall be able to recover within 1 second, otherwise \texttt{AutomatedSOS} won't be able to respect the requirement of Section~\ref{sec:performance}.
 
     \subsubsection{Security}
 
-      The system requires the users(both Data4Help and AutomatedSOS) and third Parties(only in Data4Help), in order to exploit all the functionalities of the app and avoid unauthorized access, to authenticate through email and password.
+      The system shall store securely account details and data collected into its database. Payment history shall also be protected, but it's not a critical aspect of security issues, because the system won't store any payment information of its clients (payments are handled externally, Section~\ref{sec:payment}).
 
- These 2 credentials and all the Data collected by the system has to be securely stored in the internal database.
-
- Moreover as  requirement \texttt{R.D6} says for privacy issues for all the Anonymous-Group requests the system must not allow the third parties to link data collected to the users that produced them.
-      %payment?
+      Another security issue regards anonimity of users in anonymous data sets, requested by third parties through anonymous group requests. The system shall not allow third parties to retrieve any personal information about the users whose data entries compose anonymous data sets.
 
     \subsubsection{Maintainability}
 
-      Data4Help, as \ref{sec:datagathering} says, has to collect data through multiple physical wearables devices therefore Data type handling should be implemented by the system in a flexible and extensible way, because wearables technologies change rapidly and our software should adapt in the least invasive way possible.
+      \texttt{Data4Help} has to collect data through wearables devices (Section~\ref{sec:datagathering}). Data types addition and management should be implemented in a flexible and extensible way, because wearables technologies change rapidly and our software should adapt in the least invasive way possible.
 
     \subsubsection{Portability}
 
-      The system has to gather user's data through multiple devices as \ref{sec:datagathering} says. Therefore, must be guarantee that different physical wearables can easily send data to this product function for example thanks to some form of abstraction.
+      The system shall run on most iOS/Android devices, in order to simplify communication with wearables, as they often interact with smartphone apps.
 
- In this way I will also have a significant cost reduction and an improvement in maintainability of the system.
+      A Java implementation would guarantee compatibility also with most of desktop operating systems for better data visualization.
