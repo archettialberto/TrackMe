@@ -1,43 +1,70 @@
-\section{Graphics}
+\newcommand{\fetchUML}[4] {
+  \begin{figure}[h!]
+    \centering
+    \hspace*{-#4cm}
+    \includegraphics[width=#3\textwidth]{img/UML/#1.jpg}
+    \caption{#2}
+    \label{fig:#1}
+  \end{figure}
+}
+
+\section{Requirement level UML diagrams}
 \label{sec:graph}
 
-\subsection{Use cases Diagram}
+  \subsection{Class diagram}
+    \fetchUML
+      {RequirementLevelClassDiagram}
+      {}
+      {1}           % scale
+      {0}           % move left
 
+  \clearpage
+  \subsection{State diagrams}
 
+    \fetchUML
+      {UserStateDiagram}
+      {}
+      {0.6}           % scale
+      {0}           % move left
 
-\subsubsection{Sign In}
+    \fetchUML
+      {ThirdPartyStateDiagram}
+      {}
+      {0.6}           % scale
+      {0}           % move left
 
-\begin{figure}[h!]
+  \clearpage
+  \subsection{Use case diagrams}
 
-\centering
+    \fetchUML
+      {SignIn}
+      {}
+      {1}           % scale
+      {2}           % move left
 
-\hspace*{-2.5cm}
-\includegraphics[scale=0.7]{img/Sign_In.png}
+    \fetchUML
+      {NormalBehaviour}
+      {}
+      {1}           % scale
+      {2}           % move left
 
-%\caption{---}
+  \clearpage
+  \subsection{Sequence diagrams}
 
- \label{fig:use_case_signin}
+    \fetchUML
+      {Seq_UserRegistration}
+      {}
+      {.5}           % scale
+      {0}           % move left
 
- \end{figure}
+    \fetchUML
+      {Seq_Ambulance}
+      {}
+      {.7}           % scale
+      {0}           % move left
 
-\clearpage
-
-
-\subsubsection{Exploit app functionalities}
-
-
-
-%hspace*{} before the figure and the figure must be immediately after the hspace* otherwise the system doesn't recognize it
-
-\begin{figure}[h!]
-
-\centering
-
-\hspace*{-2.5cm}
-\includegraphics[scale=0.7]{img/Normal_Behaviour.png}
-
-%\caption{---}
-
-  \label{fig:use_case_normalbehaviour}
-
- \end{figure}
+    \fetchUML
+      {Seq_ThirdPartyRequest}
+      {}
+      {.7}           % scale
+      {0}           % move left

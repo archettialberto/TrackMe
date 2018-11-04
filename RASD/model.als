@@ -1,41 +1,51 @@
 open util/integer
-open util/time
-open util/boolean
 
-sig User {
-	myData : some DataEntry
-}
+sig User {}
 
-sig DataType {
-	threshold : one Int
+one sig Threshold {
+	value : one Int
 }
 
 sig DataEntry {
-	timestamp : one Int,
-	type : one DataType,
-	value : one Int,
-	location : one GPSLocation
+	value : one Int
+}
+
+sig System {
+	data : User ->set DataEntry,
+	calls : set DataEntry
 } {
-	timestamp > 0
+	User.data = DataEntry
+	data.DataEntry = User
+	all disj u, u' : User | u.data & u'.data = none
+	all d : calls | d in User.data
+	all d : User.data |
+		(d.value > Threshold.value => d in calls) and
+		(d.value <= Threshold.value => d not in calls)
 }
 
-sig GPSLocation {}
-
-fact UniqueDataEntries {
-	all u : User| all disj de, de' : u.myData | de.timestamp != de'.timestamp
+pred acquire[u : User, d : DataEntry, s, s' : System] {
+	d not in (User - u).(s.data)
+	s'.data = s.data + u->d
+	checkCall[d, s, s']
 }
 
-fact NoDataEntryWithoutUser {
-	all de : DataEntry | some u : User | de in u.myData
+pred checkCall[d : DataEntry, s, s' : System] {
+	d.value > Threshold.value =>
+		s'.calls = s.calls + d
+	d.value <= Threshold.value =>
+		s'.calls = s.calls
 }
 
-pred addDataEntry(u, u' : User, de : DataEntry) {
-	u'.myData = u.myData + de
+run acquire for 1 System, 4 DataEntry, exactly 3 User
+
+callOnEmergency: check {
+	all s, s' : System, d : DataEntry, u : User |
+		acquire[u, d, s, s'] and d.value > Threshold.value
+			=> d in s'.calls
 }
 
-pred show{}
-
-run addDataEntry for 3 but exactly 1 User, exactly 3 DataEntry
-
-//run show for 2
-//run show for 4 but exactly 4 DataEntry, exactly 2 User
+dontCallWithoutEmergency: check {
+	all s, s' : System, d : DataEntry, u : User |
+		acquire[u, d, s, s'] and d.value <= Threshold.value
+			=> d not in s'.calls
+}
