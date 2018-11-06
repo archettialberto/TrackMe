@@ -1,5 +1,5 @@
 \newcommand{\fetchmock}[1] {img/mockup/#1.jpg}
-\def \imgwidth {.65\linewidth}
+\def \imgwidth {.6\linewidth}
 \def \pagwidth {.5\linewidth}
 \newcommand{\uclist}[1] {
   \setlist{nolistsep}
@@ -25,12 +25,6 @@
     \label{tab:uc#1}
   \end{table}
 }
-
-\def \ucnameA {}
-\def \ucnameA {}
-\def \ucnameA {}
-\def \ucnameA {}
-\def \ucnameA {}
 
 \section{Specific requirements}
 \label{sec:specreq}
@@ -162,14 +156,14 @@
           \includegraphics[width=\imgwidth]{\fetchmock{tp_sreq}}
           \caption{Single user request form}
           \label{fig:tp_sreq}
-          \vspace{4ex}
+          %\vspace{4ex}
         \end{minipage}
         \begin{minipage}[b]{\pagwidth}
           \centering
           \includegraphics[width=\imgwidth]{\fetchmock{tp_areq}}
           \caption{Anonymous request form}
           \label{fig:tp_areq}
-          \vspace{4ex}
+          %\vspace{4ex}
         \end{minipage}
       \end{figure}
 
@@ -179,7 +173,7 @@
 
     \subsubsection{Software interfaces}
 
-      \texttt{Data4Help} will not provide an automated software interface for user functionalities. However, for third parties that need automated access to our services, we will provide an API that communicates over HTTPS with messages encoded in JSON syntax. The API interface will be found in the software documentation and will be able to
+      \texttt{Data4Help} will not provide an automated software interface for user functionalities. However, for third parties that need automated access to our services, we will provide an API that communicates with messages encoded in JSON syntax. The API interface will be found in the software documentation and will be able to
       \begin{itemize}
         \item accept third party requests for access to new data
         \item accept third party requests for data they already have access to
@@ -204,21 +198,21 @@
       \item[\texttt{R.D1}] The system shall encode data received through wearables'sensors and store it internally\footnote{for example the system can store data into an internal database or can save it using a cloud service; the important aspect is that data must be retrivable in the future}
       \item[\texttt{R.D2}] The system shall be able to retrive data previously stored on request
       \item[\texttt{R.D3}] The system shall not erase data once it is stored internally
-      \item[\texttt{R.D4}] Once the system stored data, it shall allow access to that data only to the user account that was \textit{logged in} while the data was collected
+      \item[\texttt{R.D4}] Once the system just stored data, it shall allow access to that data only to the user account that was \textit{logged in} while the data was collected
       \item[\texttt{R.D5}] The system shall be able to share the stored data to more than one account
       \item[\texttt{R.D6}] The system shall be able to compose groups of data entries (\textit{aggregate data}) and anonymize them (every data entry in the group has no information about the providing user, such as fiscal code or email)
 
       \item[Interfaces]
       \item[\texttt{R.I1}] The system shall provide a registration form for users and third parties
       %TODO in case there are no data? Interface will not render anything: the requirement says that the interface shall be ABLE to render data in enery case, so I think it's fine
-      \item[\texttt{R.I2}] The system shall provide to the user an interface able to render data graphically, allowing filters like time interval or data type
+      \item[\texttt{R.I2}] The system shall provide to users and third parties an interface able to render data graphically, allowing filters like time interval or data type
       \item[\texttt{R.I3}] The system shall provide a request form to the third parties
 
       \item[Data sharing requests]
-      \item[\texttt{R.R1}] The system shall allow third parties to ask for data sharing of a single user
+      \item[\texttt{R.R1}] The system shall allow third parties to ask for data sharing of a single user by filling the request form
       \item[\texttt{R.R2}] The system shall ask the user to accept or decline every single-user request of data sharing by third parties that has him/her as target user
       \item[\texttt{R.R3}] The system shall provide access to the target user data to the third party only if the user accepted the request of the third party, otherwise the system shall notify to the third party that the user declined the request
-      \item[\texttt{R.R4}] The system shall allow third parties to ask for data sharing of \textit{aggregate data}
+      \item[\texttt{R.R4}] The system shall allow third parties to ask for data sharing of \textit{aggregate data} by filling the request form
       \item[\texttt{R.R5}] The system shall be able to check if a request for \textit{aggregate data} by a third party can be properly anonymized (there shall be at least 1000 user data entries that fit the parameters of the request)
       \item[\texttt{R.R6}] The system shall provide access to the \textit{aggregate data} to the third party only if the the request can be properly anonymized, otherwise the system shall notify the third party that its request cannot be properly anonymized
       \item[\texttt{R.R7}] The system shall provide access to a third party to newly produced data if it fits the third party request
@@ -277,6 +271,7 @@
 
       After three months, FastAndEasy brings the collected data to the Board of Directors. They can now compute the possible earnings of the new model and compare them with the old ones, in order to take a decision about the business model.
 
+  \clearpage
   \subsection{Use cases}
 
     \usecase % user registration
@@ -294,12 +289,12 @@
       }}
       {User's account has been successfully created and added to the system database}
       {\uclist{
-        \item[1] The field \texttt{email} is invalid or corresponds to an email that already exists in the system database; the field \texttt{fiscal code} is not valid; the \texttt{password} fields don't correspond. 
+        \item[5.$^*$] The field \texttt{email} is invalid or corresponds to an email that already exists in the system database; the field \texttt{fiscal code} is not valid; the \texttt{password} fields don't correspond
 
-The system notifies the issue to the user and the \textbf{Flow of Events} returns to 2, erasing invalid fields
+        The system notifies the issue to the user and the \textbf{Flow of Events} returns to 2, erasing invalid fields
       }}
       {}
-      {}
+      {$^*$ The item number in the \textbf{Exceptions} section corresponds to the phase in the \textbf{Flow of Events} in which the exception can be thrown}
 
 
     \usecase % tp registration
@@ -315,12 +310,12 @@ The system notifies the issue to the user and the \textbf{Flow of Events} return
       }}
       {Third party's account has been successfully created and added to the system database}
       {\uclist{
-        \item[1] The field \texttt{email} is invalid or corresponds to an email that already exists in the system database; the \texttt{password} fields don't correspond. 
+        \item[3.] The field \texttt{email} is invalid or corresponds to an email that already exists in the system database; the \texttt{password} fields don't correspond
 
-The system notifies the issue to the third party and the \textbf{Flow of Events} returns to 2, erasing invalid fields
+        The system notifies the issue to the third party and the \textbf{Flow of Events} returns to 2, erasing invalid fields
       }}
       {}
-      {}	
+      {}
 
 
     \usecase % user login
@@ -334,12 +329,11 @@ The system notifies the issue to the third party and the \textbf{Flow of Events}
       }}
       {User is successfully logged in the system and can exploit all the system services; the graphical interfaces moves to the default screen (Figure~\ref{fig:u_data})}
       {\uclist{
-        \item The system discovers that field \texttt{email} is invalid or doesn't corresponds to an email that already exists in the system database.
-        \item The system discovers that field  \texttt{password} doesn't correspond to the one paired with the email.
+        \item[2.] The system discovers that field \texttt{email} is invalid or doesn't corresponds to an email that already exists in the system database; the system discovers that field  \texttt{password} doesn't correspond to the one paired with the email
 
- The system notifies the issue to the user and the \textbf{Flow of Events} returns to 1
+        The system notifies the issue to the user and the \textbf{Flow of Events} returns to 1
       }}
-{}
+      {}
       {$^*$ The use case \textit{Log in of Third party} in \texttt{Data4Help} is equivalent to this one, by changing \textit{user} with \textit{third party}}
 
     \usecase % call ambulance
@@ -355,9 +349,9 @@ The system notifies the issue to the third party and the \textbf{Flow of Events}
       }}
       {The SOS system succesfully received the SOS message; the ambulance dispatchment is beyond the system's scope}
       {\uclist{
-        \item[1] The SOS system is not reachable; \textbf{Flow of Events} rollbacked to 3
+        \item[4.] The SOS system is not reachable; \textbf{Flow of Events} rollbacked to 3
       }}
-{The system has to make the call to SOSSystem within 5 seconds from the moment when it detectes that the user is in health danger}
+      {The system shall make the call to SOS system within 5 seconds from the moment of health danger detection}
       {}
 
 
@@ -378,12 +372,12 @@ The system notifies the issue to the third party and the \textbf{Flow of Events}
       }}
       {Third party can exploit user's requested data}
       {\uclist{
-        \item[1] The system doesn't find any user whose fiscal code correspond to the one inserted by the third party; \textbf{Flow of Events} rollbacked to 3
-        \item[2] User declines the request; the system notifies to the third party that is not allowed to exploit user's data
+        \item[4.] The system doesn't find any user whose fiscal code correspond to the one inserted by the third party; \textbf{Flow of Events} rollbacked to 3
+        \item[7.] User declines the request; the system notifies to the third party that is not allowed to exploit user's data
       }}
-      {}     
       {}
- 
+      {}
+
 
    \usecase % anonymous group request
       {6}
@@ -401,7 +395,7 @@ The system notifies the issue to the third party and the \textbf{Flow of Events}
       }}
       {Third party can exploit requested data}
       {\uclist{
-        \item[1] The system doesn't find enough data entries that match the request filters; the system notifies to the third party that its request cannot be fulfilled
+        \item[5.] The system doesn't find enough data entries that match the request filters; the system notifies to the third party that its request cannot be fulfilled
       }}
       {}
       {}
@@ -420,7 +414,7 @@ The system notifies the issue to the third party and the \textbf{Flow of Events}
       }}
       {User can see the data he/she requested according to the specified filter}
       {\uclist{
-        \item[1] User inserted a non valid time period; the system notifies the user of the error; \textbf{Flow of Events} rollbacked to 4
+        \item[5.] User inserted a non valid time period; the system notifies the user of the error; \textbf{Flow of Events} rollbacked to 4
       }}
       {}
       {}
@@ -455,7 +449,7 @@ The system notifies the issue to the third party and the \textbf{Flow of Events}
   \label{sec:performance}
 
     \begin{description}
-      \item[\texttt{R.P1}] The system shall detect in \textbf{negligible time} (less than 0.1 seconds) is a data entry has values that exceed thresholds\footnote{this situation directly corresponds to user's health in danger}
+      \item[\texttt{R.P1}] The system shall detect in \textbf{negligible time} (less than 0.1 seconds) if a data entry has values that exceed thresholds\footnote{this situation directly corresponds to user's health in danger, according to the domain assumptions}
       \item[\texttt{R.P2}] The system, once an emergency is detected (as in \texttt{R.P1}), shall forward an emergency call to the SOS system in \textbf{less than 5 seconds}
       \item[\texttt{R.P3}] The system shall grant data updates with at most \textbf{seconds precision} to third parties (time granularity can be selected in the request form, Table~\ref{tab:tprequest})
     \end{description}

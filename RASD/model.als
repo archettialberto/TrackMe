@@ -2,22 +2,37 @@ open util/integer
 open util/boolean
 
 
+/** *** DESCRIPTION ***
+ *
+ * In this Alloy model we will represent Data4Help
+ * and AutomatedSOS services in a simplified way:
+ *  - Data4Help: we will describe third party
+ *    requests according to some assumptions
+ *    (single user requests always target ALL
+ *    user data in the system; anonymous group
+ *    requests have size, but no filter available)
+ *  - AutomatedSOS: we will assume that every user
+ *    is subscribed to AutomatedSOS and we will test
+ *    if SOS calls are always performed correctly
+ */
+
+
 /** *** SIGNATURES *** */
 
-/** 
+/**
  * Actors of the system
- */ 
+ */
 sig User, ThirdParty {}
 
-/** 
+/**
  * A DataEntry corresponds to one wearable
- * acquisition 
+ * acquisition
  */
 sig DataEntry {
 	value : one Int
 }
 
-/** 
+/**
  * Every DataEntry has the same data type,
  * therefore a single threshold is needed
  */
@@ -25,7 +40,7 @@ one sig Threshold {
 	value : one Int
 }
 
-/** 
+/**
  * Simplified single user request:
  * third parties ask for ALL target's data
  */
@@ -43,7 +58,7 @@ sig SRequest {
 		=> shared = target.(s.data)
 }
 
-/** 
+/**
  * Simplified anonymous group request:
  * filters are not allowed
  */
@@ -51,7 +66,7 @@ sig ARequest {
 	size   : one Int,				// # of desired d.e.
 	shared : set DataEntry	// data shared
 } {
-	all s : System | 
+	all s : System |
 		// no data outside the system
 		(shared in User.(s.data)) and
 		// enough data implies sharing
@@ -80,12 +95,12 @@ sig System {
 	ThirdParty.srequests = SRequest
 	ThirdParty.arequests = ARequest
 	// no two applicants for same req.
-	all disj tp, tp' : ThirdParty | 
+	all disj tp, tp' : ThirdParty |
 		tp.srequests & tp'.srequests = none
-	all disj tp, tp' : ThirdParty | 
+	all disj tp, tp' : ThirdParty |
 		tp.arequests & tp'.arequests = none
 	// no same data entry for two users
-	all disj u, u' : User | 
+	all disj u, u' : User |
 		u.data & u'.data = none
 	// no calls outside the system
 	all d : calls | d in User.data
@@ -107,7 +122,7 @@ sig System {
 pred acquire[u : User, d : DataEntry, s, s' : System] {
 	// no unrequired changes
 	s'.srequests = s.srequests
-	s'.arequests = s.arequests	
+	s'.arequests = s.arequests
 	// add entry
 	s'.data = s.data + u->d
 	// eventually call emergency
@@ -124,7 +139,7 @@ pred acquire[u : User, d : DataEntry, s, s' : System] {
  * s is the old system,
  * s' is the new system
  */
-pred makeSRequest[s, s' : System, tp : ThirdParty, 
+pred makeSRequest[s, s' : System, tp : ThirdParty,
 									r : SRequest, u : User, b : Bool] {
 	// no unrequired changes
 	s'.data = s.data
@@ -143,7 +158,7 @@ pred makeSRequest[s, s' : System, tp : ThirdParty,
  * s is the old system,
  * s' is the new system
  */
-pred makeARequest[s, s' : System, tp : ThirdParty, 
+pred makeARequest[s, s' : System, tp : ThirdParty,
 									r : ARequest, n : Int] {
 	// no unrequired changes
 	s'.data = s.data
@@ -163,12 +178,12 @@ pred makeARequest[s, s' : System, tp : ThirdParty,
  */
 assert callOnEmergency {
 	all s, s' : System, d : DataEntry, u : User |
-			// above threshold implies emergency call 
-			(acquire[u, d, s, s'] and 
+			// above threshold implies emergency call
+			(acquire[u, d, s, s'] and
 			 d.value > Threshold.value
 			  => d in s'.calls) and
-			// below threshold implies no emergency call 
-			(acquire[u, d, s, s'] and 
+			// below threshold implies no emergency call
+			(acquire[u, d, s, s'] and
   		 d.value <= Threshold.value
 				=> d not in s'.calls)
 }
@@ -190,7 +205,7 @@ assert verifyAccessForSRequest {
  * Anymous group request access is correct
  */
 assert verifyAccessForARequest {
-	all s, s' : System, r : ARequest, 
+	all s, s' : System, r : ARequest,
   tp : ThirdParty, n : Int |
 		// enough data implies sharing
 		(n <= #s.data =>

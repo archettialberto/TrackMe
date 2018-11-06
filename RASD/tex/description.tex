@@ -3,15 +3,15 @@
 
   \subsection{Product perspective}
 
-    \texttt{Data4Help} is a service oriented to data acquisition and data sharing. Its software nature rises the necessity to combine it with another service able to directly retrive raw data from the \textit{world}. Today we can find for sale multiple wearables  that can acquire data from users and make it readable from software side. \texttt{Data4Help} users should already own these devices in order to exploit the data acquisition functionality (Section~\ref{sec:sharedp}: \textbf{\texttt{S.1}}). Once the user registered to the service, its interface will gather the last data collected and organize it in a chart view, that can be filtered by data or type and rendered by the user interface (Section~\ref{sec:sharedp}: \textbf{\texttt{S.4}}; Section~\ref{sec:userinterfaces}).
+    \texttt{Data4Help} is a service oriented to data acquisition and data sharing. Its software nature rises the necessity to combine it with another service able to directly retrive raw data from the \textit{world}. Today we can find for sale multiple wearables  that can acquire data from users and make it readable from software side. \texttt{Data4Help} users should already own these devices in order to exploit the data acquisition functionality (Section~\ref{sec:sharedp}: \textbf{\texttt{S.1}}). Once the user registered to the service, its interface will gather the last data collected and organize it in a chart view, that can be filtered by date or type and rendered by the user interface (Section~\ref{sec:sharedp}: \textbf{\texttt{S.4}}; Section~\ref{sec:userinterfaces}).
 
-    It is mandatory for the user's wearable to provide a GPS signal, if the user wants to apply to the \texttt{AutomatedSOS} service. GPS will be used to track the user's location in case of health danger and the signal will be shared to the SOS service that already exists in the \textit{world} (Section~\ref{sec:sharedp}: \textbf{\texttt{S.3}}, \textbf{\texttt{S.5}}). This SOS service accepts messages that contain the GPS location of the person in health danger and an emergency log that \texttt{AutomatedSOS} generates from the acquired data. The log explains the suspected health danger and the data that passed the defined thresholds.
+    It is mandatory for the user's wearable or device to provide a GPS signal, if the user wants to apply to the \texttt{AutomatedSOS} service. GPS will be used to track the user's location in case of health danger and the signal will be shared to the SOS service that already exists in the \textit{world} (Section~\ref{sec:sharedp}: \textbf{\texttt{S.3}}, \textbf{\texttt{S.5}}). This SOS service accepts messages that contain the GPS location of the person in health danger and an emergency log that \texttt{AutomatedSOS} generates from the acquired data. The log explains the suspected health danger and the data that passed the defined thresholds.
 
     Third party organization are interested in data gathering. In order to allow them to make requests for specific types of data, \texttt{Data4Help} provides a user interface that is in charge of composing their request, to make it understendable by the software (Section~\ref{sec:sharedp}: \textbf{\texttt{S.2}}; Section~\ref{sec:userinterfaces}). The interface provides all the possible options that the third party can compose in order to provide the closest data request to its needs.
 
   \subsection{Product functions}
 
-    Here we present the major functions that our product will offer. Some of them will entirely be handled internally by our system, but for others it will rely on external services. In the latter case, we will specify that the system will not directly provide the service and we will add example systems that already exist in the \textit{world}, in order to guarantee the feasibility of the functions.
+    Here we present the major functions that our product will offer. Some of them will entirely be handled internally by our system, but for others it will rely on external services. In the latter case, we will specify that the system will not directly provide the service and we will add examples of existing systems that can collaborate with ours, in order to guarantee the feasibility of the functions.
 
     \subsubsection{Profile management}
 
@@ -27,14 +27,14 @@
           User                  & \textit{email, password, fiscal code, date of birth, weight, height}             & \textit{social status, address, hours of work per day, hours of sport per week} \\ \hline
           Third party           & \textit{email, password, third party name, third party description} & \textit{website, research interests}                                            \\ \hline
         \end{tabularx}
-        \caption{Example of login form information}
+        \caption{Example of registration form information}
         \label{tab:login}
       \end{table}
 
     \subsubsection{Data gathering}
     \label{sec:datagathering}
 
-      Data gathering is exploited through physical wearables that users wear and that can communicate with our software by API calls (ex. Google Fit API \cite{googlefitapi}). Data entries are identified with a timestamp and the owner user.
+      Data gathering is exploited through physical wearables that users wear and that can communicate with our software by API calls (ex. Google Fit API \cite{googlefitapi}). Data entries can be identified with a timestamp and the owner user.
 
       Collected data types depend on wearables. For example, the most common sensors for health parameters that we find on smart clothing \cite{sensors} are pulse, body temperature, electrocardiogram, myocardial and blood oxygen.
 
@@ -43,7 +43,7 @@
     \subsubsection{Data sharing}
     \label{sec:datasharing}
 
-      \texttt{Data4Help} relies on an internal database for data storage. Once data has just been added to the system, only the user that produced it will have access. Data sharing is exploited by granting access to a copy of required data to third parties, if their requests have been accepted. Third parties can retrive these data by downloading them from their inteface.
+      \texttt{Data4Help} relies on a database for data storage. Once data has just been added to the system, only the user that produced it will have access. Data sharing is exploited by granting access to required data also to third parties, if their requests have been accepted. Third parties can retrive these data by visualizing or downloading them from their inteface.
 
       Third party requests are encoded in the system by filling a form that contains information like Table~\ref{tab:tprequest}. They can be accepted or rejected. In the former case the third party is granted access to the data, while in the latter it is not granted access.
 
@@ -52,7 +52,7 @@
         \begin{tabularx}{\linewidth}{|l|X|X|}
           \hline
           \textbf{Request type} & \textbf{Accept condition}                                               & \textbf{Filters}                                                                                                                           \\ \hline
-          Single user           & Target user should accept the request through his/her account                                   & \textit{fiscal code of target user, from-date, to-date, data types (weight, heart rate, etc.), time granularity (seconds, minutes, hours)} \\ \hline
+          Single user           & Target user should accept the request through his/her account                                   & \textit{fiscal code of target user, from-date, to-date, data types (weight, heart rate, etc.), time granularity (seconds, minutes, hours, etc.)} \\ \hline
           Anonymous       & Every user should have accepted the automatic sharing of requested data & \textit{size, from-date, to-date, data types (weight, heart rate, etc.), user characteristics (age interval, weight interval, etc.)}       \\ \hline
         \end{tabularx}
         \caption{Example of third party request form}
@@ -83,7 +83,7 @@
 
       This function is heavily dependant on the country in which the SOS will be handled. Our system will only communicate to the external emergency service that already exists in the \textit{world} through automatic API calls (ex. RapidSOS Emergency system for US \cite{sos}).
 
-      Calls to SOS are handled by \texttt{AutomatedSOS} that signals users GPS position and health status feedback. Calls occur, if the user previously subscribed to \texttt{AutomatedSOS}, when his/her health parameters are below certain thresholds. The time between health danger detection and emergency call must be less than 5 seconds.
+      Calls to SOS are handled by \texttt{AutomatedSOS} that signals users GPS position and health status feedback. Calls occur, if the user previously subscribed to \texttt{AutomatedSOS}, when his/her health parameters are above certain thresholds. The time between health danger detection and emergency call must be less than 5 seconds.
 
   \subsection{User characteristics}
   \label{sec:usercharacteristics}
@@ -123,13 +123,13 @@
 
       \texttt{Data4Help} relies on
       \begin{itemize}
-        \item \textbf{payment handler}, to deal with payment of users and third parties, as discussed in Section~\ref{sec:payment}
-        \item \textbf{wearables}, to encode users'data (see Section~\ref{sec:datagathering})
+        \item \textbf{payment handler}, to deal with payment of third parties (Section~\ref{sec:payment})
+        \item \textbf{wearables}, to encode users'data (Section~\ref{sec:datagathering})
       \end{itemize}
       \texttt{AutomatedSOS} relies on
       \begin{itemize}
         \item \textbf{wearables}, to encode GPS signals and users'parameters
-        \item \textbf{SOS system}, for ambulance dispatching (see Section~\ref{sec:sossystem})
+        \item \textbf{SOS system}, for ambulance dispatching (Section~\ref{sec:sossystem})
       \end{itemize}
 
     \subsubsection{Constraints}

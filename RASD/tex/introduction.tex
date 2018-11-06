@@ -9,13 +9,13 @@
         The system allows third parties registration. Third parties can request access to users'collected data in two ways:
 
         \begin{description}
-          \item [\textbf{Single-person data}] After the the third party makes a request to the system for a single user data sharing, by providing  the fiscal code of the user, the system asks the user for authorization; if positively provided, the third party is granted access to the user's data
-          \item [\textbf{Amonymous-group data}] Thirs parties can be interested in big amounts of data, but not in who are the people providing it; the system, once the request is sent by the third party, checks if the data can be effectively anonymized (it must find at least 1000 people that can provide data matching the third party request) and, if positively evaluated, grants access to the anonymized data to the third party
+          \item [\textbf{Single user data}] After a third party makes a request to the system for a single user data sharing, by providing  user's fiscal code, the system asks the user for authorization; if positively provided, the third party is granted access to the user's data
+          \item [\textbf{Amonymous group data}] Third parties can be interested in big amounts of data, but not in who are the people providing it; the system, once the request is sent by the third party, checks if the data can be effectively anonymized (it must find at least 1000 people that can provide data matching the third party request's filters) and, if positively evaluated, grants access to the anonymized data to the third party
         \end{description}
 
         Third parties can subscribe to new data and receive it as soon as it is collected by the system.
 
-        Another service that TrackMe wants to develop is \texttt{AutomatedSOS}, built on \texttt{Data4Help}. This service analyzes users'data and calls a SOS whenever data exceedes the basic health parameters. For this particular purpose, system performances will be a critical aspect to be taken into account, because even the slightest delay matters in critical health situations.
+        Another service that TrackMe wants to develop is \texttt{AutomatedSOS}, built on \texttt{Data4Help}. This service analyzes users'data and calls a SOS whenever data exceedes the basic health parameters. For this particular purpose, system performance will be a critical aspect to be taken into account, because even the slightest delay matters in critical health situations.
 
       \subsubsection{Goals}
       \label{sec:goals}
@@ -34,13 +34,12 @@
 
     \subsubsection{World}
 
-      Our \textit{world} is composed of two main types of actors: users and third parties. Users are interestes in monitoring their health parameters and third parties are interested in developing services or researches that exploit data gathered from the users. \texttt{Data4Help} is the service that acts as a bridge between these actors'needs. \\
+      Our \textit{world} is composed of two main types of actors: users and third parties. Users are interested in monitoring their health parameters and third parties are interested in developing services or researches that exploit data gathered from the users. \texttt{Data4Help} is the service that acts as a bridge between these actors'needs. \\
       Phenomena that occur in the \textit{world} and are related to our application domain are
       \begin{itemize}
         \item physical conditions of the users
         \item third parties'projects, researches and interests
-        \item SOS system that is able to dispatch ambulances
-        \item payment system that processes payments between actors
+        \item ambulances dispatched by the SOS system
       \end{itemize}
       These phenomena exist in the \textit{world}, but cannot be observerd directly by our system.
 
@@ -66,6 +65,7 @@
     \begin{description}
       \item[Data] Set of values of qualitative or quantitative variables\footnote{https://en.wikipedia.org/wiki/Data}; in the context of \texttt{Data4Help} we will refer to quantitative variables concerning health parameters (Section~\ref{sec:datagathering})
       \begin{description}
+        \item[Aggregate data] See \textit{DataSet}
         \item[Anonymous data] \textit{data entry} that doesn't contain information about the user from which it was produced; a \textit{data set} is said to be anonymized if it contains only anonymous \textit{data entries} and its cardinality is greater or equal than 1000
         \item[Data entry] Tuple that corresponds to the user's parameters in a particular moment
         \item[Data set] Set of \textit{data entries}; depending on the context, it can identify a set of entries all belonging to a single user or or a set of anonymous entries belonging to more that 1000 users; a \textit{data set}, among all \textit{data} that the system is storing, can be identified and constructed according to the filters of a third party request (Section~\ref{sec:datasharing})
@@ -110,7 +110,7 @@
       \item Section~\ref{sec:intro} gives a brief introduction on the project to be developed, by describing its goals and the environment in which it will be released; keeps track of the revision history
       \item Section~\ref{sec:overdesc} describes the world and the shared phenomena, by defining assumptions and constraints; it identifies the main functions of the project
       \item Section~\ref{sec:specreq}, as the main part of this document, is about requirement analysis; it has also sections about interfaces of the system and software attributes
-      \item Section~\ref{sec:alloy} contains the \texttt{Alloy} model that certifies correctness of goals implication by requirements and domain assumptions
-      \item Section~\ref{sec:graph} contains graphics, like UML diagrams, that help for a better understand of the system structure
+      \item Section~\ref{sec:alloy} contains the \texttt{Alloy} model that certifies system correctness
+      \item Section~\ref{sec:graph} contains UML diagrams that help the understanding of the system structure
       \item Section~\ref{sec:effort} lists the work sessions that drove this project's development, ordered by date, as the hour counter of effort spent by each group member
     \end{itemize}
