@@ -10,14 +10,85 @@
   \subsection{Purpose}
   \label{sec:purpose}
 
+    TrackMe wants to develop a software-based service that allows individual users to collect health data, called \texttt{Data4Help}. This data can be retrived from the system and visualized according to different filters by a user interface. \\
+    The system allows third parties registration. Third parties can request access to users'collected data in two ways:
+
+    \begin{description}
+      \item [\textbf{Single user data}] After a third party makes a request to the system for a single user data sharing, by providing  user's fiscal code, the system asks the user for authorization; if positively provided, the third party is granted access to the user's data
+      \item [\textbf{Amonymous group data}] Third parties can be interested in big amounts of data, but not in who are the people providing it; the system, once the request is sent by the third party, checks if the data can be effectively anonymized (it must find at least 1000 people that can provide data matching the third party request's filters) and, if positively evaluated, grants access to the anonymized data to the third party
+    \end{description}
+
+    Third parties can subscribe to new data and receive it as soon as it is collected by the system.
+
+    Another service that TrackMe wants to develop is \texttt{AutomatedSOS}, built on \texttt{Data4Help}. This service analyzes users'data and calls a SOS whenever data exceedes the basic health parameters. For this particular purpose, system performance will be a critical aspect to be taken into account, because even the slightest delay matters in critical health situations.
+
+    We will list the project \textbf{goals}, described in the RASD document:
+    \begin{description}
+      \item[\texttt{G.U1}] Users can collect, store and manage their health data
+      \item[\texttt{G.U2}] Users can choose to have their health monitored; if their health is critical, an ambulance will be dispatched
+      \item[\texttt{G.T1}] Third parties can ask single users for their health data sharing
+      \item[\texttt{G.T2}] Third parties can request access to anonymized data that comes from groups of people
+      \item[\texttt{G.T3}] Third parties can subscribe to new data and receive it as soon as it is produced
+    \end{description}
+
   \subsection{Scope}
   \label{sec:scope}
+
+    \subsubsection{World}
+
+      Our \textit{world} is composed of two main types of actors: \textit{users} and \textit{third parties}. Users are interested in monitoring their health parameters and third parties are interested in developing services or researches that exploit data gathered from the users. \texttt{Data4Help} is the service that acts as a bridge between these actors'needs. \\
+      Phenomena that occur in the \textit{world} and are related to our application domain are
+      \begin{itemize}
+        \item physical conditions of the users
+        \item third parties'projects, researches and interests
+        \item ambulances dispatched by the SOS system
+      \end{itemize}
+      These phenomena exist in the \textit{world}, but cannot be observerd directly by our system.
+
+    \subsubsection{Shared phenomena}
+    \label{sec:sharedp}
+
+      In order to communicate with the \textit{world}, our system needs to share some aspects with it. We will list the aspects controlled by the world, but observable by the machine:
+      \begin{description}
+        \item[\texttt{S.1}] physical parameters of the users, gathered through sensors on wereable devices
+        \item[\texttt{S.2}] third parties requests to the system for the data they need
+        \item[\texttt{S.3}] users'location, acquired through GPS signals
+      \end{description}
+      On the other hand, the aspects that occur in the machine, but are observable by the world are
+      \begin{description}
+        \item[\texttt{S.4}] interfaces that organize the gathered data that can be filtered according to time or type of data
+        \item[\texttt{S.5}] messages for the SOS system, that are sent in case of critical health of a user
+        \item[\texttt{S.6}] payment requests
+      \end{description}
 
   \subsection{Definitions}
   \label{sec:definitions}
 
+    \begin{description}
+      \item[Data] Quantitative variables concerning health parameters
+      \begin{description}
+        \item[Aggregate data] See \textit{DataSet}
+        \item[Anonymous data] \textit{data entry} that doesn't contain information about the user from which it was produced; a \textit{data set} is said to be anonymized if it contains only anonymous \textit{data entries} and its cardinality is greater or equal than 1000
+        \item[Data entry] Tuple that corresponds to the user's parameters in a particular moment
+        \item[Data set] Set of \textit{data entries}; depending on the context, it can identify a set of entries all belonging to a single user or or a set of anonymous entries belonging to more that 1000 users; a \textit{data set}, among all \textit{data} that the system is storing, can be identified and constructed according to the filters of a third party request
+      \end{description}
+      \item[Request] Third parties can ask the system for some data sharing through requests; requests are encoded through filling a form; the system, provided that the request is satisfiable, grants the third party access to the requested data
+      \item[Third party] Actor interested in collecting data from a single user or from an anonymous group of users
+      \item[Threshold] Numerical values related to a particular health parameter; they act as boundaries between the domain of critical health status and normal health status
+      \item[User] Actor interested in his/her health data collecting and managing; a user can also be interested in automating SOS calls whenever his health status becomes critical
+    \end{description}
+
+    Some of these definitions may already be present and further explained in the RASD document.
+
   \subsection{Acronyms and abbreviations}
   \label{sec:acronyms}
+
+    \begin{description}
+      \item[API] Application Programming Interface
+      \item[Data] Whenever the context refers to generic groups of \textit{data entries}, the terms \textit{data} and \textit{data set} are interchangeable
+      \item[System] Software product that TrackMe wants to develop; can be interchanged with \textit{S2B}
+      \item[S2B] Software To Be
+    \end{description}
 
   \subsection{Revision history}
   \label{sec:revhistory}
@@ -33,14 +104,14 @@
   \subsection{Document structure}
   \label{sec:docstructure}
 
-  This document uses the IEEE standards for requirement analysis documents \cite{ieee830} as a guideline towards a clear and logical explanation of its contents:
+  This document describes architecture and design of \texttt{Data4Help} and \texttt{AutomatedSOS} systems. The description will start with a top-down approach, in order to make the reader familiar with the overall structure; a bottom-up approach will then be adopted, in order to describe components in a isolated way. This document is devided in
   \begin{itemize}
-    \item Section~\ref{sec:intro} gives a brief introduction on the project to be developed.
-    \item Section~\ref{sec:arcdes} describes the architectural design
-    \item Section~\ref{sec:userdes} provide an overview on how the user interface(s) of your system will look like
-    \item Section~\ref{sec:req} explain how the requirements previously defined in the RASD map to the design elements described in this document
-    \item Section~\ref{sec:imp} describes how to implement the subcomponents of the system and how to integrate such subcomponents and test the integration.
-    \item Section~\ref{sec:effort} lists the work sessions that drove this project's development, ordered by date, as the hour counter of effort spent by each group member
+    \item Section~\ref{sec:intro}: brief introduction on the project to be developed in order to make this document self-contained
+    \item Section~\ref{sec:arcdes}: describes the high-level architecture (high-level components, their interation, runtime views and architextural decisions)
+    \item Section~\ref{sec:userdes}: provide an overview on how the user interfaces will look like
+    \item Section~\ref{sec:req}: mapping between software requirements, described in the RASD document, and design elements
+    \item Section~\ref{sec:imp}: identifies the order in which subcomponents will be implemented, integrated and tested
+    \item Section~\ref{sec:effort}: list of the work sessions that drove this document's development, ordered by date, as the hour counter of effort spent by each group member
   \end{itemize}
 
 \end{document}

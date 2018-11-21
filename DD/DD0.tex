@@ -12,6 +12,7 @@
 \usepackage{subcaption}
 \usepackage{enumitem}
 \usepackage{geometry}
+\usepackage{fancyhdr}
 
 \def \thisDocVersion {\texttt{v.0}}
 \newcommand{\fetchImg}[1]{img/#1}
@@ -27,6 +28,15 @@
 
 \tableofcontents
 \clearpage
+
+\pagestyle{fancy}
+\fancyhead[LE,RO]{\slshape \rightmark}
+\fancyhead[LO,RE]{\slshape \leftmark}
+%\fancyfoot[C]{\thepage}
+\renewcommand{\footrulewidth}{0.4pt}
+\lfoot{Mandatory Project, 2018/2019}
+\cfoot{}
+\rfoot{Design Document, \thepage}
 
 \pagenumbering{arabic}
 \clearpage
