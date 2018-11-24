@@ -2,32 +2,40 @@
 \begin{document}
 
 \newcommand{\fetchUML}[4] {
+
   \begin{figure}[h!]
+
     \centering
     \hspace*{-#4cm}
     \includegraphics[width=#3\textwidth]{img/UML/#1.jpg}
     \caption{#2}
     \label{fig:#1}
+
   \end{figure}
+
 }
 
 \section {User Interface Design}
+
 \label{sec:userdes}
 
     \fetchUML
-      {User_Registration}
-      {Creation of User account}
+      {User}
+      {User account}
       {1}           % scale
       {0}           % move left
 
   \clearpage
-\label{sec:userdes}
 
-    \fetchUML
-      {Third_Party_Registration}
-      {Creation of Third Party account}
-      {1}           % scale
-      {0}           % move left
+%\label{sec:thirdpartydes}
+%
+%    \fetchUML
+%      {Third_Party_Registration}
+%      {Creation of Third Party account}
+%      {1}           % scale
+%      {0}           % move left
 
-  \clearpage
+
+ % \clearpage
+
 \end{document}
