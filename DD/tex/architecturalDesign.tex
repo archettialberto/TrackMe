@@ -7,8 +7,67 @@
   \subsection{Overview}
   \label{sec:overview}
 
+    The main components of the system are
+    \begin{description}
+      \item[App] Application installed on users'devices that communicates with the system; its purpose is to show data to the user and forward his/her requests to the Application Server; we will focus on the smartphone app for Andriod or iOS systems, as it is the main front-end application that our clients need
+      \item[Application Server] Back-end component on which the logic of the application takes place; it elaborates the requests it receives and interacts with external services and the data layer; we will focus mainly on this component, as it shall handle all the information dispatching from different layers
+      \item[Database] Component responsible for data storage; it shall grant ACID properties (Atomicity, Consistency, Isolation and Durability) and shall provide a management service that handles query parallelization and optimization, as data access policies from different accounts
+      \item[External Systems] Systems that interact with \texttt{Data4Help} or \texttt{AutomatedSOS}; they handle functionalities not internally developed in the system, such as payment handling and ambulance dispatching
+    \end{description}
+
+    The architecture is a three-tier architecture: it allows to separate clearly presentation layer, logic layer and data layer. These sets of components will communicate through defined interfaces and will be treated as black boxes during their interaction. This modular approach enhances modifiability and extensibility.
+
+    % TODO add image with 3-tier architecture
+    % TODO add deployment diagram
+
   \subsection{Component view}
   \label{sec:compview}
+
+    In this section we will analyze every high-level component in terms of its subcomponents and provide the main interface interaction between different components. For details on component interfaces see Section~\ref{sec:compinterf}.
+
+      \subsubsection{App}
+
+        The application component is the front-end of the system. Our clients will interact with the system through the front end. We will provide
+        \begin{itemize}
+          \item A smartphone application, capable of exploiting all of the system functionalities: it shall render data, provide forms for the clients (users and third parties) and communicate with the Application Server
+          \item An API that allows more experienced users or other developers to automate communication with our system; the API is particularly useful when third parties need to analyze huge quantities of data that a smartphone graphical interface cannot render
+        \end{itemize}
+
+        It is important to note that the smartphone application exploits the API for communication with the Application Server. Every \texttt{Data4Help} or \texttt{AutomatedSOS} service can be required by API communication.
+
+      \subsubsection{Application Server}
+
+        The Application Server holds the application logic. It is the only component of the \textit{business} layer, but it is the most crucial component of the system. Its subcomponents are
+        \begin{description}
+          \item[Account Manager] *DESCRIPTION*
+          \item[Data Entry Analyzer] *DESCRIPTION*
+          \item[Data Entry Collector] *DESCRIPTION*
+          \item[Data Retriver] *DESCRIPTION*
+          \item[Filter Handler] *DESCRIPTION*
+          \item[Request Handler] *DESCRIPTION*
+          \item[Set Builder] *DESCRIPTION*
+        \end{description}
+
+        % TODO add descriptions
+        % TODO add sub-components details
+
+      \subsubsection{Database}
+
+        The database is the only component of the \textit{data} layer. Queries are managed by a DBMS that optimizes them and elaborates them in parallel. Data stored in the database is persistent and shall not be lost due to external factors. The database service will not be directly developed by us, but will be bought from the existing ones.
+
+        The \textit{data} layer is only accessible from the Application Server. It won't implement any application logic, except from DBMS functionalities: it will just respond to queries and passively store data.
+
+        An important factor for \texttt{Data4Help} is the data access policy: Data Entries should be available only to the users that produced them, when inserted in the database. If a Data Set is shared to a third party, that third party shall be allowed to retrive Data Entries that belong to that Data Set from the database. Therefore the access policy shall be dinamic and shall consider \texttt{Data4Help} accounts.
+
+        % TODO add ER diagram
+
+      \subsubsection{External Systems}
+
+        In this section we will present the main external systems that interact with the Application Server.
+
+        \texttt{Data4Help} relies on an external payment handler. The Application Server, once has composed a third party request, evaluates its price and asks third party for payment, by exploiting the external plyment handler service. The service manages the effective payment from the third party to TrackMe and signals errors occurred during the procedure.
+
+        \texttt{AutomatedSOS} relies on an external SOS system. The SOS system dispatches ambulances and handles health emergencies by accepting automated calls. \texttt{AutomatedSOS}, on the Application Server, detects health dangers as soon as they're collected from the front-end components forwards an emergency message to the SOS system.
 
   \subsection{Deployment view}
   \label{sec:deplview}
