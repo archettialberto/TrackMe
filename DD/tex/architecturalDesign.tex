@@ -17,20 +17,21 @@
   \subsection{Overview}
   \label{sec:overview}
 
-    The main components of the system are
+    In this section we present an overview of the three-tier architecture of the system. The main components are
+
+    \begin{figure}[h!]
+      \centering
+      \includegraphics[width=\linewidth]{\fetchImg{util/OverallArchitecture.jpg}}
+      \caption{Overall architecture of the system}
+      \label{fig:overallarchitecture}
+    \end{figure}
+
     \begin{description}
       \item[App] Application installed on users'devices that communicates with the system; its purpose is to show data to the user and forward his/her requests to the Application Server; we will focus on the smartphone app for Andriod or iOS systems, as it is the main front-end application that our clients need
       \item[Application Server] Back-end component on which the logic of the application takes place; it elaborates the requests it receives and interacts with external services and the data layer; we will focus mainly on this component, as it shall handle all the information dispatching from different layers
       \item[Database] Component responsible for data storage; it shall grant ACID properties (Atomicity, Consistency, Isolation and Durability) and shall provide a management service that handles query parallelization and optimization, as data access policies from different accounts
       \item[External Systems] Systems that interact with \texttt{Data4Help} or \texttt{AutomatedSOS}; they handle functionalities not internally developed in the system, such as payment handling and ambulance dispatching
     \end{description}
-
-    \begin{figure}[h!]
-      \centering
-      \includegraphics[width=.9\linewidth]{\fetchImg{util/OverallArchitecture.jpg}}
-      \caption{Overall architecture of the system}
-      \label{fig:overallarchitecture}
-    \end{figure}
 
     The architecture is a three-tier architecture (Figure~\ref{fig:overallarchitecture}): it allows to separate clearly presentation layer, logic layer and data layer. These sets of components will communicate through defined interfaces and will be treated as black boxes during their interaction. This modular approach enhances modifiability and extensibility.
 
