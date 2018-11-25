@@ -25,9 +25,14 @@
       \item[External Systems] Systems that interact with \texttt{Data4Help} or \texttt{AutomatedSOS}; they handle functionalities not internally developed in the system, such as payment handling and ambulance dispatching
     \end{description}
 
-    The architecture is a three-tier architecture: it allows to separate clearly presentation layer, logic layer and data layer. These sets of components will communicate through defined interfaces and will be treated as black boxes during their interaction. This modular approach enhances modifiability and extensibility.
+    \begin{figure}[h!]
+      \centering
+      \includegraphics[width=.9\linewidth]{\fetchImg{util/OverallArchitecture.jpg}}
+      \caption{Overall architecture of the system}
+      \label{fig:overallarchitecture}
+    \end{figure}
 
-    % TODO add image with 3-tier architecture
+    The architecture is a three-tier architecture (Figure~\ref{fig:overallarchitecture}): it allows to separate clearly presentation layer, logic layer and data layer. These sets of components will communicate through defined interfaces and will be treated as black boxes during their interaction. This modular approach enhances modifiability and extensibility.
 
   \subsection{Component view}
   \label{sec:compview}
