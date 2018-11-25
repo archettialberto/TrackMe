@@ -1,6 +1,16 @@
 \documentclass[../DD0.tex]{subfiles}
 \begin{document}
 
+\def \AccountManager {\texttt{AccountManager}}
+\def \DataCollector {\texttt{DataCollector}}
+\def \EmergencyDetector {\texttt{EmergencyDetector}}
+\def \PaymentGateway {\texttt{PaymentGateway}}
+\def \NotificationManager {\texttt{NotificationManager}}
+\def \EmergencyDispatcher {\texttt{EmergencyDispatcher}}
+\def \FilterManager {\texttt{FilterManager}}
+\def \RequestManager {\texttt{RequestManager}}
+\def \SetBuilder {\texttt{SetBuilder}}
+
 \section{Architectural Design}
 \label{sec:arcdes}
 
@@ -18,7 +28,6 @@
     The architecture is a three-tier architecture: it allows to separate clearly presentation layer, logic layer and data layer. These sets of components will communicate through defined interfaces and will be treated as black boxes during their interaction. This modular approach enhances modifiability and extensibility.
 
     % TODO add image with 3-tier architecture
-    % TODO add deployment diagram
 
   \subsection{Component view}
   \label{sec:compview}
@@ -37,19 +46,26 @@
 
       \subsubsection{Application Server}
 
-        The Application Server holds the application logic. It is the only component of the \textit{business} layer, but it is the most crucial component of the system. Its subcomponents are
+        The Application Server holds the application logic. It is the only component of the \textit{business} layer, but it is the most crucial component of the system. Its role is to coordinate the information flow between the user layer and the data layer and to incorporate external systems'services.
+
+        In the architecture the Application Server is the only link to the database. External systems or clients cannot directly access persistent data of our system.
+
+        The Application Server is also the only link to the user interface, as external systems'services cannot directly communicate with users.
+
+        Subcomponents of the Application Server are
         \begin{description}
-          \item[Account Manager] *DESCRIPTION*
-          \item[Data Entry Analyzer] *DESCRIPTION*
-          \item[Data Entry Collector] *DESCRIPTION*
-          \item[Data Retriver] *DESCRIPTION*
-          \item[Filter Handler] *DESCRIPTION*
-          \item[Request Handler] *DESCRIPTION*
-          \item[Set Builder] *DESCRIPTION*
+          \item[\AccountManager] This module handles creation, authentication ans management of users and third parties'accounts; before exploiting our system's functionalities users and third parties need to be authenticated by this module after providing their credentials
+          \item[\DataCollector] This module communicates with users'application and periodically receives data entries, as soon as they're collected by users'wearables
+          \item[\EmergencyDetector] This module is in charge of automatically analyze data entries inserted in the system if their owner subscribed to \texttt{AutomatedSOS}; it is separated from the \DataCollector\ because emergency detection can be exploited in many ways, depending on the medical literature on the topic; this feature should be independant and isolated from the rest of the architecture
+          \item[\EmergencyDispatcher] This module builds emergency messages and forwards them tothe SOS system
+          \item[\FilterManager] This module composes filter constraints on data entries that can be fetched from the database
+          \item[\NotificationManager] This module shall dispatch notifications between user and third party accounts; notifications from users to third parties contain information about user's responses concerning third parties'requests; notifications from third parties to users corcern third parties'single user requests
+          \item[\PaymentGateway] This module is in charge of communicating with the external payment system is order to process payments between third parties and TrackMe
+          \item[\RequestManager] This module is in charge of composing, verifying and elaborating third parties'requests; it communicates with \FilterManager\ to properly identify which type of data is required and with \NotificationManager\ to keep every client involved in the request updated on its status
+          \item[\SetBuilder] This module generates data-oriented queries for the database, given a particular filter from the \FilterManager; queries can be accepted or declined by the database, depending on the account permissions concerning data entries access
         \end{description}
 
-        % TODO add descriptions
-        % TODO add sub-components details
+        % TODO add component diagram
 
       \subsubsection{Database}
 
