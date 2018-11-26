@@ -1,5 +1,21 @@
 \documentclass[../DD0.tex]{subfiles}
+
 \begin{document}
+
+\newcommand{\fetchUML}[4] {
+
+  \begin{figure}[h!]
+
+    \centering
+    \hspace*{-#4cm}
+    \includegraphics[width=#3\textwidth]{img/UML/#1.jpg}
+    \caption{#2}
+    \label{fig:#1}
+
+  \end{figure}
+
+}
+
 
 \def \AccountManager {\texttt{AccountManager}}
 \def \DataCollector {\texttt{DataCollector}}
@@ -34,6 +50,7 @@
 
     The architecture is a three-tier architecture (Figure~\ref{fig:overallarchitecture}): it allows to separate clearly presentation layer, logic layer and data layer. These sets of components will communicate through defined interfaces and will be treated as black boxes during their interaction. This modular approach enhances modifiability and extensibility.
 
+
   \subsection{Component view}
   \label{sec:compview}
 
@@ -56,10 +73,12 @@
         In the architecture the Application Server is the only link to the database. External systems or clients cannot directly access persistent data of our system.
 
         The Application Server is also the only link to the user interface, as external systems'services cannot directly communicate with users.
+%because security issues...?
 
         Subcomponents of the Application Server are
         \begin{description}
           \item[\AccountManager] This module handles creation, authentication ans management of users and third parties'accounts; before exploiting our system's functionalities users and third parties need to be authenticated by this module after providing their credentials
+%check whether the data inserted in the registration phase are correct or not
           \item[\DataCollector] This module communicates with users'application and periodically receives data entries, as soon as they're collected by users'wearables
           \item[\EmergencyDetector] This module is in charge of automatically analyze data entries inserted in the system if their owner subscribed to \texttt{AutomatedSOS}; it is separated from the \DataCollector\ because emergency detection can be exploited in many ways, depending on the medical literature on the topic; this feature should be independant and isolated from the rest of the architecture
           \item[\EmergencyDispatcher] This module builds emergency messages and forwards them tothe SOS system
@@ -67,6 +86,7 @@
           \item[\NotificationManager] This module shall dispatch notifications between user and third party accounts; notifications from users to third parties contain information about user's responses concerning third parties'requests; notifications from third parties to users corcern third parties'single user requests
           \item[\PaymentGateway] This module is in charge of communicating with the external payment system is order to process payments between third parties and TrackMe
           \item[\RequestManager] This module is in charge of composing, verifying and elaborating third parties'requests; it communicates with \FilterManager\ to properly identify which type of data is required and with \NotificationManager\ to keep every client involved in the request updated on its status
+%distinguish between single and anonymous group requests(not clear about different info. from/to user to/from third parties
           \item[\SetBuilder] This module generates data-oriented queries for the database, given a particular filter from the \FilterManager; queries can be accepted or declined by the database, depending on the account permissions concerning data entries access
         \end{description}
 
@@ -74,11 +94,11 @@
 
       \subsubsection{Database}
 
-        The database is the only component of the \textit{data} layer. Queries are managed by a DBMS that optimizes them and elaborates them in parallel. Data stored in the database is persistent and shall not be lost due to external factors. The database service will not be directly developed by us, but will be bought from the existing ones.
+        The database is the only component of the \textit{data} layer. Queries are managed by a DBMS that optimizes and elaborates them in parallel. Data stored in the database is persistent and shall not be lost due to external factors. The database service will not be directly developed by us, but will be bought from the existing ones.
 
         The \textit{data} layer is only accessible from the Application Server. It won't implement any application logic, except from DBMS functionalities: it will just respond to queries and passively store data.
 
-        An important factor for \texttt{Data4Help} is the data access policy: Data Entries should be available only to the users that produced them, when inserted in the database. If a Data Set is shared to a third party, that third party shall be allowed to retrive Data Entries that belong to that Data Set from the database. Therefore the access policy shall be dinamic and shall consider \texttt{Data4Help} accounts.
+        An important factor for \texttt{Data4Help} is the data access policy: Data Entries should be available only to the users that produced them, when inserted in the database. If a Data Set is shared to a third party, that third party shall be allowed to retrive Data Entries that belong to that Data Set from the database. Therefore the access policy shall be dinamic and shall consider \texttt{Data4Help} different accounts.
 
         % TODO add ER diagram
 
@@ -87,14 +107,35 @@
         In this section we will present the main external systems that interact with the Application Server.
 
         \texttt{Data4Help} relies on an external payment handler. The Application Server, once has composed a third party request, evaluates its price and asks third party for payment, by exploiting the external plyment handler service. The service manages the effective payment from the third party to TrackMe and signals errors occurred during the procedure.
+%specify that payment gateway also compute the price
 
         \texttt{AutomatedSOS} relies on an external SOS system. The SOS system dispatches ambulances and handles health emergencies by accepting automated calls. \texttt{AutomatedSOS}, on the Application Server, detects health dangers as soon as they're collected from the front-end components forwards an emergency message to the SOS system.
 
   \subsection{Deployment view}
   \label{sec:deplview}
 
+\clearpage
+
   \subsection{Runtime view}
   \label{sec:runtview}
+%notes (don't delete)
+%green:application server
+%blue:database				(interact with appserver only)
+%purple:external services			(interact with appserver only)
+\subsubsection{User Account}
+
+\label{sec:useracc}
+
+    \fetchUML
+      {run_User_Account}
+      {User account}
+      {1}           % scale
+      {0}           % move left
+
+  \clearpage
+
+%TODO  1)maybe in interaction with DBMS?
+% 	     2)description
 
   \subsection{Component interfaces}
   \label{sec:compinterf}
