@@ -117,6 +117,8 @@
 
         \texttt{AutomatedSOS} relies on an external SOS system. The SOS system dispatches ambulances and handles health emergencies by accepting automated calls. \texttt{AutomatedSOS}, on the Application Server, detects health dangers as soon as they're collected from the front-end components forwards an emergency message to the SOS system.
 
+\clearpage
+
   \subsection{Deployment view}
   \label{sec:deplview}
 
@@ -126,12 +128,13 @@
   \label{sec:runtview}
 %notes (don't delete)
 %orange:user application
-%green:application server
-%blue:database				(interact with appserver only)
-%purple:external services			(interact with appserver only)
+%blue:application server
+%green:database		DBMS		(interact with appserver only)
+%purple:external services		NO :	(interact with appserver only)
+
 \subsubsection{User Account}
 
-\label{sec:useracc}
+\label{sec:userdata}
 
     \fetchUML
       {run_User_Data}
@@ -147,7 +150,7 @@
 
 \subsubsection{Filtering}
 
-\label{sec:useracc}
+\label{sec:filtering}
 
     \fetchUML
       {run_Filtering}
@@ -159,7 +162,7 @@
 
 \subsubsection{AutomatedSOS}
 
-\label{sec:useracc}
+\label{sec:automatedSOS}
 
     \fetchUML
       {run_AutomatedSOS}
@@ -171,7 +174,7 @@
 
 \subsubsection{Single User request}
 
-\label{sec:useracc}
+\label{sec:singleuser}
 
     \fetchUML
       {run_Single_Request}
@@ -180,6 +183,19 @@
       {0}           % move left
 
   \clearpage
+
+\subsubsection{Anonymous Group request}
+
+\label{sec:anonymousgroup}
+
+    \fetchUML
+      {run_Anonymous_Request}
+      {Anonymous Group request}
+      {1}           % scale
+      {0}           % move left
+
+  \clearpage
+
   \subsection{Component interfaces}
   \label{sec:compinterf}
 
