@@ -80,6 +80,7 @@
           \item[\AccountManager] This module handles creation, authentication ans management of users and third parties'accounts; before exploiting our system's functionalities users and third parties need to be authenticated by this module after providing their credentials
 %check whether the data inserted in the registration phase are correct or not
           \item[\DataCollector] This module communicates with users'application and periodically receives data entries, as soon as they're collected by users'wearables
+%user and third party application not only user
           \item[\EmergencyDetector] This module is in charge of automatically analyze data entries inserted in the system if their owner subscribed to \texttt{AutomatedSOS}; it is separated from the \DataCollector\ because emergency detection can be exploited in many ways, depending on the medical literature on the topic; this feature should be independant and isolated from the rest of the architecture
           \item[\EmergencyDispatcher] This module builds emergency messages and forwards them tothe SOS system
           \item[\FilterManager] This module composes filter constraints on data entries that can be fetched from the database
@@ -119,6 +120,7 @@
   \subsection{Runtime view}
   \label{sec:runtview}
 %notes (don't delete)
+%orange:user application
 %green:application server
 %blue:database				(interact with appserver only)
 %purple:external services			(interact with appserver only)
@@ -136,6 +138,19 @@
 
 %TODO  1)maybe in interaction with DBMS?
 % 	     2)description
+
+
+\subsubsection{Filtering}
+
+\label{sec:useracc}
+
+    \fetchUML
+      {run_Filtering}
+      {Filtering}
+      {1}           % scale
+      {0}           % move left
+
+  \clearpage
 
   \subsection{Component interfaces}
   \label{sec:compinterf}
