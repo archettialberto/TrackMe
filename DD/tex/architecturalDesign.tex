@@ -1,22 +1,5 @@
 \documentclass[../DD0.tex]{subfiles}
 
-\begin{document}
-
-\newcommand{\fetchUML}[4] {
-
-  \begin{figure}[h!]
-
-    \centering
-    \hspace*{-#4cm}
-    \includegraphics[width=#3\textwidth]{img/UML/#1.jpg}
-    \caption{#2}
-    \label{fig:#1}
-
-  \end{figure}
-
-}
-
-
 \def \AccountManager {\texttt{AccountManager}}
 \def \DataCollector {\texttt{DataCollector}}
 \def \EmergencyDetector {\texttt{EmergencyDetector}}
@@ -27,11 +10,32 @@
 \def \RequestManager {\texttt{RequestManager}}
 \def \SetBuilder {\texttt{SetBuilder}}
 
+\newcommand{\fetchUML}[4] {
+  \begin{figure}[h!]
+    \centering
+    \hspace*{-#4cm}
+    \includegraphics[width=#3\textwidth]{img/UML/#1.jpg}
+    \caption{#2}
+    \label{fig:#1}
+  \end{figure}
+}
+
+\begin{document}
+
 \section{Architectural Design}
 \label{sec:arcdes}
 
   \subsection{Overview}
   \label{sec:overview}
+
+    The architecture is a three-tier architecture (Figure~\ref{fig:overallarchitecture}): it allows to separate clearly \textit{presentation} layer, \textit{business} layer and \textit{data} layer. These sets of components will communicate through defined interfaces and will be treated as black boxes during their interaction. This modular approach enhances modifiability and extensibility.
+
+    \begin{figure}[h!]
+      \centering
+      \includegraphics[width=\linewidth]{\fetchImg{util/OverallArchitecture.jpg}}
+      \caption{Overall architecture of the system}
+      \label{fig:overallarchitecture}
+    \end{figure}
 
     The main components of the system are
     \begin{description}
@@ -40,16 +44,6 @@
       \item[Database] Component responsible for data storage; it shall grant ACID properties (Atomicity, Consistency, Isolation and Durability) and shall provide a management service that handles query parallelization and optimization, as data access policies from different accounts
       \item[External Systems] Systems that interact with \texttt{Data4Help} or \texttt{AutomatedSOS}; they handle functionalities not internally developed in the system, such as payment handling and ambulance dispatching
     \end{description}
-
-    \begin{figure}[h!]
-      \centering
-      \includegraphics[width=.9\linewidth]{\fetchImg{util/OverallArchitecture.jpg}}
-      \caption{Overall architecture of the system}
-      \label{fig:overallarchitecture}
-    \end{figure}
-
-    The architecture is a three-tier architecture (Figure~\ref{fig:overallarchitecture}): it allows to separate clearly presentation layer, logic layer and data layer. These sets of components will communicate through defined interfaces and will be treated as black boxes during their interaction. This modular approach enhances modifiability and extensibility.
-
 
   \subsection{Component view}
   \label{sec:compview}
@@ -72,22 +66,22 @@
 
         In the architecture the Application Server is the only link to the database. External systems or clients cannot directly access persistent data of our system.
 
-        The Application Server is also the only link to the user interface, as external systems'services cannot directly communicate with users.
-%because security issues...?
+        The Application Server is also the only link to the \textit{presentation} layer, as the Application Server  coordinates the user-external system interation.
 
         Subcomponents of the Application Server are
         \begin{description}
           \item[\AccountManager] This module handles creation, authentication and management of users and third parties'accounts; before exploiting our system's functionalities users and third parties need to be authenticated by this module after providing their credentials
-%check whether the data inserted in the registration phase are correct or not
+          %check whether the data inserted in the registration phase are correct or not
+          % FABIO implicit in "handles creation"
           \item[\DataCollector] This module communicates with users'application and periodically receives data entries, as soon as they're collected by users'wearables
-%user and third party application not only user
+          %user and third party application not only user
+          % FABIO only users collect data from wearables, not third parties
           \item[\EmergencyDetector] This module is in charge of automatically analyze data entries inserted in the system if their owner subscribed to \texttt{AutomatedSOS}; it is separated from the \DataCollector\ because emergency detection can be exploited in many ways, depending on the medical literature on the topic; this feature should be independant and isolated from the rest of the architecture
           \item[\EmergencyDispatcher] This module builds emergency messages and forwards them tothe SOS system
           \item[\FilterManager] This module composes filter constraints on data entries that can be fetched from the database
           \item[\NotificationManager] This module shall dispatch notifications between user and third party accounts; notifications from users to third parties contain information about user's responses concerning third parties'requests; notifications from third parties to users corcern third parties'single user requests
           \item[\PaymentGateway] This module is in charge of communicating with the external payment system is order to process payments between third parties and TrackMe
-          \item[\RequestManager] This module is in charge of composing, verifying and elaborating third parties'requests; it communicates with \FilterManager\ to properly identify which type of data is required and with \NotificationManager\ to keep every client involved in the request updated on its status
-%distinguish between single and anonymous group requests(not clear about different info. from/to user to/from third parties
+          \item[\RequestManager] This module is in charge of composing, verifying and elaborating third parties'requests, both of single-user type and anonymous-group type; it communicates with \FilterManager\ to properly identify which type of data is required and with \NotificationManager\ to keep every client involved in the request updated on its status
           \item[\SetBuilder] This module generates data-oriented queries for the database, given a particular filter from the \FilterManager; queries can be accepted or declined by the database, depending on the account permissions concerning data entries access
         \end{description}
 
@@ -103,7 +97,7 @@
 
         \begin{figure}[h!]
           \centering
-          \includegraphics[width=\linewidth]{\fetchImg{util/ER.jpg}}
+          \includegraphics[width=.8 \linewidth]{\fetchImg{util/ER.jpg}}
           \caption{Entity-Relation diagram}
           \label{fig:er}
         \end{figure}
@@ -112,92 +106,147 @@
 
         In this section we will present the main external systems that interact with the Application Server.
 
-        \texttt{Data4Help} relies on an external payment handler. The Application Server, once has composed a third party request, evaluates its price and asks third party for payment, by exploiting the external plyment handler service. The service manages the effective payment from the third party to TrackMe and signals errors occurred during the procedure.
-%specify that payment gateway also compute the price
+        \texttt{Data4Help} relies on an external payment handler. The Application Server, once has composed a third party request, evaluates its price and asks third party for payment, by exploiting the external payment handler service. The service manages the effective payment from the third party to TrackMe and signals errors occurred during the procedure.
 
         \texttt{AutomatedSOS} relies on an external SOS system. The SOS system dispatches ambulances and handles health emergencies by accepting automated calls. \texttt{AutomatedSOS}, on the Application Server, detects health dangers as soon as they're collected from the front-end components forwards an emergency message to the SOS system.
 
-\clearpage
-
+  \clearpage
   \subsection{Deployment view}
   \label{sec:deplview}
 
-\clearpage
+    % TODO add deployment description
+    % TODO add deployment diagram
 
+  \clearpage
   \subsection{Runtime view}
   \label{sec:runtview}
-%notes (don't delete)
-%orange:user application
-%blue:application server
-%green:database		DBMS		(interact with appserver only)
-%purple:external services		NO :	(interact with appserver only)
 
-\subsubsection{User Account}
+    %notes (don't delete)
+    %orange:user application
+    %blue:application server
+    %green:database		DBMS		(interact with appserver only)
+    %purple:external services		NO :	(interact with appserver only)
 
-\label{sec:userdata}
+    \subsubsection{User Account}
+    \label{sec:userdata}
 
-    \fetchUML
-      {run_User_Data}
-      {User account}
-      {1}           % scale
-      {0}           % move left
+      \fetchUML
+        {run_User_Data}
+        {User account}
+        {1}           % scale
+        {0}           % move left
 
-  \clearpage
-
-%TODO  1)maybe in interaction with DBMS?
-% 	     2)description
+      %TODO  1)maybe in interaction with DBMS?
+      % 	   2)description
 
 
-\subsubsection{Filtering}
+    \clearpage
+    \subsubsection{Filtering}
+    \label{sec:filtering}
 
-\label{sec:filtering}
+      \fetchUML
+        {run_Filtering}
+        {Filtering}
+        {1}           % scale
+        {0}           % move left
 
-    \fetchUML
-      {run_Filtering}
-      {Filtering}
-      {1}           % scale
-      {0}           % move left
+    \clearpage
+    \subsubsection{AutomatedSOS}
+    \label{sec:automatedSOS}
 
-  \clearpage
+      \fetchUML
+        {run_AutomatedSOS}
+        {AutomatedSOS}
+        {1}           % scale
+        {0}           % move left
 
-\subsubsection{AutomatedSOS}
+    \clearpage
+    \subsubsection{Single User request}
+    \label{sec:singleuser}
 
-\label{sec:automatedSOS}
+      \fetchUML
+        {run_Single_Request}
+        {Single User request}
+        {1}           % scale
+        {0}           % move left
 
-    \fetchUML
-      {run_AutomatedSOS}
-      {AutomatedSOS}
-      {1}           % scale
-      {0}           % move left
+    \clearpage
+    \subsubsection{Anonymous Group request}
+    \label{sec:anonymousgroup}
 
-  \clearpage
-
-\subsubsection{Single User request}
-
-\label{sec:singleuser}
-
-    \fetchUML
-      {run_Single_Request}
-      {Single User request}
-      {1}           % scale
-      {0}           % move left
-
-  \clearpage
-
-\subsubsection{Anonymous Group request}
-
-\label{sec:anonymousgroup}
-
-    \fetchUML
-      {run_Anonymous_Request}
-      {Anonymous Group request}
-      {1}           % scale
-      {0}           % move left
+      \fetchUML
+        {run_Anonymous_Request}
+        {Anonymous Group request}
+        {1}           % scale
+        {0}           % move left
 
   \clearpage
-
   \subsection{Component interfaces}
   \label{sec:compinterf}
+
+    In this section we will present the details concerning the interfaces of the components defined in Section~\ref{sec:compview}. Every component will offer or require some functionalities through interface methods in a way that, once all components are assembled, the system shall not have uncovered functionalities and shall satisfy RASD requirements through offered functionalities.
+
+    We will present first the interfaces of the Application Server subcomponents. % TODO refine this
+
+    \subsubsection{\AccountManager}
+
+      \begin{description}
+        \item[\texttt{createUserAccount}] Generates a new user account, provided email, password and other valid information, specified in Section 2.2.1 of RASD document; the return value specifies if the procedure ended correctly or if some incorrect information made it abort
+        \item[\texttt{createThirdPartyAccount}] Generates a new third party account, provided email, password and other valid information, specified in Section 2.2.1 of RASD document; the return value specifies if the procedure ended correctly or if some incorrect information made it abort
+        \item[\texttt{login}] By providing email and password, a client can login into his/her account and exploit system functionalities\footnote{the \textit{login} procedure is exploited by assigning a unique token to the client session and providing it as a login succesfull certificate during every API call to the Application Server}; the return value is positive if information provided is correct and negative if there's no account that matches given credentials
+        \item[\texttt{resetPassword}] This method is called when a client doesn't remember his/her password: it triggers a reset procedure through the client's email, used for registering to \texttt{Data4Help}
+        \item[\texttt{editInfo}] Updates the client's profile information with the the new set of information passed as parameter; the return value confirms if the procedure ended correctly
+        \item[\texttt{getSharingPermissions}] This method returns the set of data types that the target user is willing to share anonymously
+      \end{description}
+
+    \subsubsection{\DataCollector}
+
+      \begin{description}
+        \item[\texttt{acquireNewDataEntry}] This \textbf{asynchronous} method acquires a new data entry collected on the logged user's application; if the logged user is subscribed to \texttt{AutomatedSOS}, it forwards the data entry to the \EmergencyDetector
+      \end{description}
+
+    \subsubsection{\EmergencyDetector}
+
+      \begin{description}
+        \item[\texttt{analyzeDataEntry}] This \textbf{asynchronous} method analyzes passed data entry and checks whether all parameters are above or below defined thresholds; if some parameters exceed thresholds, it will call
+        \item[\texttt{generateEmergencyMessage}] This method, given a data entry that exceedes thresholds, returns an emergency message that must be delivered to the SOS system
+      \end{description}
+
+    \subsubsection{\EmergencyDispatcher}
+
+      \begin{description}
+        \item[\texttt{sendEmergencyMessage}] This method triggers the passed emergecy message to be sent to the SOS system
+      \end{description}
+
+    \subsubsection{\FilterManager}
+
+      \begin{description}
+        \item[\texttt{generateFilter}] This method returns a new filter instance with the passed parameters on type and boundaries of data, that can be used to narrow the data domain of interrogation during database queries
+      \end{description}
+
+    \subsubsection{\NotificationManager}
+
+      \begin{description}
+        \item[\texttt{notifyDecline}] This method notifies a third party that its single user request has been declined by the target user
+        \item[\texttt{notifyUnfeasibility}] This method notifies a third party that its anonymous group request hasn't been accepted by the system due to the impossibility of properly anonymized required data
+        \item[\texttt{notifyPaymentResult}] This method sends to a third party the exit status of the payment operation it started
+      \end{description}
+
+    \subsubsection{\PaymentGateway}
+
+      \begin{description}
+        \item[\texttt{pay}] This method triggers a payment call to the external payment system that returns a positive or negative exit status, depending on the correct execution of the procedure
+      \end{description}
+
+    \subsubsection{\RequestManager}
+    \subsubsection{\SetBuilder}
+
+      \begin{description}
+        \item[\texttt{getDataSet}] This method accepts a filter as parameter and forwards a query based on such filter to the database; the return value is either the set of data entries fetched from the database subject to the filter's constraints or an error message if the query couldn't be performed (the asking user hasn't access permissions or there's not anough data to satisfy the query requirements)
+      \end{description}
+    
+    \subsubsection{Database}
+    \subsubsection{External Systems}
 
   \subsection{Selected architectural sytles and patterns}
   \label{sec:stylesandpatterns}
