@@ -61,6 +61,7 @@
         It is important to note that the smartphone application exploits the API for communication with the Application Server. Every \texttt{Data4Help} or \texttt{AutomatedSOS} service can be required by API communication.
 
       \subsubsection{Application Server}
+      \label{sec:applserverinterf}
 
         The Application Server holds the application logic. It is the only component of the \textit{business} layer, but it is the most crucial component of the system. Its role is to coordinate the information flow between the user layer and the data layer and to incorporate external systems'services.
 
@@ -181,12 +182,10 @@
         {0}           % move left
 
   \clearpage
-  \subsection{Component interfaces}
+  \subsection{Application Server interfaces}
   \label{sec:compinterf}
 
-    In this section we will present the details concerning the interfaces of the components defined in Section~\ref{sec:compview}. Every component will offer or require some functionalities through interface methods in a way that, once all components are assembled, the system shall not have uncovered functionalities and shall satisfy RASD requirements through offered functionalities.
-
-    We will present first the interfaces of the Application Server subcomponents. % TODO refine this
+    In this section we will present the details concerning the interfaces of the subcomponents of Application Server defined in Section~\ref{sec:applserverinterf}. Every component will offer or require some functionalities through interface methods in a way that, once all components are assembled, the Application Server shall not have uncovered functionalities that will not be covered by other systems (Section~\ref{sec:otherinterfaces}).
 
     \subsubsection{\AccountManager}
 
@@ -239,14 +238,46 @@
       \end{description}
 
     \subsubsection{\RequestManager}
+
+      \begin{description}
+        \item[\texttt{makeSingleUserRequest}] This method, provided a target user and the proper filters over the data that the third party wants to collect, generates a new single user request by the third party for the target user's data; it returns the data set that contains the requested data if the procedure ended correctly or a notification error, if the user declined the request
+        \item[\texttt{makeAnonymousGroupRequest}] This method, provided the proper filters over the data that the third party wants to collect, generates a new anonymous group request; it returns the data set that contains the requested data if the procedure ended correctly or a notification error, if the system wasn't able to properly anonymize the data set
+      \end{description}
+
     \subsubsection{\SetBuilder}
 
       \begin{description}
         \item[\texttt{getDataSet}] This method accepts a filter as parameter and forwards a query based on such filter to the database; the return value is either the set of data entries fetched from the database subject to the filter's constraints or an error message if the query couldn't be performed (the asking user hasn't access permissions or there's not anough data to satisfy the query requirements)
       \end{description}
-    
+
+  \subsection{Other interfaces}
+  \label{sec:otherinterfaces}
+
+    In this section we will explore the interface methods of the components that communicate with the Application Server. These components heavily rely on external services and their interfaces may be very complex and may change over time, due to the fact that in the most cases, we are not directly developing them. Therefore our description is at a high level of abstraction. Furthermore, we will focus only on the critical methods that are mandatory for the system in order to communicate correctly with the Application Server.
+
+    \subsubsection{Application}
+
+      \begin{description}
+        \item[\texttt{renderDataSet}] Visually renders a data set on the application screen
+        \item[\texttt{showNotification}] Shows a notification on the application screen
+      \end{description}
+
     \subsubsection{Database}
+
+      \begin{description}
+        \item[\texttt{requstData}] This method analyzes the passed query throug the DBMS service in parallel with other queries and returns the tuples corresponding to the required data, or returns an error if the asking account hasn't the permissions to read the data
+      \end{description}
+
     \subsubsection{External Systems}
+
+      Payment system and SOS system are the only external systems required by the Application Server. The payment system offers
+      \begin{description}
+        \item[\texttt{processPayment}] This method accepts payment data and performs the effetive money movement from third party to TrackMe; it returns the exit status of the process, positive if it ended correctly or negative, alongside an error log, if the process was not succesfull
+      \end{description}
+      while the SOS system offers
+      \begin{description}
+        \item[\texttt{dispatchAmbulance}] This method accepts emergency messages and dispatches ambulances according to the data contained in the passed emergency log
+      \end{description}
 
   \subsection{Selected architectural sytles and patterns}
   \label{sec:stylesandpatterns}
