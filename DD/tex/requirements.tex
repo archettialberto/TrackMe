@@ -1,6 +1,14 @@
 \documentclass[../DD0.tex]{subfiles}
 \begin{document}
-
+\def \AccountManager {\texttt{AccountManager}}
+\def \DataCollector {\texttt{DataCollector}}
+\def \EmergencyDetector {\texttt{EmergencyDetector}}
+\def \PaymentGateway {\texttt{PaymentGateway}}
+\def \NotificationManager {\texttt{NotificationManager}}
+\def \EmergencyDispatcher {\texttt{EmergencyDispatcher}}
+\def \FilterManager {\texttt{FilterManager}}
+\def \RequestManager {\texttt{RequestManager}}
+\def \SetBuilder {\texttt{SetBuilder}}
 \section{Requirements Traceability}
 \label{sec:req}
 In the following tables a description of components which interact with presentation layer is given\footnote{In this section for readibility purpose a brief description of functional requirements is given but for full description see RASD document section 3.2}.
@@ -9,16 +17,16 @@ In the following tables a description of components which interact with presenta
     \begin{table}[h!]
 
       \centering
-      \begin{tabularx}{.8\linewidth}{|X|X|X|}
+      \begin{tabularx}{\linewidth}{|X|X|X|}
         \hline
-        \textbf{Reference ID} & \textbf{Requirement} & \textbf{Component} \\ \hline
-        \texttt{R.A1} & Registration as Data4Help user &\texttt{Account Manager} \\
+        \textbf{Requirement} & \textbf{Description} & \textbf{Component} \\ \hline
+        \texttt{R.A1} & Registration as Data4Help user &\texttt{\AccountManager} \\
         \hline
-        \texttt{R.A3} & Distinguish user and third party accounts & \texttt{Account Manager} \\
+        \texttt{R.A3} & Distinguish user and third party accounts & \texttt{\AccountManager} \\
         \hline
-        \texttt{R.A4} & Different accounts must have different email & \texttt{Account Manager} \\
+        \texttt{R.A4} & Different accounts must have different email & \texttt{\AccountManager} \\
         \hline
-        \texttt{R.I1} & Provide registration form  & \texttt{Account Manager} \\
+        \texttt{R.I1} & Provide registration form  & \texttt{\AccountManager} \\
         \hline
       \end{tabularx}
       \label{tab:guestuser}
@@ -31,16 +39,16 @@ In the following tables a description of components which interact with presenta
     \begin{table}[h!]
 
       \centering
-      \begin{tabularx}{.8\linewidth}{|X|X|X|}
+      \begin{tabularx}{\linewidth}{|X|X|X|}
         \hline
-        \textbf{Raw ID} & \textbf{Requirement} & \textbf{Component} \\ \hline
-        \texttt{R.A2} & Registration as Data4Help third party &\texttt{Account Manager} \\
+         \textbf{Requirement} & \textbf{Description} & \textbf{Component} \\ \hline
+        \texttt{R.A2} & Registration as Data4Help third party &\texttt{\AccountManager} \\
         \hline
-        \texttt{R.A3} & Distinguish user and third party account & \texttt{Account Manager} \\
+        \texttt{R.A3} & Distinguish user and third party account & \texttt{\AccountManager} \\
         \hline
-        \texttt{R.A4} & Different accounts have different email & \texttt{Account Manager} \\
+        \texttt{R.A4} & Different accounts have different email & \texttt{\AccountManager} \\
         \hline
-        \texttt{R.I1} & Provide registration form & \texttt{Account Manager} \\
+        \texttt{R.I1} & Provide registration form & \texttt{\AccountManager} \\
         \hline
        
       \end{tabularx}
@@ -53,26 +61,26 @@ In the following tables a description of components which interact with presenta
     \begin{table}[h!]
 
       \centering
-      \begin{tabularx}{.8\linewidth}{|X|X|X|}
+      \begin{tabularx}{\linewidth}{|X|X|X|}
         \hline
-        \textbf{Raw ID} & \textbf{Requirement} & \textbf{Component} \\ \hline
-        \texttt{R.A3} & Distinguish user and third party account & \texttt{Account Manager} \\
+        \textbf{Requirement} & \textbf{Description} & \textbf{Component} \\ \hline
+        \texttt{R.A3} & Distinguish user and third party account & \texttt{\AccountManager} \\
         \hline
-        \texttt{R.A5} & Login & \texttt{Account Manager} \\
+        \texttt{R.A5} & Login & \texttt{\AccountManager} \\
         \hline
-       \texttt{R.A6} & Only authenticated user can exploit all functionalities & \texttt{Account Manager} \\
+       \texttt{R.A6} & Only authenticated user can exploit all functionalities & \texttt{\AccountManager} \\
         \hline
-        \texttt{R.D1} & System shall encode and store data  & \texttt{Database} \\
+        \texttt{R.D1} & System shall encode and store data  & \texttt{\DataCollector} \\
         \hline
-        \texttt{R.D2} & Retrieve data in case of request  & \texttt{Filter Manager} \\
+        \texttt{R.D2} & Retrieve data in case of request  & \texttt{\FilterManager} \\
         \hline
-        \texttt{R.D3} & Not erase stored data  & \texttt{Database} \\
+        \texttt{R.D3} & Not erase stored data  & \texttt{\DataCollector} \\
         \hline
-        \texttt{R.D4} & Data can be collected only when the users are logged in &\texttt{Account Manager} \\
+        \texttt{R.D4} & Data can be collected only when the users are logged in &\texttt{\AccountManager} \\
         \hline
-        \texttt{R.I2} & Provide graphical interface to render data graphically & \texttt{Filter Manager} \\
+        \texttt{R.I2} & Provide graphical interface to render data graphically & \texttt{\FilterManager} \\
         \hline
-        \texttt{R.R2} & Ask for single-user request directly to user & \texttt{Notification Manager} \\
+        \texttt{R.R2} & Ask for single-user request directly to user & \texttt{\NotificationManager} \\
         \hline
       \end{tabularx}
       \label{tab:datauser}
@@ -83,22 +91,22 @@ In the following tables a description of components which interact with presenta
 
     \begin{table}[h!]
       \centering
-      \begin{tabularx}{.8\linewidth}{|X|X|X|}
+      \begin{tabularx}{\linewidth}{|X|X|X|}
         \hline
-        \textbf{Raw ID} & \textbf{Requirement} & \textbf{Component} \\ \hline
-        \texttt{R.A3} & Distinguish user and third party account & \texttt{Account Manager} \\
+       \textbf{Requirement} & \textbf{Description} & \textbf{Component} \\ \hline
+        \texttt{R.A3} & Distinguish user and third party account & \texttt{\AccountManager} \\
         \hline
-        \texttt{R.A5} & Login & \texttt{Account Manager} \\
+        \texttt{R.A5} & Login & \texttt{\AccountManager} \\
         \hline
-       \texttt{R.A6} & Only authenticated user can exploit all functionalities & \texttt{Account Manager} \\
+       \texttt{R.A6} & Only authenticated user can exploit all functionalities & \texttt{\AccountManager} \\
         \hline
-        \texttt{R.S1}  & Apply to AutomatedSOS & \texttt{Emergency Detector} \\
+        \texttt{R.S1}  & Apply to AutomatedSOS & \texttt{\EmergencyDetector} \\
         \hline
-        \texttt{R.S2}  & Monitoring user's health & \texttt{Emergency Detector} \\
+        \texttt{R.S2}  & Monitoring user's health & \texttt{\EmergencyDetector} \\
         \hline
-        \texttt{R.S3}  & In case of need make an emergency call to SOSSystem & \texttt{Emergency Dispatcher} \\
+        \texttt{R.S3}  & In case of need make an emergency call to SOSSystem & \texttt{\EmergencyDispatcher} \\
         \hline
-        \texttt{R.S4}  & Provide user's location and health parameters to SOSSyestem & \texttt{Emergency Dispatcher} \\
+        \texttt{R.S4}  & Provide user's location and health parameters to SOSSyestem & \texttt{\EmergencyDispatcher} \\
         \hline
       \end{tabularx}
       \label{tab:auto}
@@ -109,38 +117,38 @@ In the following tables a description of components which interact with presenta
     \begin{table}[h!]
 
       \centering
-      \begin{tabularx}{.8\linewidth}{|X|X|X|}
+      \begin{tabularx}{\linewidth}{|X|X|X|}
         \hline
-        \textbf{Raw ID} & \textbf{Requirement} & \textbf{Component} \\ \hline
-        \texttt{R.A3} & Distinguish user and third party account & \texttt{Account Manager} \\
+         \textbf{Requirement} & \textbf{Description} & \textbf{Component} \\ \hline
+        \texttt{R.A3} & Distinguish user and third party account & \texttt{\AccountManager} \\
         \hline
-        \texttt{R.A5} & Login & \texttt{Account Manager} \\
+        \texttt{R.A5} & Login & \texttt{\AccountManager} \\
         \hline
-        \texttt{R.A6} & Only authenticated user can exploit all functionalities & \texttt{Account Manager} \\
+        \texttt{R.A6} & Only authenticated user can exploit all functionalities & \texttt{\AccountManager} \\
         \hline
-        \texttt{R.D1}  & System shall encode and store data & \texttt{Database} \\
+        \texttt{R.D1}  & System shall encode and store data & \texttt{\DataCollector} \\
         \hline
-        \texttt{R.D2}  &  Retrieve data in case of request & \texttt{Filter Manager} \\
+        \texttt{R.D2}  &  Retrieve data in case of request & \texttt{\FilterManager} \\
         \hline
-        \texttt{R.D3}  &  Not erase stored data & \texttt{Database} \\
+        \texttt{R.D3}  &  Not erase stored data & \texttt{\DataCollector} \\
         \hline
-        \texttt{R.D5}  & Share data among multiple accounts & \texttt{SetBuilder} \\
+        \texttt{R.D5}  & Share data among multiple accounts & \texttt{\SetBuilder} \\
         \hline
-        \texttt{R.R1}  & Allow to make single-user request & \texttt{Request Manager} \\
+        \texttt{R.R1}  & Allow to make single-user request & \texttt{\RequestManager} \\
         \hline
-        \texttt{R.R3}  & Decide whether to share or not the data according to user's answer in case of single-user request & \texttt{Request Manager} \\
+        \texttt{R.R3}  & Decide whether to share or not the data according to user's answer in case of single-user request & \texttt{\RequestManager} \\
         \hline
-        \texttt{R.R4}  & Allow to make anonymous-group request & \texttt{Request Manager} \\
+        \texttt{R.R4}  & Allow to make anonymous-group request & \texttt{\RequestManager} \\
         \hline
-        \texttt{R.R5}  & Check whether the required data can be properly anonymized in case of anonymous request or not & \texttt{Request Manager} \\
+        \texttt{R.R5}  & Check whether the required data can be properly anonymized in case of anonymous request or not & \texttt{\RequestManager} \\
         \hline
-        \texttt{R.R6} & Provide data only if can be properly anonymized in case of anonymous request & \texttt{Request Manager}\\
+        \texttt{R.R6} & Provide data only if can be properly anonymized in case of anonymous request & \texttt{\RequestManager}\\
         \hline 
-        \texttt{R.R7} & Provide access to newly produced data if they fit the request & \texttt{Request Manager} \\
+        \texttt{R.R7} & Provide access to newly produced data if they fit the request & \texttt{\RequestManager} \\
         \hline
-        \texttt{R.I2} & Provide graphical interface to render data graphically & \texttt{Filter Manager} \\
+        \texttt{R.I2} & Provide graphical interface to render data graphically & \texttt{\FilterManager} \\
         \hline
-        \texttt{R.I3} & Provide a request form &\texttt{Request Manager} \\
+        \texttt{R.I3} & Provide a request form &\texttt{\RequestManager} \\
         \hline
       \end{tabularx}
       \label{tab:automatedtp}
