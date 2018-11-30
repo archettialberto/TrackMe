@@ -18,6 +18,17 @@
 \newcommand{\fetchImg}[1]{img/#1}
 \newcommand{\includeSubfile}[1]{\subfile{tex/#1}}
 
+\def \AccountManager {\texttt{AccountManager}}
+\def \DataCollector {\texttt{DataCollector}}
+\def \EmergencyDetector {\texttt{EmergencyDetector}}
+\def \PaymentGateway {\texttt{PaymentGateway}}
+\def \NotificationManager {\texttt{NotificationManager}}
+\def \EmergencyDispatcher {\texttt{EmergencyDispatcher}}
+\def \FilterManager {\texttt{FilterManager}}
+\def \RequestManager {\texttt{RequestManager}}
+\def \SetBuilder {\texttt{SetBuilder}}
+
+
 \begin{document}
 
 \includeSubfile{titlepage}
@@ -34,7 +45,7 @@
 \fancyhead[LO,RE]{\slshape \leftmark}
 %\fancyfoot[C]{\thepage}
 \renewcommand{\footrulewidth}{0.4pt}
-\lfoot{Mandatory Project, 2018/2019}
+\lfoot{Mandatory Project, 18/19}
 \cfoot{}
 \rfoot{Design Document, \thepage}
 
@@ -57,6 +68,9 @@
 \clearpage
 
 \includeSubfile{effort.tex}
+\clearpage
+
+\includeSubfile{tools.tex}
 \clearpage
 
 \includeSubfile{bibliography.tex}

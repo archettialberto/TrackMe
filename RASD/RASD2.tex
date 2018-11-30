@@ -12,8 +12,9 @@
 \usepackage{subcaption}
 \usepackage{enumitem}
 \usepackage{geometry}
+\usepackage{fancyhdr}
 
-\def \thisDocVersion {\texttt{v.1}}
+\def \thisDocVersion {\texttt{v.2}}
 
 \begin{document}
 
@@ -25,6 +26,16 @@
 
 \tableofcontents
 \clearpage
+
+\pagestyle{fancy}
+\fancyhead[LE,RO]{\slshape \rightmark}
+\fancyhead[LO,RE]{\slshape \leftmark}
+%\fancyfoot[C]{\thepage}
+\renewcommand{\footrulewidth}{0.3pt}
+\lfoot{Mandatory Project, 18/19}
+\cfoot{}
+\rfoot{Requirements Analysis and Specification Document, \thepage}
+
 
 \pagenumbering{arabic}
 \clearpage
