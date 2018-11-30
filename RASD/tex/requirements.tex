@@ -225,6 +225,9 @@
       \item[\texttt{R.S3}] If user applied to \texttt{AutomatedSOS} and his/her health parameters are critical (above or below thresholds), the system shall send an emergency call to the SOS system
       \item[\texttt{R.S4}] When the system sends an emergency call, it shall provide to the SOS system API user's GPS location and user's health status through his/her critical parameters encoding
 
+      \item[Payment]
+      \item[\texttt{R.P1}] The system shall be able to communicate with an external service that is able to process payments between accounts and TrackMe
+
     \end{description}
 
   \subsection{Scenarios}
@@ -358,7 +361,7 @@
     \usecase % single user request
       {5}
       {Accept a single user request}
-      {Third party, User}
+      {Third party, User, Payment Service}
       {Third party and user have already created respectively a third party and a user account and they are already logged in the system}
       {\uclist{
         \item Third party opens the sidebar (Figure~\ref{fig:tp_sidebar})
@@ -368,12 +371,15 @@
         \item The system receives the request by the third party and forwards a notification to the user
         \item User clicks on the notification and opens the request information (Figure~\ref{fig:u_request})
         \item User clicks the \texttt{Accept} button
-        \item The system receives user's response and shares requested data to the third party
+        \item The system receives user's response
+        \item The system instanciates the payment process between Payment Service and the Third Party
+        \item The system shares requested data to the third party
       }}
       {Third party can exploit user's requested data}
       {\uclist{
         \item[4.] The system doesn't find any user whose fiscal code correspond to the one inserted by the third party; \textbf{Flow of Events} rollbacked to 3
         \item[7.] User declines the request; the system notifies to the third party that is not allowed to exploit user's data
+        \item[9.] Payment process didn't end correctly; \texttt{Data4Help} doesn't share the data
       }}
       {}
       {}
@@ -382,7 +388,7 @@
    \usecase % anonymous group request
       {6}
       {Accept an anonymous group request}
-      {Third Party}
+      {Third Party, Payment Service}
       {Third party has already created an account and it's already logged in the system}
       {\uclist{
         \item Third party opens the sidebar (Figure~\ref{fig:tp_sidebar})
@@ -391,11 +397,13 @@
         \item Third party clicks the \texttt{Confirm} button
         \item The system fetches from the databse a quantity of data entries equal to the data set size selected by the third party; all of the data entries match the request filters
         \item The system anonymizes the data entries and composes an anonymous data set
+        \item The system instanciates the payment process between Payment Service and the Third Party
         \item The system shares the data set to the third party
       }}
       {Third party can exploit requested data}
       {\uclist{
         \item[5.] The system doesn't find enough data entries that match the request filters; the system notifies to the third party that its request cannot be fulfilled
+       \item[7.] Payment process didn't end correctly; \texttt{Data4Help} doesn't share the data
       }}
       {}
       {}
@@ -433,9 +441,9 @@
         \hline
         \texttt{r4} & \texttt{G.U2} & \texttt{R.S1},  \texttt{R.S2}, \texttt{R.S3}, \texttt{R.S4} & \texttt{UC.4} \\
         \hline
-        \texttt{r5} & \texttt{G.T1} & \texttt{R.A3}, \texttt{R.I3}, \texttt{R.R1}, \texttt{R.R2}, \texttt{R.R3}& \texttt{UC.5}  \\
+        \texttt{r5} & \texttt{G.T1} & \texttt{R.A3}, \texttt{R.I3}, \texttt{R.R1}, \texttt{R.R2}, \texttt{R.R3}, \texttt{R.P1} & \texttt{UC.5}  \\
         \hline
-        \texttt{r6} & \texttt{G.T2} & \texttt{R.A3},  \texttt{R.D2}, \texttt{R.D5}, \texttt{R.D6}, \texttt{R.I3}, \texttt{R.R4}, \texttt{R.R5}, \texttt{R.R6} & \texttt{UC.6}   \\
+        \texttt{r6} & \texttt{G.T2} & \texttt{R.A3},  \texttt{R.D2}, \texttt{R.D5}, \texttt{R.D6}, \texttt{R.I3}, \texttt{R.R4}, \texttt{R.R5}, \texttt{R.R6}, \texttt{R.P1} & \texttt{UC.6}   \\
         \hline
         \texttt{r7} & \texttt{G.U1} & \texttt{R.A3}, \texttt{R.A7},  \texttt{R.I2},  \texttt{R.D2} & \texttt{UC.7}   \\
         \hline
