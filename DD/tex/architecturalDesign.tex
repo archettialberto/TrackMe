@@ -75,7 +75,12 @@
           \item[\SetBuilder] This module generates data set oriented queries for the database; queries can be accepted or declined by the database, depending on the account permissions concerning data entries access
         \end{description}
 
-        % TODO add component diagram
+        \begin{figure}[h!]
+          \centering
+          \includegraphics[width=\linewidth]{\fetchImg{util/OverallArchitecture.jpg}}
+          \caption{Overall architecture of the system}
+          \label{fig:overallarchitecture}
+        \end{figure}
 
       \subsubsection{Database}
 
@@ -85,13 +90,6 @@
 
         An important factor for \texttt{Data4Help} is the data access policy: Data Entries should be available only to the users that produced them, when inserted in the database. If a Data Set is shared to a third party, that third party shall be allowed to retrive Data Entries that belong to that Data Set from the database. Therefore the access policy shall be dinamic and shall consider \texttt{Data4Help} different accounts.
 
-        \begin{figure}[h!]
-          \centering
-          \includegraphics[width=.8 \linewidth]{\fetchImg{util/ER.jpg}}
-          \caption{Entity-Relation diagram}
-          \label{fig:er}
-        \end{figure}
-
       \subsubsection{External Systems}
 
         In this section we will present the main external systems that interact with the Application Server.
@@ -99,6 +97,12 @@
         \texttt{Data4Help} relies on an external payment handler. The Application Server, once has composed a third party request, evaluates its price and asks third party for payment, by exploiting the external payment handler service. The service manages the effective payment from the third party to TrackMe and signals errors occurred during the procedure.
 
         \texttt{AutomatedSOS} relies on an external SOS system. The SOS system dispatches ambulances and handles health emergencies by accepting automated calls. \texttt{AutomatedSOS}, on the Application Server, detects health dangers as soon as they're collected from the front-end components forwards an emergency message to the SOS system.
+
+        \fetchUML
+          {ComponentDiagram}
+          {UML component diagram of \texttt{Data4Help} and \texttt{AutomatedSOS}: component interaction is described in Section~\ref{sec:deplview} and interfaces are described in Section~\ref{sec:compinterf} and Section~\ref{sec:otherinterfaces}}
+          {1}           % scale
+          {0}           % move left
 
   \clearpage
   \subsection{Deployment view}
