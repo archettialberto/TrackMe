@@ -70,10 +70,9 @@
           \item[\EmergencyDetector] This module is in charge of automatically analyze data entries inserted in the system if their owner subscribed to \texttt{AutomatedSOS}; it is separated from the \DataCollector\ because emergency detection can be exploited in many ways, depending on the medical literature on the topic; this feature should be independant and isolated from the rest of the architecture
           \item[\EmergencyDispatcher] This module builds emergency messages and forwards them tothe SOS system
           \item[\FilterManager] This module composes filter constraints on data entries that can be fetched from the database
-          \item[\NotificationManager] This module shall dispatch notifications between user and third party accounts; notifications from users to third parties contain information about user's responses concerning third parties'requests; notifications from third parties to users corcern third parties'single user requests
           \item[\PaymentGateway] This module is in charge of communicating with the external payment system is order to process payments between third parties and TrackMe
-          \item[\RequestManager] This module is in charge of composing, verifying and elaborating third parties'requests, both of single-user type and anonymous-group type; it communicates with \FilterManager\ to properly identify which type of data is required and with \NotificationManager\ to keep every client involved in the request updated on its status
-          \item[\SetBuilder] This module generates data-oriented queries for the database, given a particular filter from the \FilterManager; queries can be accepted or declined by the database, depending on the account permissions concerning data entries access
+          \item[\RequestManager] This module is in charge of composing, verifying and elaborating third parties'requests, both of single user type and anonymous group type
+          \item[\SetBuilder] This module generates data set oriented queries for the database; queries can be accepted or declined by the database, depending on the account permissions concerning data entries access
         \end{description}
 
         % TODO add component diagram
@@ -112,42 +111,58 @@
   \subsection{Runtime view}
   \label{sec:runtview}
 
+    In this section we will present some sequence diagrams that show the major interaction processes between the system components. All the methods performed between components are described in detail in Section~\ref{sec:compinterf} and Section~\ref{sec:otherinterfaces}.
+
     %notes (don't delete)
     %orange:user application
     %blue:application server
     %green:database		DBMS		(interact with appserver only)
     %purple:external services		NO :	(interact with appserver only)
 
-    \subsubsection{User Account}
-    \label{sec:userdata}
+    \subsubsection{Account Registration}
+    \label{sec:runregistration}
+
+      The sequence diagram in Figure~\ref{fig:run_Registration} shows the registration process to the \texttt{Data4Help} system from the point of view of an user. The same process applies for third parties, by substituting the \texttt{createUserAccount} method with \texttt{createThirdPartyAccount}.
 
       \fetchUML
-        {run_User_Data}
-        {User account}
-        {1}           % scale
+        {run_Registration}
+        {Account registration to \texttt{Data4Help} system}
+        {.7}           % scale
         {0}           % move left
 
-      %TODO  1)maybe in interaction with DBMS?
-      % 	   2)description
+    \clearpage
+    \subsubsection{Data entry acquisition}
+    \label{sec:userdata}
 
+      The sequence diagram in Figure~\ref{fig:run_AcquireData} shows the process of acquiring a new data entry for a user account, without exploiting \texttt{AutomatedSOS} service. It shows also the login procedure, that is valid for both users and third parties. This procedure will be omitted in the next sequence diagrams, but it shall be performed correctly by every Application involved in the shown processes, in order to be able to exploit all the system functionalities.
+
+      \fetchUML
+        {run_AcquireData}
+        {Data entry acquisition loop}
+        {1}           % scale
+        {0}           % move left
 
     \clearpage
     \subsubsection{Filtering}
     \label{sec:filtering}
 
+      Figure~\ref{fig:run_Filtering} shows the update of graphical data rendering options (see Figure 3 in Section 3.1.1 of the RASD document).
+
       \fetchUML
         {run_Filtering}
-        {Filtering}
+        {Graphical filters selection}
         {1}           % scale
         {0}           % move left
 
     \clearpage
-    \subsubsection{AutomatedSOS}
+    \subsubsection{Emergency call}
     \label{sec:automatedSOS}
 
+      In Figure \ref{fig:run_EmergencyCall} we see the \texttt{AutomatedSOS} activation for a user account that was not already subscribed to it and the SOS calling process.
+
       \fetchUML
-        {run_AutomatedSOS}
-        {AutomatedSOS}
+        {run_EmergencyCall}
+        {Trigger of \texttt{AutomatedSOS} emercency call}
         {1}           % scale
         {0}           % move left
 
@@ -155,9 +170,11 @@
     \subsubsection{Single User request}
     \label{sec:singleuser}
 
+      The sequence diagram in Figure~\ref{fig:run_SingleUserRequest} shows a third party that performs a single user request. Although it will depend on future TrackMe policies, we added the payment operation to this process.
+
       \fetchUML
-        {run_Single_Request}
-        {Single User request}
+        {run_SingleUserRequest}
+        {Single user request elaboration process}
         {1}           % scale
         {0}           % move left
 
@@ -165,17 +182,19 @@
     \subsubsection{Anonymous Group request}
     \label{sec:anonymousgroup}
 
+      The sequence diagram in Figure~\ref{fig:run_AnonymousGroupRequest} shows a third party that performs an anonymous group request.
+
       \fetchUML
-        {run_Anonymous_Request}
-        {Anonymous Group request}
-        {1}           % scale
+        {run_AnonymousGroupRequest}
+        {Anonymous group request elaboration process}
+        {.93}           % scale
         {0}           % move left
 
   \clearpage
   \subsection{Application Server interfaces}
   \label{sec:compinterf}
 
-    In this section we will present the details concerning the interfaces of the subcomponents of Application Server defined in Section~\ref{sec:applserverinterf}. Every component will offer or require some functionalities through interface methods in a way that, once all components are assembled, the Application Server shall not have uncovered functionalities that will not be covered by other systems (Section~\ref{sec:otherinterfaces}).
+    In this section we will present the details concerning the interfaces of the subcomponents of Application Server defined in Section~\ref{sec:applserverinterf}. Every component will offer or require some functionalities through interface methods in a way that, once all components are assembled, the Application Server shall not have uncovered functionalities that will not be covered by other systems (Section~\ref{sec:otherinterfaces}). All of this methods has been called at least once in the sequence diagrams of Section~\ref{sec:runtview}.
 
     \subsubsection{\AccountManager}
 
@@ -183,48 +202,41 @@
         \item[\texttt{createUserAccount}] Generates a new user account, provided email, password and other valid information, specified in Section 2.2.1 of RASD document; the return value specifies if the procedure ended correctly or if some incorrect information made it abort
         \item[\texttt{createThirdPartyAccount}] Generates a new third party account, provided email, password and other valid information, specified in Section 2.2.1 of RASD document; the return value specifies if the procedure ended correctly or if some incorrect information made it abort
         \item[\texttt{login}] By providing email and password, a client can login into his/her account and exploit system functionalities\footnote{the \textit{login} procedure is exploited by assigning a unique token to the client session and providing it as a login succesfull certificate during every API call to the Application Server}; the return value is positive if information provided is correct and negative if there's no account that matches given credentials
-        \item[\texttt{resetPassword}] This method is called when a client doesn't remember his/her password: it triggers a reset procedure through the client's email, used for registering to \texttt{Data4Help}
-        \item[\texttt{editInfo}] Updates the client's profile information with the the new set of information passed as parameter; the return value confirms if the procedure ended correctly
-        \item[\texttt{getSharingPermissions}] This method returns the set of data types that the target user is willing to share anonymously
+        %\item[\texttt{resetPassword}] This method is called when a client doesn't remember his/her password: it triggers a reset procedure through the client's email, used for registering to \texttt{Data4Help}
+        \item[\texttt{editInfo}] Updates the client's profile information with the the new set of information passed as parameter; the return value confirms if the procedure ended correctly; it may even toggle \texttt{AutomatedSOS} real time health danger detenction checks on inserted data
+        %\item[\texttt{toggleAutomatedSOS}] Activates or stops \texttt{AutomatedSOS} health danger real time checks on inserted data entries in the system
+        %\item[\texttt{getSharingPermissions}] This method returns the set of data types that the target user is willing to share anonymously
       \end{description}
 
     \subsubsection{\DataCollector}
 
       \begin{description}
-        \item[\texttt{acquireNewDataEntry}] This \textbf{asynchronous} method acquires a new data entry collected on the logged user's application; if the logged user is subscribed to \texttt{AutomatedSOS}, it forwards the data entry to the \EmergencyDetector
+        \item[\texttt{acquireNewDataEntry}] This method acquires a new data entry collected on the logged user's application; if the logged user is subscribed to \texttt{AutomatedSOS}, it forwards the data entry to the \EmergencyDetector
       \end{description}
 
     \subsubsection{\EmergencyDetector}
 
       \begin{description}
-        \item[\texttt{analyzeDataEntry}] This \textbf{asynchronous} method analyzes passed data entry and checks whether all parameters are above or below defined thresholds; if some parameters exceed thresholds, it will call
-        \item[\texttt{generateEmergencyMessage}] This method, given a data entry that exceedes thresholds, returns an emergency message that must be delivered to the SOS system
+        \item[\texttt{analyzeDataEntry}] This method analyzes passed data entry and checks whether all parameters are above or below defined thresholds; if some parameters exceed thresholds, it will call the \EmergencyDispatcher\ in order to forward the SOS call
+        %\item[\texttt{generateEmergencyMessage}] This method, given a data entry that exceedes thresholds, returns an emergency message that must be delivered to the SOS system
       \end{description}
 
     \subsubsection{\EmergencyDispatcher}
 
       \begin{description}
-        \item[\texttt{sendEmergencyMessage}] This method triggers the passed emergecy message to be sent to the SOS system
+        \item[\texttt{sendEmergencyMessage}] This method builds and forwards an emergency message to the SOS system
       \end{description}
 
     \subsubsection{\FilterManager}
 
       \begin{description}
-        \item[\texttt{generateFilter}] This method returns a new filter instance with the passed parameters on type and boundaries of data, that can be used to narrow the data domain of interrogation during database queries
-      \end{description}
-
-    \subsubsection{\NotificationManager}
-
-      \begin{description}
-        \item[\texttt{notifyDecline}] This method notifies a third party that its single user request has been declined by the target user
-        \item[\texttt{notifyUnfeasibility}] This method notifies a third party that its anonymous group request hasn't been accepted by the system due to the impossibility of properly anonymized required data
-        \item[\texttt{notifyPaymentResult}] This method sends to a third party the exit status of the payment operation it started
+        \item[\texttt{generateFilter}] This method returns a new filter instance with the passed parameters on type and boundaries of data, that can be used to narrow the data domain of interrogation during database queries; the return value specifies if the filter is well formed or if it cannot be created
       \end{description}
 
     \subsubsection{\PaymentGateway}
 
       \begin{description}
-        \item[\texttt{pay}] This method triggers a payment call to the external payment system that returns a positive or negative exit status, depending on the correct execution of the procedure
+        \item[\texttt{pay}] This method triggers a payment call to the external payment system that returns a positive or negative exit status, depending on the correct execution of the procedure; the return value contains the errors of the payment procedures
       \end{description}
 
     \subsubsection{\RequestManager}
@@ -237,25 +249,30 @@
     \subsubsection{\SetBuilder}
 
       \begin{description}
-        \item[\texttt{getDataSet}] This method accepts a filter as parameter and forwards a query based on such filter to the database; the return value is either the set of data entries fetched from the database subject to the filter's constraints or an error message if the query couldn't be performed (the asking user hasn't access permissions or there's not anough data to satisfy the query requirements)
+        \item[\texttt{getDataSet}] This method accepts some filters as parameters and forwards a query based on such filters to the database (filters shall be previously elaborated by \FilterManager); the return value is either the set of data entries fetched from the database subject to the filter's constraints or an error message if the query couldn't be performed (the asking user hasn't access permissions or there's not anough data to satisfy the query requirements)
       \end{description}
 
   \subsection{Other interfaces}
   \label{sec:otherinterfaces}
 
-    In this section we will explore the interface methods of the components that communicate with the Application Server. These components heavily rely on external services and their interfaces may be very complex and may change over time, due to the fact that in the most cases, we are not directly developing them. Therefore our description is at a high level of abstraction. Furthermore, we will focus only on the critical methods that are mandatory for the system in order to communicate correctly with the Application Server.
+    In this section we will explore the interface methods of the components that communicate with the Application Server. These components rely on external services and their interfaces may be very complex and may change over time, due to the fact that in the most cases, we are not directly developing them. Therefore our description is at a high level of abstraction. Furthermore, we will focus only on the critical methods that are mandatory for the system in order to communicate correctly with the Application Server.
 
     \subsubsection{Application}
 
+      The following methods are not called by the Application Server, but are useful in order to understand the expected behaviour of the Application when recieving data from the Application Server.
+
       \begin{description}
         \item[\texttt{renderDataSet}] Visually renders a data set on the application screen
-        \item[\texttt{showNotification}] Shows a notification on the application screen
+        \item[\texttt{showNotification}] Shows a notification error or a data request notification (in case of user account targeted by a third party single user request) on the application screen
       \end{description}
 
     \subsubsection{Database}
 
       \begin{description}
+        \item[\texttt{addAccount}] This method adds a new user or third party account to the account set of the system; the return value states if the procedure ended correctly
         \item[\texttt{requstData}] This method analyzes the passed query throug the DBMS service in parallel with other queries and returns the tuples corresponding to the required data, or returns an error if the asking account hasn't the permissions to read the data
+        \item[\texttt{saveData}] This method saves the passed data into the persistent memory
+        \item[\texttt{updatePermissions}] This method updates permission accesses to data entries of the system, in order to share them between user and third party accounts; the return value states the correct ending of the procedure
       \end{description}
 
     \subsubsection{External Systems}
@@ -266,7 +283,7 @@
       \end{description}
       while the SOS system offers
       \begin{description}
-        \item[\texttt{dispatchAmbulance}] This method accepts emergency messages and dispatches ambulances according to the data contained in the passed emergency log
+        \item[\texttt{sendEmergency}] This method accepts emergency messages and dispatches ambulances according to the data contained in the passed emergency message
       \end{description}
 
   \subsection{Selected architectural sytles and patterns}
