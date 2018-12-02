@@ -13,10 +13,21 @@
 \usepackage{enumitem}
 \usepackage{geometry}
 \usepackage{fancyhdr}
+\usepackage{hyperref}
 
 \def \thisDocVersion {\texttt{v.0}}
 \newcommand{\fetchImg}[1]{img/#1}
 \newcommand{\includeSubfile}[1]{\subfile{tex/#1}}
+
+\newcommand{\fetchUML}[4] {
+  \begin{figure}[h!]
+    \centering
+    \hspace*{-#4cm}
+    \includegraphics[width=#3\textwidth]{img/UML/#1.jpg}
+    \caption{#2}
+    \label{fig:#1}
+  \end{figure}
+}
 
 \def \AccountManager {\texttt{AccountManager}}
 \def \DataCollector {\texttt{DataCollector}}
