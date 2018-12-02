@@ -3,27 +3,25 @@
 
 \section {User Interface Design}
 \label{sec:ui}
-\subsection{Flow graph for Screens Interface}
 
-\label{sec:userdes}
+  In this secrion we provide further details on the interface design of the Application. In the RASD document we provided a set of mockups that represent the overall feel of the Application screens. Here we will provide the navigation flow between the screens. The adopted syntax is \textbf{bold} for buttons, \textit{italics} for screens (referenced by figure number in the RASD document) and square brackets for conditional branches.
 
-    \fetchUML
-      {User}
-      {User account}
-      {1}           % scale
-      {0}           % move left
+  \subsection{Screen flow graph for users}
 
-  \clearpage
+    \begin{figure}[h!]
+      \centering
+      \includegraphics[width=\linewidth]{\fetchImg{util/GUIUser.jpg}}
+      \caption{Flow of screens in the user application}
+      \label{fig:flowuser}
+    \end{figure}
 
-\label{sec:thirdpartydes}
+    \subsection{Screen flow graph for third parties}
 
-    \fetchUML
-      {Third_Party}
-      {Third Party account}
-      {1}           % scale
-      {0}           % move left
-
-
- % \clearpage
+      \begin{figure}[h!]
+        \centering
+        \includegraphics[width=\linewidth]{\fetchImg{util/GUIThirdParty.jpg}}
+        \caption{Flow of screens in the third party application}
+        \label{fig:flowthirdparty}
+      \end{figure}
 
 \end{document}

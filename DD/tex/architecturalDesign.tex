@@ -28,7 +28,7 @@
   \subsection{Component view}
   \label{sec:compview}
 
-    In this section we will analyze every high-level component in terms of its subcomponents and provide the main interface interaction between different components. For details on component interfaces see Section~\ref{sec:compinterf}.
+    In this section we will analyze every high-level component in terms of its subcomponents and provide the main interface interaction between different components (Figure~\ref{fig:ComponentDiagram}). For details on component interfaces see Section~\ref{sec:compinterf}.
 
       \subsubsection{App}
 
@@ -65,20 +65,20 @@
           \item[\SetBuilder] This module generates data set oriented queries for the database; queries can be accepted or declined by the database, depending on the account permissions concerning data entries access
         \end{description}
 
-        \begin{figure}[h!]
-          \centering
-          \includegraphics[width=\linewidth]{\fetchImg{util/OverallArchitecture.jpg}}
-          \caption{Overall architecture of the system}
-          \label{fig:overallarchitecture}
-        \end{figure}
-
       \subsubsection{Database}
 
-        The database is the only component of the \textit{data} layer. Queries are managed by a DBMS that optimizes and elaborates them in parallel. Data stored in the database is persistent and shall not be lost due to external factors. The database service will not be directly developed by us, but will be bought from the existing ones.
+        The database is the only component of the \textit{data} layer. Queries are managed by a DBMS that optimizes and elaborates them in parallel. Data stored in the database is persistent and shall not be lost due to external factors. The database service will not be directly developed by us, but will be bought from the existing ones. In Figure~\ref{fig:er} we reported the Entity-Relashionsip diagram for the data stored in the databse.
 
         The \textit{data} layer is only accessible from the Application Server. It won't implement any application logic, except from DBMS functionalities: it will just respond to queries and passively store data.
 
         An important factor for \texttt{Data4Help} is the data access policy: Data Entries should be available only to the users that produced them, when inserted in the database. If a Data Set is shared to a third party, that third party shall be allowed to retrive Data Entries that belong to that Data Set from the database. Therefore the access policy shall be dinamic and shall consider \texttt{Data4Help} different accounts.
+
+        \begin{figure}[h!]
+          \centering
+          \includegraphics[width=\linewidth]{\fetchImg{util/ER.jpg}}
+          \caption{Entity-Relationship diagram for the database}
+          \label{fig:er}
+        \end{figure}
 
       \subsubsection{External Systems}
 
@@ -293,7 +293,7 @@
 
     \begin{figure}[h!]
       \centering
-      \includegraphics[width=.7\linewidth]{\fetchImg{util/ThinClient.jpg}}
+      \includegraphics[width=.85\linewidth]{\fetchImg{util/ThinClient.jpg}}
       \caption{Thin client architecture: logic operations and data storage are not performed by the client nodes, on which the presentation layer reside}
       \label{fig:thinclient}
     \end{figure}
