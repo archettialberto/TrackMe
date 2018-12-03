@@ -58,7 +58,7 @@
           %user and third party application not only user
           % FABIO only users collect data from wearables, not third parties
           \item[\EmergencyDetector] This module is in charge of automatically analyze data entries inserted in the system if their owner subscribed to \texttt{AutomatedSOS}; it is separated from the \DataCollector\ because emergency detection can be exploited in many ways, depending on the medical literature on the topic; this feature should be independant and isolated from the rest of the architecture
-          \item[\EmergencyDispatcher] This module builds emergency messages and forwards them tothe SOS system
+          \item[\EmergencyDispatcher] This module builds emergency messages and forwards them to the SOS system
           \item[\FilterManager] This module composes filter constraints on data entries that can be fetched from the database
           \item[\PaymentGateway] This module is in charge of communicating with the external payment system is order to process payments between third parties and TrackMe
           \item[\RequestManager] This module is in charge of composing, verifying and elaborating third parties'requests, both of single user type and anonymous group type
@@ -203,7 +203,7 @@
       \end{description}
 
     \subsubsection{\DataCollector}
-
+    \label{sec:datacollectormethod}
       \begin{description}
         \item[\texttt{acquireNewDataEntry}] This method acquires a new data entry collected on the logged user's application; if the logged user is subscribed to \texttt{AutomatedSOS}, it forwards the data entry to the \EmergencyDetector
       \end{description}
@@ -298,7 +298,11 @@
       \label{fig:thinclient}
     \end{figure}
 
-  %\subsection{Other design decisions}
-  %\label{sec:designdecisions}
+  \subsection{Other design decisions}
+  \label{sec:designdecisions}
+  Data collection is a very critical functionality for both AutomatedSOS and Data4Help.
+  Despite the fact that are two separate elements, deciding to have two different data collection subcomponents in ~\ref{sec:applserverinterf} will result in a significant drawback:the reduction of Maintanability which, as already said in section 3.7.4 of the RASD document, is a very important aspect of our software.
+  This is the reason why in ~\ref{sec:datacollectormethod} is said that \EmergencyDetector  retrieve user's health parameters from \DataCollector  and not collects them directly to the app: in this way any change in the presentation layer will requires the update only of \DataCollector  while \EmergencyDetector  remains the same; thus the software Manintanability is increased.  
+
 
 \end{document}
