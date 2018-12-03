@@ -184,7 +184,34 @@
         {.93}           % scale
         {0}           % move left
 
+    \clearpage
+
+    \subsubsection{Update Single Data}
+    \label{sec:updatesingledata}
+
+      The sequence diagram in Figure~\ref{fig:run_SingleUpdate} shows an update process of a given single-user request.
+
+      \fetchUML
+        {run_SingleUpdate}
+        {Update elaboration process}
+        {.93}           % scale
+        {0}           % move left
+
   \clearpage
+
+  \subsubsection{Update Group Data}
+    \label{sec:updatedata}
+
+      The sequence diagram in Figure~\ref{fig:run_GroupUpdate} shows an update process of a given anonymous group request.
+
+      \fetchUML
+        {run_GroupUpdate}
+        {Update elaboration process}
+        {.93}           % scale
+        {0}           % move left
+
+  \clearpage
+
   \subsection{Application Server interfaces}
   \label{sec:compinterf}
 
@@ -238,12 +265,13 @@
       \begin{description}
         \item[\texttt{makeSingleUserRequest}] This method, provided a target user and the proper filters over the data that the third party wants to collect, generates a new single user request by the third party for the target user's data; it returns the data set that contains the requested data if the procedure ended correctly or a notification error, if the user declined the request
         \item[\texttt{makeAnonymousGroupRequest}] This method, provided the proper filters over the data that the third party wants to collect, generates a new anonymous group request; it returns the data set that contains the requested data if the procedure ended correctly or a notification error, if the system wasn't able to properly anonymize the data set
+        \item[\texttt{updateData}]  This method, provided that a single-user or anonymous-group request has been previously done by the third party; it returns either the new user-data stored in the database since the last update(not already shared with the third party) or an error message if the user, meantime, has revoke the consensus for that single-user request
       \end{description}
 
     \subsubsection{\SetBuilder}
 
       \begin{description}
-        \item[\texttt{getDataSet}] This method accepts some filters as parameters and forwards a query based on such filters to the database (filters shall be previously elaborated by \FilterManager); the return value is either the set of data entries fetched from the database subject to the filter's constraints or an error message if the query couldn't be performed (the asking user hasn't access permissions or there's not anough data to satisfy the query requirements)
+        \item[\texttt{getDataSet}] This method accepts some filters as parameters and forwards a query based on such filters to the database (filters shall be previously elaborated by \FilterManager); the return value is either the set of data entries fetched from the database subject to the filter's constraints or an error message if the \FilterManager request couldn't be performed (the asking user hasn't access permissions or in the database there aren't enough data to satisfy the query requirements)
       \end{description}
 
   \subsection{Other interfaces}
@@ -285,9 +313,12 @@
 
     \begin{description}
       \item[Model-View-Controller] We adopted the MVC pattern because it separates the three most important architectural aspects of the system: data storage, user interfaces and business logic. It allows to develop in parrallel every component, in isolation from the others, granting a less error prone developement and a more extensible architecture to future additions or punctual changes. The MVC pattern can be adopted at varoius architectural levels, as we can find it also in the mobile application.
+
       \item[Three-tier architecture] It allows to develop in isolation the presentation layer, the business layer and the data layer. It allows also to deploy on different physical nodes these layers, enhancing the MVC paradigm and the complete isolation of the layer components. The physical separation of nodes enhances reliability and availability of the services, as the application logic and data may be distributed on more than one node, lowering the failure probability and enhancing overall performances.
       \item[Client-Server] It is the standard model of communication of the World Wide Web.
-      \item[Thin client] Data and logic of the system are handled in the data and business layer respectively. The presentation layer has the only role of showing data to the user and performing requests that will be handled by the other layers. (Figure~\ref{fig:thinclient})
+
+      \item[Thin client] Data and logic of the system are handled in the data and business layer respectively. The presentation layer has the only role of showing data to the user and performing requests that will be handled by the other layers. (Figure~\ref{fig:thinclient}). In this way \texttt{Maintanability} and \texttt{Availability} are granted despite software and hardware updates of smartphones.
+
       \item[REST and stateless communication] In order to make the system scalable with the number of requests, it is a good practice to grant stateless communication between client and server. According to the REST paradigm, every HTTP request encapsulates all the data needed to be performed, therefore it is completely independant from other requests. This paradigm allows different requests to be handled from different server nodes, encreasing scalability possibilities and load balancing options. The server doesn't hold any session information about the client.
     \end{description}
 
@@ -301,8 +332,8 @@
   \subsection{Other design decisions}
   \label{sec:designdecisions}
   Data collection is a very critical functionality for both AutomatedSOS and Data4Help.
-  Despite the fact that are two separate elements, deciding to have two different data collection subcomponents in ~\ref{sec:applserverinterf} will result in a significant drawback:the reduction of Maintanability which, as already said in section 3.7.4 of the RASD document, is a very important aspect of our software.
-  This is the reason why in ~\ref{sec:datacollectormethod} is said that \EmergencyDetector  retrieve user's health parameters from \DataCollector  and not collects them directly to the app: in this way any change in the presentation layer will requires the update only of \DataCollector  while \EmergencyDetector  remains the same; thus the software Manintanability is increased.  
+  Despite the fact that are two separate elements, deciding to have two different data collection subcomponents in ~\ref{sec:applserverinterf} will result in a significant drawback:the reduction of \texttt{Maintanability} which, as already said in section 3.7.4 of the RASD document, is a very important aspect of our software.
+  This is the reason why in ~\ref{sec:datacollectormethod} is said that \EmergencyDetector  retrieve user's health parameters from \DataCollector  and not collects them directly to the app: in this way any change in the physical wearables deviced will requires the update only of \DataCollector  while \EmergencyDetector  remains the same; thus the software Manintanability is increased.  
 
 
 \end{document}
