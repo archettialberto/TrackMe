@@ -34,10 +34,9 @@
 
         The application component is the front-end of the system. Our clients will interact with the system through the front end. We will provide
         \begin{itemize}
-          \item A smartphone application, capable of exploiting all of the system functionalities: it shall render data, provide forms for the clients (users and third parties) and communicate with the Application Server
-          \item An API that allows more experienced users or other developers to automate communication with our system; the API is particularly useful when third parties need to analyze huge quantities of data that a smartphone graphical interface cannot render
-          \item A command line interface is provided to subscribed third parties. It grants a fast and easy method to exploit to Data4Help functionalities which could be useful in several situations such as: dealing with huge amounts of data or checking for newly data.
-          The CLI, as the smartphone, can communicate only with the Application Server
+          \item a smartphone application, capable of exploiting all of the system functionalities: it shall render data, provide forms for the clients (users and third parties) and communicate with the Application Server
+          \item an API that allows more experienced users or other developers to automate communication with our system; the API is particularly useful when third parties need to analyze huge quantities of data that a smartphone graphical interface cannot render
+          \item a command line tool that automates API calls for third parties that don't want to develop a different program to interact with our system; the command line tool will be written in Java, in order to favor the compatibility with most operating systems
         \end{itemize}
 
         It is important to note that the smartphone application exploits the API for communication with the Application Server. Every \texttt{Data4Help} or \texttt{AutomatedSOS} service can be required by API communication.
@@ -77,11 +76,12 @@
 
         \begin{figure}[h!]
           \centering
-          \includegraphics[width=\linewidth]{\fetchImg{util/ER.jpg}}
+          \includegraphics[width=.8\linewidth]{\fetchImg{util/ER.jpg}}
           \caption{Entity-Relationship diagram for the database}
           \label{fig:er}
         \end{figure}
 
+      \clearpage
       \subsubsection{External Systems}
 
         In this section we will present the main external systems that interact with the Application Server.
@@ -97,40 +97,29 @@
           {0}           % move left
 
   \clearpage
-
   \subsection{Deployment view}
   \label{sec:deplview}
- In figure ~\ref{fig:Deployment} is given a graphical representation of the deployment \footnote{PC refers to both notebook and desktop computer}
-  \fetchUML
-        {Deployment}
-        {Deployment Diagram}
-        {.7}           % scale
-        {0}           % move left
 
-Each node refers to a different component system:
-\begin{itemize}
-  \item[\texttt{Mobile device}] runs client application which performs only Presentation Layer functionalities given that a Thin Client architectural style is chosen(~\ref{sec:stylesandpatterns}). 
-  \item[\texttt{PC}] performs only Presentation Layer functionalities thanks to a proper CLI
+    We decided to deploy our system exploiting the services provided by Amazon AWS. Amazon AWS hides most of the back-end complexity in terms of scalability, reliability and fault tolerance of the system. It automatically handles server calls in a distributed way, by just providing the code we want to run.
 
-Both client application and CLI can interact only with the application server thanks to a RESTful APIs(~\ref{sec:stylesandpatterns})
+    It is important to note that in the other parts of this document we didn't treat the Application Server as a physical node, but more as a logical node. In fact, the Application Server functionalities will be deployed by Lambda functions, that have no concept of node or server on which business logic is handled. By hiding the deployment details of the Application Server, we intended to isolate this section from the rest of the document, in order to ease future changes or additions.
 
-  \item[\texttt{AWS Lambda}] computer platform where it is possible to upload application code (provided that is written in one of the supported languages such as Node.js, Java, Go , C and Python)which will be run in an environment called Lambda function.
-  This lambda function is stateless and given that AWS Lambda autonomously manages memory, CPU, network, and other resources we are responsible only for our code; we have not to consider some critical aspects such as availability or load balancing. 
-  Moreover a stateless approach is coherent with the use of REST for communication as says ~\ref{sec:stylesandpatterns}).
-  For all these reasons we choose AWS Lambda to implement Business Layer functionalities.
-  This component can interact with both Presentation Layer(with RESTful APIs) and Data Layer(with Query API)
-
-  \item[\texttt{Amazon RDS}] Amazon Relational Database Service provides an easy,cost-efficient,scalable database in the cloud which performs the Data function.
-  Moreover Amazon RDS autonomously performs all the administration tasks such as database setup, patching and backups; thus is possible to focus only on how should be the database behaviour and not how this can be achieved.
-  This component can interact only with the Business Layer
-   
-
-\end{itemize}
+    Figure~\ref{fig:Deployment} represents the deployment view of the system: each device refers to a different component of the system (Section~\ref{sec:compview}):
+    \begin{description}
+      \item[\texttt{Mobile device}] Runs the mobile Application of the presentation layer; the Application is compatible with Android and iOS operating systems, as they're the most common between TrackMe target clients
+      \item[\texttt{PC}] Runs the CLI Application of the presentation layer; the Application is written in Java and is compatible with most desktop operating systems
+      %Both client application and CLI can interact only with the application server thanks to a RESTful APIs(~\ref{sec:stylesandpatterns})
+      \item[\texttt{AWS Lambda}] Platform where it is possible to upload application code (written in one of the supported languages such as Node.js, Java, Go, C and Python) which will be run in an environment called Lambda function; every Lambda function is stateless (Section~\ref{sec:stylesandpatterns}), meaning that it is completely independant from other functions and can be executed in a distributed and very efficient way; AWS Lambda autonomously manages memory, CPU, network and other resources, so we are responsible only for our code
+      \item[\texttt{Amazon RDS}] Amazon Relational Database Service provides an easy, cost-efficient, scalable database in the cloud which implements the data layer; Amazon RDS autonomously performs all the administration tasks such as database setup, patching and backups: we can focus only on how should the database behaviour be and not how can it be achieved
+    \end{description}
 
 
-
+    \fetchUML
+      {Deployment}
+      {Deployment Diagram}
+      {.7}           % scale
+      {0}           % move left
     % TODO ALBERTO ti convince la parte sul DataBase?
-   
 
   \clearpage
   \subsection{Runtime view}
@@ -358,13 +347,13 @@ Both client application and CLI can interact only with the application server th
         {0}           % move left
 
       \begin{enumerate}
-      \item The client asks whether the server can accept requests or not at that specific moment 
+      \item The client asks whether the server can accept requests or not at that specific moment
       \item The server accept to receive requests
       \item The third party ask for 1500 users weights and heartbeats since 01/2018
       \item The server denies the request because 1500 users with those characteristics cannot be found
       \end{enumerate}
 
-      After fourth step due to stateless communication if the third party wants to make another request has repeat the procedure from the first step 
+      After fourth step due to stateless communication if the third party wants to make another request has repeat the procedure from the first step
 
       \item[Query API] Exploits HTTP requests and a Query parameter named Action to grant communication between Application Server and Database. Each Query request must include some common parameters to handle authentication and selection of an action.
 
