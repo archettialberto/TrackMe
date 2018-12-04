@@ -95,8 +95,22 @@
           {0}           % move left
 
   \clearpage
+
   \subsection{Deployment view}
   \label{sec:deplview}
+ 
+In figure ~\ref{Deployment} is given a graphical representation of the deployment \footnote{PC refers to both notebook and desktop computer}
+  \fetchUML
+        {Deployment}
+        {Deployment Diagram}
+        {.7}           % scale
+        {0}           % move left
+
+Each node refers to a different component system:
+\begin{itemize}
+  \item Smartphone: 
+\end{itemize}
+
 
     % TODO add deployment description
     % TODO add deployment diagram
@@ -128,7 +142,7 @@
     \subsubsection{Data entry acquisition}
     \label{sec:userdata}
 
-      The sequence diagram in Figure~\ref{fig:run_AcquireData} shows the process of acquiring a new data entry for a user account, without exploiting \texttt{AutomatedSOS} service. It shows also the login procedure, that is valid for both users and third parties. This procedure will be omitted in the next sequence diagrams, but it shall be performed correctly by every Application involved in the shown processes, in order to be able to exploit all the system functionalities.
+      The sequence diagram in Figure ~\ref{fig:run_AcquireData} shows the process of acquiring a new data entry for a user account, without exploiting \texttt{AutomatedSOS} service. It shows also the login procedure, that is valid for both users and third parties. This procedure will be omitted in the next sequence diagrams, but it shall be performed correctly by every Application involved in the shown processes, in order to be able to exploit all the system functionalities.
 
       \fetchUML
         {run_AcquireData}
