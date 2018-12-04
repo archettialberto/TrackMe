@@ -109,21 +109,18 @@
 
 Each node refers to a different component system:
 \begin{itemize}
-  \item [\texttt{Mobile device}] runs client application which performs only Presentation Layer functionalities given that a Thin Client architectural style is chosen(~\ref{sec:stylesandpatterns}). 
-  \item [\texttt{PC}] performs only Presentation Layer functionalities thanks to a proper CLI
-\end{itemize}
+  \item[\texttt{Mobile device}] runs client application which performs only Presentation Layer functionalities given that a Thin Client architectural style is chosen(~\ref{sec:stylesandpatterns}). 
+  \item[\texttt{PC}] performs only Presentation Layer functionalities thanks to a proper CLI
 
 Both client application and CLI can interact only with the application server thanks to a RESTful APIs(~\ref{sec:stylesandpatterns})
 
-\begin{itemize}
-
-  \item [\texttt{AWS Lambda}] computer platform where it is possible to upload application code (provided that is written in one of the supported languages such as Node.js, Java, Go , C and Python)which will be run in an environment called Lambda function.
+  \item[\texttt{AWS Lambda}] computer platform where it is possible to upload application code (provided that is written in one of the supported languages such as Node.js, Java, Go , C and Python)which will be run in an environment called Lambda function.
   This lambda function is stateless and given that AWS Lambda autonomously manages memory, CPU, network, and other resources we are responsible only for our code; we have not to consider some critical aspects such as availability or load balancing. 
   Moreover a stateless approach is coherent with the use of REST for communication as says ~\ref{sec:stylesandpatterns}).
   For all these reasons we choose AWS Lambda to implement Business Layer functionalities.
   This component can interact with both Presentation Layer(with RESTful APIs) and Data Layer(with Query API)
 
-  \item [\texttt{Amazon RDS}] Amazon Relational Database Service provides an easy,cost-efficient,scalable database in the cloud which performs the Data function.
+  \item[\texttt{Amazon RDS}] Amazon Relational Database Service provides an easy,cost-efficient,scalable database in the cloud which performs the Data function.
   Moreover Amazon RDS autonomously performs all the administration tasks such as database setup, patching and backups; thus is possible to focus only on how should be the database behaviour and not how this can be achieved.
   This component can interact only with the Business Layer
    
@@ -366,6 +363,8 @@ Both client application and CLI can interact only with the application server th
       \item The third party ask for 1500 users weights and heartbeats since 01/2018
       \item The server denies the request because 1500 users with those characteristics cannot be found
       \end{enumerate}
+
+      After fourth step due to stateless communication if the third party wants to make another request has repeat the procedure from the first step 
 
       \item[Query API] Exploits HTTP requests and a Query parameter named Action to grant communication between Application Server and Database. Each Query request must include some common parameters to handle authentication and selection of an action.
 
