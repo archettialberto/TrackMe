@@ -69,7 +69,7 @@
 
       \subsubsection{Database}
 
-        The database is the only component of the \textit{data} layer. Queries are managed by a DBMS that optimizes and elaborates them in parallel. Data stored in the database is persistent and shall not be lost due to external factors. The database service will not be directly developed by us, but will be bought from the existing ones. In Figure~\ref{fig:er} we reported the Entity-Relashionsip diagram for the data stored in the databse.
+        The database is the only component of the \textit{data} layer. Queries are managed by a DBMS that optimizes and elaborates them in parallel. Data stored in the database is persistent and shall not be lost due to external factors. The database service will not be directly developed by us, but will be bought from the existing ones. In Figure~\ref{fig:er} we reported the Entity-Relashionsip diagram for the data stored in the database.
 
         The \textit{data} layer is only accessible from the Application Server. It won't implement any application logic, except from DBMS functionalities: it will just respond to queries and passively store data.
 
@@ -350,7 +350,25 @@ Both client application and CLI can interact only with the application server th
       \item[Three-tier architecture] It allows to develop in isolation the presentation layer, the business layer and the data layer. It allows also to deploy on different physical nodes these layers, enhancing the MVC paradigm and the complete isolation of the layer components. The physical separation of nodes enhances reliability and availability of the services, as the application logic and data may be distributed on more than one node, lowering the failure probability and enhancing overall performances.
       \item[Client-Server] It is the standard model of communication of the World Wide Web.
       \item[Thin client] Data and logic of the system are handled in the data and business layer respectively. The presentation layer has the only role of showing data to the user and performing requests that will be handled by the other layers (Figure~\ref{fig:thinclient}). In this way the system can easily adapt to changes and updates in the presentation layer.
-      \item[REST and stateless communication] In order to make the system scalable with the number of requests, it is a good practice to grant stateless communication between client and server. According to the REST paradigm, every HTTP request encapsulates all the data needed to be performed, therefore it is completely independant from other requests. This paradigm allows different requests to be handled from different server nodes, encreasing scalability possibilities and load balancing options. The server doesn't hold any session information about the client.
+      \item[REST and stateless communication] In order to make the system scalable with the number of requests, it is a good practice to grant stateless communication between client and server. According to the REST paradigm, every HTTP request encapsulates all the data needed to be performed, therefore it is completely independent from other requests and exploits the RESTful APIs. This paradigm allows different requests to be handled from different server nodes, increasing scalability possibilities and load balancing options. The server doesn't hold any session information about the client.
+
+      The figure ~\ref{fig:REST_Diagram} describes a third party client making an anonymous group request to the server:
+
+      \fetchUML
+        {REST_Diagram}
+        {Example of REST protocol}
+        {1}           % scale
+        {0}           % move left
+
+      \begin{enumerate}
+      \item The client asks whether the server can accept requests or not at that specific moment 
+      \item The server accept to receive requests
+      \item The third party ask for 1500 users weights and heartbeats since 01/2018
+      \item The server denies the request because 1500 users with those characteristics cannot be found
+      \end{enumerate}
+
+      \item[Query API] Exploits HTTP requests and a Query parameter named Action to grant communication between Application Server and Database. Each Query request must include some common parameters to handle authentication and selection of an action.
+
     \end{description}
 
     \begin{figure}[h!]
