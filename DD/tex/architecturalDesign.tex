@@ -36,6 +36,8 @@
         \begin{itemize}
           \item A smartphone application, capable of exploiting all of the system functionalities: it shall render data, provide forms for the clients (users and third parties) and communicate with the Application Server
           \item An API that allows more experienced users or other developers to automate communication with our system; the API is particularly useful when third parties need to analyze huge quantities of data that a smartphone graphical interface cannot render
+          \item A command line interface is provided to subscribed third parties. It grants a fast and easy method to exploit to Data4Help functionalities which could be useful in several situations such as: dealing with huge amounts of data or checking for newly data.
+          The CLI, as the smartphone, can communicate only with the Application Server
         \end{itemize}
 
         It is important to note that the smartphone application exploits the API for communication with the Application Server. Every \texttt{Data4Help} or \texttt{AutomatedSOS} service can be required by API communication.
@@ -98,8 +100,7 @@
 
   \subsection{Deployment view}
   \label{sec:deplview}
- 
-In figure ~\ref{Deployment} is given a graphical representation of the deployment \footnote{PC refers to both notebook and desktop computer}
+ In figure ~\ref{fig:Deployment} is given a graphical representation of the deployment \footnote{PC refers to both notebook and desktop computer}
   \fetchUML
         {Deployment}
         {Deployment Diagram}
@@ -108,8 +109,21 @@ In figure ~\ref{Deployment} is given a graphical representation of the deploymen
 
 Each node refers to a different component system:
 \begin{itemize}
-  \item Smartphone: 
+  \item Mobile device:runs client application which performs only Presentation Layer functionalities given that a Thin Client architectural style is chosen(~\ref{sec:stylesandpatterns}). 
+  \item PC: performs only Presentation Layer functionalities thanks to a proper CLI
 \end{itemize}
+
+Both client application and CLI can interact only with the application server thanks to a RESTful APIs(~\ref{sec:stylesandpatterns})
+
+\begin{itemize}
+  \item AWS Lambda: computer platform where it is possible to upload application code (provided that is written in one of the supported languages such as Node.js, Java, Go , C and Python)which will be run in an environment called Lambda function. This lambda function is stateless and given that AWS Lambda autonomously manages memory, CPU, network, and other resources we are responsible only for our code; we have not to consider some critical aspects such as availability or load balancing. Moreover a stateless approach is coherent with the use of REST for communication as says ~\ref{sec:stylesandpatterns}).
+  For all these reasons we choose AWS Lambda to implement Business Layer functionalities.
+  This component can interact with both Presentation Layer and Data Layer(provided that)
+
+   
+
+\end{itemize}
+
 
 
     % TODO add deployment description
