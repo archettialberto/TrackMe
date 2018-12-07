@@ -16,7 +16,7 @@
       \item {\color{red} \textbf{red}}: SOS related dependency
       \item {\color{blue} \textbf{blue}}: payment related dependency
     \end{itemize}
-    At first, red and blue dependencies, as well as their target components may be excluded from the graph, due to the fact that these dependencies are not relevant to the core functionalities of the system part that shall be developed first. We will divide the integration and testing procedure in high level steps, in order to simlpify the deadline definition.
+    At first, red and blue dependencies, as well as their target components may be excluded from the graph, due to the fact that these dependencies are not relevant to the core functionalities of the system part that shall be developed first. We will divide the integration and testing procedure in high level steps, in order to simplify the deadline definition.
 
     \begin{figure}[h!]
       \centering
@@ -28,14 +28,12 @@
   \clearpage
   \subsection{Step 0}
 
-    For the integration and testing procedure we will adopt a top-down approach, starting from the most critical component that has no \textit{use} relation starting from it: the Database.
-
-    The Database shall be tested through the stubs and shall respect the following requirements, in order to move to the next integration and testing step:
+    For the integration and testing procedure we will adopt a top-down approach, starting from the most critical component that has no \textit{use} relation starting from it: the Database. Top-down approach implies that it shall be tested through stubs. In order to move to the next integration and testing step, the unit tests on the database shall guarantee that it
     \begin{itemize}
-      \item save account data provided by the \AccountManager\ stub and data entries provided by the \DataCollector\ stub
-      \item retrive on request account data or data entries respecting data ownership
-      \item be able to update data ownership on request
-      \item be able to compose data sets according to the queries given by the \SetBuilder\ stub
+      \item saves account data provided by the \AccountManager\ stub and data entries provided by the \DataCollector\ stub
+      \item retrives on request account data or data entries respecting data ownership
+      \item is able to update data ownership on request
+      \item is able to compose data sets according to the queries given by the \SetBuilder\ stub
     \end{itemize}
 
     \begin{figure}[h!]
@@ -47,13 +45,14 @@
 
     In parallel to the Database developement, the \FilterManager\ also can be implemented and tested, as it shares no dependency to still unimplemented components. It shall be able to convert parametrized filters to filter objects, checking the integrity and validity of the passed parameters.
 
+    In all of these steps the unit tests shall focus on the requirement mapping conformity (Section~\ref{sec:req}) and on granting acceptable behaviours on unexpected inputs, even for internal components that do not have interfaces exposed to the extrernal systems. 
+
   \clearpage
   \subsection{Step 1}
 
-    In this step some of the crucial components of the Application Server will be added to the system. \\
-    Before moving to the next step,
+    In this step some of the crucial components of the Application Server will be integrated together. At this point the system shall guarantee that
     \begin{itemize}
-      \item the \AccountManager\ shall be able to create accounts of users and third parties according to the Application stub requests
+      \item the \AccountManager\ shall be able to create accounts of users and third parties according to the Application stub requests and correctly loggin in them
       \item the \DataCollector\ shall be able to retrive data entries collected by the Application stub and interact with the Database in order to save them on persistent memory with the ownership set to the user that produced them
       \item the \SetBuilder\ shall be able to build queries for the Database according to the \FilterManager\ filters and shall be able to anonymize data sets returned by the Database
     \end{itemize}
@@ -65,7 +64,7 @@
       \label{fig:depgraph1}
     \end{figure}
 
-    At this point the data management features, except from the request related ones, shall be covered on the Application Server: it is able to store and retrive data concerning both accounts and data entries and is able to manipulate it by building filtered sets and anonymizing them.
+    At this point the data management features, except from the request related ones, shall be covered on the Application Server. It is possible to conduce some stress tests in order to verify the stability of the system. The performance must be acceptable before moving to Step 2.
 
   \clearpage
   \subsection{Step 2}
@@ -98,7 +97,7 @@
       \label{fig:depgraph3}
     \end{figure}
 
-    At this point the top-down integration procedure is completed and system has been assembled in all of its parts. It can be tested as a whole entity, in all of its functionalities.
+    At this point the top-down integration procedure is completed and system has been assembled in all of its parts. It can be tested as a whole entity, in all of its functionalities. It is important, before release, to test that all the requirements have been implemented correctly, that the system can handle heavy loads from its communication interfaces and that it behaves correctly even if it receives unexpected inputs.
 
 
 \end{document}
