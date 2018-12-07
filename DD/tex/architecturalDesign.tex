@@ -100,24 +100,38 @@
   \subsection{Deployment view}
   \label{sec:deplview}
 
-    We decided to deploy our system exploiting the services provided by Amazon AWS. Amazon AWS hides most of the back-end complexity in terms of scalability, reliability and fault tolerance of the system. It automatically handles server calls in a distributed way, by just providing the code we want to run.
+    We decided to deploy our system exploiting the services provided by Amazon AWS (Figure~\ref{fig:deplidea}). Amazon AWS hides most of the back-end complexity in terms of scalability, reliability and fault tolerance of the system. It automatically handles server calls in a distributed way, by just providing the code we want to run \cite{amazonAWS}. The pros of this deployment choice may be summarized in
+    \begin{itemize}
+      \item automatic load balancing of client-server communication and automatic scaling of the system
+      \item no need to purchase physical servers, as Amazon AWS provides software services that are entirely exploited on their machines
+      \item Amazon AWS provides a payment policy proportional to the effetive resource usage required by our system: there is no need for physical resource planning, as the allocated resources and the payment amount adapt automatically to the usage we require
+      \item coding, testing and integration phases are handled in a professional environment, the Amazon AWS platform, that provides easy-to-use and powerful instruments that allow developers and testers to work faster and more efficiently, by focusing only on system-related tasks and not worrying about service integration issues
+    \end{itemize}
 
-    It is important to note that in the other parts of this document we didn't treat the Application Server as a physical node, but more as a logical node. In fact, the Application Server functionalities will be deployed by Lambda functions, that have no concept of node or server on which business logic is handled. By hiding the deployment details of the Application Server, we intended to isolate this section from the rest of the document, in order to ease future changes or additions.
+    \begin{figure}[h!]
+      \centering
+      \includegraphics[width=\linewidth]{\fetchImg{util/DeploymentIdea.jpg}}
+      \caption{Mapping of the architectural layers on the Amazon AWS services}
+      \label{fig:deplidea}
+    \end{figure}
 
-    Figure~\ref{fig:Deployment} represents the deployment view of the system: each device refers to a different component of the system (Section~\ref{sec:compview}):
+    It is important to note that in the other parts of this document we didn't treat the Application Server as a physical node, but more as a logical node. In fact, the Application Server functionalities will be deployed by Lambda functions, that have no concept of node or server on which business logic is handled. Nevertheless the set of defined Lambdas has the same external behaviour of a stateless server that waits for API calls and performs tasks between its logical components. By hiding the deployment details of the Application Server, we intended to isolate this section from the rest of the document, in order to ease future changes or additions.
+
+    In the deployment view (Figure~\ref{fig:Deployment}) we find:
     \begin{description}
-      \item[\texttt{Mobile device}] Runs the mobile Application of the presentation layer; the Application is compatible with Android and iOS operating systems, as they're the most common between TrackMe target clients
-      \item[\texttt{PC}] Runs the CLI Application of the presentation layer; the Application is written in Java and is compatible with most desktop operating systems
-      %Both client application and CLI can interact only with the application server thanks to a RESTful APIs(~\ref{sec:stylesandpatterns})
-      \item[\texttt{AWS Lambda}] Platform where it is possible to upload application code (written in one of the supported languages such as Node.js, Java, Go, C and Python) which will be run in an environment called Lambda function; every Lambda function is stateless (Section~\ref{sec:stylesandpatterns}), meaning that it is completely independant from other functions and can be executed in a distributed and very efficient way; AWS Lambda autonomously manages memory, CPU, network and other resources, so we are responsible only for our code
-      \item[\texttt{Amazon RDS}] Amazon Relational Database Service provides an easy, cost-efficient, scalable database in the cloud which implements the data layer; Amazon RDS autonomously performs all the administration tasks such as database setup, patching and backups: we can focus only on how should the database behaviour be and not how can it be achieved
+      \item[\texttt{Mobile device}] Runs the mobile Application of the presentation layer; the Application is compatible with Android and iOS operating systems, as they're the most common mobile operating systems between TrackMe target clients; there are no particular hardware constraints regarding the mobile device, other than having a touch screen
+      \item[\texttt{PC}] Runs the CLI Application of the presentation layer; the Application is written in Java, therefore it is compatible with most desktop operating systems
+      \item[\texttt{AWS Lambda}] Platform where it is possible to upload application code (written in one of the supported languages such as Node.js, Java, Go, C and Python) which will be run in an environment called Lambda function; every Lambda function is stateless (Section~\ref{sec:stylesandpatterns}), meaning that it is completely independant from other functions and can be executed in a distributed and very efficient way; Lambdas autonomously manage memory, CPU usage, network and other resources, so we are responsible only for our code
+      \item[\texttt{Amazon Cognito}] Handles user registration, login, and access control quickly and easily
+      \item[\texttt{Amazon RDS}] Amazon Relational Database Service performs all the administration tasks such as database setup, patching and backups: we can focus only on how should the database behaviour be and not how can it be achieved
+      \item[\texttt{Amazon Aurora}] Amazon Aurora is a relational database engine used to deploy the data layer of the system; it delivers up to five times the throughput of standard MySQL; Amazon Aurora's storage is fault-tolerant and self-healing, and disk failures are repaired in the background without loss of database availability\footnote{\texttt{https://aws.amazon.com/rds/aurora/details/}}
     \end{description}
 
 
     \fetchUML
       {Deployment}
       {Deployment Diagram}
-      {.7}           % scale
+      {.9}           % scale
       {0}           % move left
     % TODO ALBERTO ti convince la parte sul DataBase?
 
