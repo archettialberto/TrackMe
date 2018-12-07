@@ -122,7 +122,7 @@
       \item[\texttt{Mobile device}] Runs the mobile Application of the presentation layer; the Application is compatible with Android and iOS operating systems, as they're the most common mobile operating systems between TrackMe target clients; there are no particular hardware constraints regarding the mobile device, other than having a touch screen
       \item[\texttt{PC}] Runs the CLI Application of the presentation layer; the Application is written in Java, therefore it is compatible with most desktop operating systems
       \item[\texttt{AWS Lambda}] Platform where it is possible to upload application code (written in one of the supported languages such as Node.js, Java, Go, C and Python) which will be run in an environment called Lambda function; every Lambda function is stateless (Section~\ref{sec:stylesandpatterns}), meaning that it is completely independant from other functions and can be executed in a distributed and very efficient way; Lambdas autonomously manage memory, CPU usage, network and other resources, so we are responsible only for our code
-      \item[\texttt{Amazon Cognito}] Handles user registration, login, and access control quickly and easily
+      \item[\texttt{Amazon Cognito}] Handles user registration, login, and access control quickly and easily; it is basically a suite that handles all the functionalities required to the \AccountManager, therefore it can be deployed on this service
       \item[\texttt{Amazon RDS}] Amazon Relational Database Service performs all the administration tasks such as database setup, patching and backups: we can focus only on how should the database behaviour be and not how can it be achieved
       \item[\texttt{Amazon Aurora}] Amazon Aurora is a relational database engine used to deploy the data layer of the system; it delivers up to five times the throughput of standard MySQL; Amazon Aurora's storage is fault-tolerant and self-healing, and disk failures are repaired in the background without loss of database availability\footnote{\texttt{https://aws.amazon.com/rds/aurora/details/}}
     \end{description}
@@ -231,9 +231,9 @@
         {1}           % scale
         {0}           % move left
 
-  \clearpage
+    \clearpage
 
-  \subsubsection{Update anonymous-group request}
+    \subsubsection{Update anonymous-group request}
     \label{sec:updatedata}
 
       The sequence diagram in Figure~\ref{fig:run_GroupUpdate} shows an update process of a anonymous-group request: the request has already been payed by the third party. By making the request, the third party subscribed to new data as soon as it will be produced. New data is fetched through the \texttt{updateRequest} method.
@@ -350,35 +350,37 @@
       \item[Three-tier architecture] It allows to develop in isolation the presentation layer, the business layer and the data layer. It allows also to deploy on different physical nodes these layers, enhancing the MVC paradigm and the complete isolation of the layer components. The physical separation of nodes enhances reliability and availability of the services, as the application logic and data may be distributed on more than one node, lowering the failure probability and enhancing overall performances.
       \item[Client-Server] It is the standard model of communication of the World Wide Web.
       \item[Thin client] Data and logic of the system are handled in the data and business layer respectively. The presentation layer has the only role of showing data to the user and performing requests that will be handled by the other layers (Figure~\ref{fig:thinclient}). In this way the system can easily adapt to changes and updates in the presentation layer.
-      \item[REST and stateless communication] In order to make the system scalable with the number of requests, it is a good practice to grant stateless communication between client and server. According to the REST paradigm, every HTTP request encapsulates all the data needed to be performed, therefore it is completely independent from other requests and exploits the RESTful APIs. This paradigm allows different requests to be handled from different server nodes, increasing scalability possibilities and load balancing options. The server doesn't hold any session information about the client.
 
-      The figure ~\ref{fig:REST_Diagram} describes a third party client making an anonymous group request to the server:
+      \begin{figure}[h!]
+        \centering
+        \includegraphics[width=.85\linewidth]{\fetchImg{util/ThinClient.jpg}}
+        \caption{Thin client architecture: logic operations and data storage are not performed by the client nodes, on which the presentation layer reside}
+        \label{fig:thinclient}
+      \end{figure}
 
-      \fetchUML
-        {REST_Diagram}
-        {Example of REST protocol}
-        {1}           % scale
-        {0}           % move left
-
-      \begin{enumerate}
-      \item The client asks whether the server can accept requests or not at that specific moment
-      \item The server accept to receive requests
-      \item The third party ask for 1500 users weights and heartbeats since 01/2018
-      \item The server denies the request because 1500 users with those characteristics cannot be found
-      \end{enumerate}
-
-      After fourth step due to stateless communication if the third party wants to make another request has repeat the procedure from the first step
-
-      \item[Query API] Exploits HTTP requests and a Query parameter named Action to grant communication between Application Server and Database. Each Query request must include some common parameters to handle authentication and selection of an action.
-
+      \item[RESTful API and stateless communication] In order to make the system scalable with the number of requests, it is a good practice to grant stateless communication between client and server. According to the REST paradigm, every HTTP request encapsulates all the data needed to be performed, therefore it is completely independent from other requests. This paradigm allows different requests to be handled from different server nodes, increasing scalability possibilities and load balancing options. The server doesn't hold any session information about the client. Figure ~\ref{fig:REST_structure} and Figure~\ref{fig:REST_Diagram} describe a client-server REST interaction.
     \end{description}
 
     \begin{figure}[h!]
       \centering
-      \includegraphics[width=.85\linewidth]{\fetchImg{util/ThinClient.jpg}}
-      \caption{Thin client architecture: logic operations and data storage are not performed by the client nodes, on which the presentation layer reside}
-      \label{fig:thinclient}
+      \includegraphics[width=.85\linewidth]{\fetchImg{util/REST_Diagram.jpg}}
+      \caption{REST communication structure}
+      \label{fig:REST_structure}
     \end{figure}
+
+    \def \restfulwid {.4\linewidth}
+    \begin{figure*}
+      \centering
+      \begin{tabular}{lll}
+        & \textbf{Request} & \textbf{Response} \\[4pt]
+        \rotatebox{90}{\textbf{\qquad POST}} & \includegraphics[width=\restfulwid]{\fetchImg{util/RESTful_example_post}} & \includegraphics[width=\restfulwid]{\fetchImg{util/RESTful_example_post_r}} \\
+        \rotatebox{90}{\textbf{\qquad GET}} & \includegraphics[width=\restfulwid]{\fetchImg{util/RESTful_example_get}} & \includegraphics[width=\restfulwid]{\fetchImg{util/RESTful_example_get_r}} \\
+      \end{tabular}
+      \caption{Example of REST communication messages}
+      \caption*{The purpose of these messages is to illustrate how the REST paradigm works: in the first row we see a client that uses the \texttt{POST} command to upload a new data entry in the server while in the second row we see a client or a third party that asks for some data entries with the \texttt{GET} command}
+      \label{fig:REST_Diagram}
+    \end{figure*}
+
 
   %\subsection{Other design decisions}
   %\label{sec:designdecisions}
