@@ -35,7 +35,7 @@
 
       \subsubsection{App}
 
-        The application component is the front-end of the system. Our clients will interact with the system through the front end. We will provide
+        The Application component is the front-end of the system. Our clients will interact with the system through the front end. We will provide
         \begin{itemize}
           \item a smartphone application, capable of exploiting all of the system functionalities: it shall render data, provide forms for the clients (users and third parties) and communicate with the Application Server
 
@@ -53,12 +53,18 @@
 
         In the architecture the Application Server is the only link to the database. External systems or clients cannot directly access persistent data of our system.
 
-        The Application Server is also the only link to the \textit{presentation} layer, as the Application Server  coordinates the user-external system interation.
+        The Application Server is also the only link to the \textit{presentation} layer, as it  coordinates the user-external system interation.
 
         Subcomponents of the Application Server are
         \begin{description}
-          \item[\AccountManager] This module handles creation, authentication and management of users and third parties'accounts; before exploiting our system's functionalities users and third parties need to be authenticated by this module after providing their credentials
-        
+          \item[\AccountManager] This module handles creation, authentication and management of users and third parties' accounts (Figure~\ref{fig:Component_AccountManager}); before exploiting our system's functionalities users and third parties need to be authenticated by this module after providing their credentials
+
+          \fetchUML
+            {Component_AccountManager}
+            {\AccountManager\ subcomponents: \texttt{LoginModule} handles account authentication by checking the passed credentials; \texttt{RegistrationModule} handles account registration, provided the registration form with the details of the client that is registering; \texttt{PermissionModule} checks for the ownership of required data entries (every account owns some data entries: these entries are the only ones that it is allowed to ask for; furthermore, the ownership relations may change through time)}
+            {.6}           % scale
+            {0}           % move left
+
           \item[\DataCollector] This module communicates with users'application and periodically receives data entries, as soon as they're collected by users'wearables
 
           \item[\EmergencyDetector] This module is in charge of automatically analyze data entries inserted in the system if their owner subscribed to \texttt{AutomatedSOS}; it is separated from the \DataCollector\ because emergency detection can be exploited in many ways, depending on the medical literature on the topic; this feature should be independant and isolated from the rest of the architecture
@@ -69,7 +75,13 @@
 
           \item[\PaymentGateway] This module is in charge of communicating with the external payment system is order to process payments between third parties and TrackMe
 
-          \item[\RequestManager] This module is in charge of composing, verifying and elaborating third parties'requests, both of single user type and anonymous group type
+          \item[\RequestManager] This module is in charge of composing, verifying and elaborating third parties'requests (Figure~\ref{fig:Component_RequestManager})
+
+          \fetchUML
+            {Component_RequestManager}
+            {\RequestManager\ subcomponents: \texttt{RequestFactory} generates and manages requests provided the request form (requests may be of single-user or anonymous-group type; they'll be both handled by the same subcomponent until possible, in order to enhance reliability and reusability of code); \texttt{RequestUpdateDaemon} asks the database for new data entries, in order to provide to the third party new data as soon as it is collected}
+            {.4}           % scale
+            {0}           % move left
 
           \item[\SetBuilder] This module generates data set oriented queries for the database; queries can be accepted or declined by the database, depending on the account permissions concerning data entries access
         \end{description}
@@ -265,7 +277,9 @@
   \subsection{Application Server interfaces}
   \label{sec:compinterf}
 
-    In this section we will present the details concerning the interfaces of the subcomponents of Application Server defined in Section~\ref{sec:applserverinterf}. Every component will offer or require some functionalities through interface methods in a way that, once all components are assembled, the Application Server shall not have uncovered functionalities that will not be covered by other systems (Section~\ref{sec:otherinterfaces}). All of this methods has been called at least once in the sequence diagrams of Section~\ref{sec:runtview}.
+    In this section we will present the details concerning the interfaces of the subcomponents of Application Server defined in Section~\ref{sec:applserverinterf}. Every component will offer or require some functionalities through interface methods in a way that, once all components are assembled, the Application Server shall not have uncovered functionalities that will not be covered by other systems (Section~\ref{sec:otherinterfaces}). Since all the components provide or require a unique interface, the provided interface will be called with the same name of the providing component and will be omitted in the Component Diagram (Figure~\ref{fig:ComponentDiagram}), in order to simplify the description.
+
+    All of this methods has been called at least once in the sequence diagrams of Section~\ref{sec:runtview}.
 
     \subsubsection{\AccountManager}
 
@@ -397,21 +411,12 @@
       \label{fig:REST_structure}
     \end{figure}
 
-    \def \restfulwid {.4\linewidth}
     \begin{figure*}
       \centering
-      \begin{tabular}{lll}
-        & \textbf{Request} & \textbf{Response} \\[4pt]
-        \rotatebox{90}{\textbf{\qquad POST}} & \includegraphics[width=\restfulwid]{\fetchImg{util/RESTful_example_post}} & \includegraphics[width=\restfulwid]{\fetchImg{util/RESTful_example_post_r}} \\
-        \rotatebox{90}{\textbf{\qquad GET}} & \includegraphics[width=\restfulwid]{\fetchImg{util/RESTful_example_get}} & \includegraphics[width=\restfulwid]{\fetchImg{util/RESTful_example_get_r}} \\
-      \end{tabular}
-
+      \includegraphics[width=\linewidth]{\fetchImg{util/RESTful_example}}
       \caption{Example of REST communication messages}
-
-      \caption*{The purpose of these messages is to illustrate how the REST paradigm works: in the first row we see a client that uses the \texttt{POST} command to upload a new data entry in the server while in the second row we see a third party (also a user can make the same request:the host field will become  \emph{Data4Help user}) that asks for some data entries with the \texttt{GET} command }
+      \caption*{The purpose of these messages is to illustrate how the REST paradigm works: in the first row we see a client that uses the \texttt{POST} command to upload a new data entry in the server while in the second row we see a client or a third party that asks for some data entries with the \texttt{GET} command}
       \label{fig:REST_Diagram}
     \end{figure*}
-
-
 
 \end{document}
