@@ -20,8 +20,11 @@
     The main components of the system are
     \begin{description}
       \item[App] Application installed on users'devices that communicates with the system; its purpose is to show data to the user and forward his/her requests to the Application Server; we will focus on the smartphone app for Andriod or iOS systems, as it is the main front-end application that our clients need
+
       \item[Application Server] Back-end component on which the logic of the application takes place; it elaborates the requests it receives and interacts with external services and the data layer; we will focus mainly on this component, as it shall handle all the information dispatching from different layers
+
       \item[Database] Component responsible for data storage; it shall grant ACID properties (Atomicity, Consistency, Isolation and Durability) and shall provide a management service that handles query parallelization and optimization, as data access policies from different accounts
+
       \item[External Systems] Systems that interact with \texttt{Data4Help} or \texttt{AutomatedSOS}; they handle functionalities not internally developed in the system, such as payment handling and ambulance dispatching
     \end{description}
 
@@ -35,7 +38,9 @@
         The application component is the front-end of the system. Our clients will interact with the system through the front end. We will provide
         \begin{itemize}
           \item a smartphone application, capable of exploiting all of the system functionalities: it shall render data, provide forms for the clients (users and third parties) and communicate with the Application Server
+
           \item an API that allows more experienced users or other developers to automate communication with our system; the API is particularly useful when third parties need to analyze huge quantities of data that a smartphone graphical interface cannot render
+
           \item a command line tool that automates API calls for third parties that don't want to develop a different program to interact with our system; the command line tool will be written in Java, in order to favor the compatibility with most operating systems
         \end{itemize}
 
@@ -53,16 +58,19 @@
         Subcomponents of the Application Server are
         \begin{description}
           \item[\AccountManager] This module handles creation, authentication and management of users and third parties'accounts; before exploiting our system's functionalities users and third parties need to be authenticated by this module after providing their credentials
-          %check whether the data inserted in the registration phase are correct or not
-          % FABIO implicit in "handles creation"
+        
           \item[\DataCollector] This module communicates with users'application and periodically receives data entries, as soon as they're collected by users'wearables
-          %user and third party application not only user
-          % FABIO only users collect data from wearables, not third parties
+
           \item[\EmergencyDetector] This module is in charge of automatically analyze data entries inserted in the system if their owner subscribed to \texttt{AutomatedSOS}; it is separated from the \DataCollector\ because emergency detection can be exploited in many ways, depending on the medical literature on the topic; this feature should be independant and isolated from the rest of the architecture
+
           \item[\EmergencyDispatcher] This module builds emergency messages and forwards them to the SOS system
+
           \item[\FilterManager] This module composes filter constraints on data entries that can be fetched from the database
+
           \item[\PaymentGateway] This module is in charge of communicating with the external payment system is order to process payments between third parties and TrackMe
+
           \item[\RequestManager] This module is in charge of composing, verifying and elaborating third parties'requests, both of single user type and anonymous group type
+
           \item[\SetBuilder] This module generates data set oriented queries for the database; queries can be accepted or declined by the database, depending on the account permissions concerning data entries access
         \end{description}
 
@@ -103,8 +111,11 @@
     We decided to deploy our system exploiting the services provided by Amazon AWS (Figure~\ref{fig:deplidea}). Amazon AWS hides most of the back-end complexity in terms of scalability, reliability and fault tolerance of the system. It automatically handles server calls in a distributed way, by just providing the code we want to run \cite{amazonAWS}. The pros of this deployment choice may be summarized in
     \begin{itemize}
       \item automatic load balancing of client-server communication and automatic scaling of the system
+
       \item no need to purchase physical servers, as Amazon AWS provides software services that are entirely exploited on their machines
+
       \item Amazon AWS provides a payment policy proportional to the effetive resource usage required by our system: there is no need for physical resource planning, as the allocated resources and the payment amount adapt automatically to the usage we require
+
       \item coding, testing and integration phases are handled in a professional environment, the Amazon AWS platform, that provides easy-to-use and powerful instruments that allow developers and testers to work faster and more efficiently, by focusing only on system-related tasks and not worrying about service integration issues
     \end{itemize}
 
@@ -120,10 +131,15 @@
     In the deployment view (Figure~\ref{fig:Deployment}) we find:
     \begin{description}
       \item[\texttt{Mobile device}] Runs the mobile Application of the presentation layer; the Application is compatible with Android and iOS operating systems, as they're the most common mobile operating systems between TrackMe target clients; there are no particular hardware constraints regarding the mobile device, other than having a touch screen
+
       \item[\texttt{PC}] Runs the CLI Application of the presentation layer; the Application is written in Java, therefore it is compatible with most desktop operating systems
+
       \item[\texttt{AWS Lambda}] Platform where it is possible to upload application code (written in one of the supported languages such as Node.js, Java, Go, C and Python) which will be run in an environment called Lambda function; every Lambda function is stateless (Section~\ref{sec:stylesandpatterns}), meaning that it is completely independant from other functions and can be executed in a distributed and very efficient way; Lambdas autonomously manage memory, CPU usage, network and other resources, so we are responsible only for our code
+
       \item[\texttt{Amazon Cognito}] Handles user registration, login, and access control quickly and easily; it is basically a suite that handles all the functionalities required to the \AccountManager, therefore it can be deployed on this service
+
       \item[\texttt{Amazon RDS}] Amazon Relational Database Service performs all the administration tasks such as database setup, patching and backups: we can focus only on how should the database behaviour be and not how can it be achieved
+
       \item[\texttt{Amazon Aurora}] Amazon Aurora is a relational database engine used to deploy the data layer of the system; it delivers up to five times the throughput of standard MySQL; Amazon Aurora's storage is fault-tolerant and self-healing, and disk failures are repaired in the background without loss of database availability\footnote{\texttt{https://aws.amazon.com/rds/aurora/details/}}
     \end{description}
 
@@ -255,10 +271,14 @@
 
       \begin{description}
         \item[\texttt{createUserAccount}] Generates a new user account, provided email, password and other valid information, specified in Section 2.2.1 of RASD document; the return value specifies if the procedure ended correctly or if some incorrect information made it abort
+
         \item[\texttt{createThirdPartyAccount}] Generates a new third party account, provided email, password and other valid information, specified in Section 2.2.1 of RASD document; the return value specifies if the procedure ended correctly or if some incorrect information made it abort
+
         \item[\texttt{login}] By providing email and password, a client can login into his/her account and exploit system functionalities\footnote{the \textit{login} procedure is exploited, according to the stateless communication paradigm, by providing the credentials to every request from the client side, in order to guarantee isolation between the requests}; the return value is positive if information provided is correct and negative if there's no account that matches given credentials
+
         %\item[\texttt{resetPassword}] This method is called when a client doesn't remember his/her password: it triggers a reset procedure through the client's email, used for registering to \texttt{Data4Help}
         \item[\texttt{editInfo}] Updates the client's profile information with the the new set of information passed as parameter; the return value confirms if the procedure ended correctly; it may even toggle \texttt{AutomatedSOS} real time health danger detenction checks on inserted data
+
         %\item[\texttt{toggleAutomatedSOS}] Activates or stops \texttt{AutomatedSOS} health danger real time checks on inserted data entries in the system
         %\item[\texttt{getSharingPermissions}] This method returns the set of data types that the target user is willing to share anonymously
       \end{description}
@@ -298,7 +318,9 @@
 
       \begin{description}
         \item[\texttt{makeSingleUserRequest}] This method, provided a target user and the proper filters over the data that the third party wants to collect, generates a new single user request by the third party for the target user's data; it returns the data set that contains the requested data if the procedure ended correctly or a notification error, if the user declined the request
+
         \item[\texttt{makeAnonymousGroupRequest}] This method, provided the proper filters over the data that the third party wants to collect, generates a new anonymous group request; it returns the data set that contains the requested data if the procedure ended correctly or a notification error, if the system wasn't able to properly anonymize the data set
+
         \item[\texttt{updateRequest}] This method, provided a single-user or anonymous-group request by a third party that hasn't already been expired\footnote{Third parties can subscribe to new data and receive it once has been collected by the system; requests have an expiry date, after which updates cannot be performed}, checks if there are new data entries that fulfill the request, then returns them or an empty set if there's no new data entry
       \end{description}
 
@@ -319,6 +341,7 @@
 
       \begin{description}
         \item[\texttt{renderDataSet}] Visually renders a data set on the application screen
+
         \item[\texttt{showNotification}] Shows a notification error or a data request notification (in case of user account targeted by a third party single user request) on the application screen
       \end{description}
 
@@ -326,8 +349,11 @@
 
       \begin{description}
         \item[\texttt{addAccount}] This method adds a new user or third party account to the account set of the system; the return value states if the procedure ended correctly
+
         \item[\texttt{requstData}] This method analyzes the passed query throug the DBMS service in parallel with other queries and returns the tuples corresponding to the required data, or returns an error if the asking account hasn't the permissions to read the data
+
         \item[\texttt{saveData}] This method saves the passed data into the persistent memory
+
         \item[\texttt{updatePermissions}] This method updates permission accesses to data entries of the system, in order to share them between user and third party accounts; the return value states the correct ending of the procedure
       \end{description}
 
@@ -347,8 +373,11 @@
 
     \begin{description}
       \item[Model-View-Controller] We adopted the MVC pattern because it separates the three most important architectural aspects of the system: data storage, user interfaces and business logic. It allows to develop in parrallel every component, in isolation from the others, granting a less error prone developement and a more extensible architecture to future additions or punctual changes. The MVC pattern can be adopted at varoius architectural levels, as we can find it also in the mobile application.
+
       \item[Three-tier architecture] It allows to develop in isolation the presentation layer, the business layer and the data layer. It allows also to deploy on different physical nodes these layers, enhancing the MVC paradigm and the complete isolation of the layer components. The physical separation of nodes enhances reliability and availability of the services, as the application logic and data may be distributed on more than one node, lowering the failure probability and enhancing overall performances.
+
       \item[Client-Server] It is the standard model of communication of the World Wide Web.
+
       \item[Thin client] Data and logic of the system are handled in the data and business layer respectively. The presentation layer has the only role of showing data to the user and performing requests that will be handled by the other layers (Figure~\ref{fig:thinclient}). In this way the system can easily adapt to changes and updates in the presentation layer.
 
       \begin{figure}[h!]
@@ -363,7 +392,7 @@
 
     \begin{figure}[h!]
       \centering
-      \includegraphics[width=.85\linewidth]{\fetchImg{util/REST_Diagram.jpg}}
+      \includegraphics[width=.6\linewidth]{\fetchImg{util/REST_Diagram.jpg}}
       \caption{REST communication structure}
       \label{fig:REST_structure}
     \end{figure}
@@ -376,16 +405,13 @@
         \rotatebox{90}{\textbf{\qquad POST}} & \includegraphics[width=\restfulwid]{\fetchImg{util/RESTful_example_post}} & \includegraphics[width=\restfulwid]{\fetchImg{util/RESTful_example_post_r}} \\
         \rotatebox{90}{\textbf{\qquad GET}} & \includegraphics[width=\restfulwid]{\fetchImg{util/RESTful_example_get}} & \includegraphics[width=\restfulwid]{\fetchImg{util/RESTful_example_get_r}} \\
       \end{tabular}
+
       \caption{Example of REST communication messages}
-      \caption*{The purpose of these messages is to illustrate how the REST paradigm works: in the first row we see a client that uses the \texttt{POST} command to upload a new data entry in the server while in the second row we see a client or a third party that asks for some data entries with the \texttt{GET} command}
+
+      \caption*{The purpose of these messages is to illustrate how the REST paradigm works: in the first row we see a client that uses the \texttt{POST} command to upload a new data entry in the server while in the second row we see a third party (also a user can make the same request:the host field will become  \emph{Data4Help user}) that asks for some data entries with the \texttt{GET} command }
       \label{fig:REST_Diagram}
     \end{figure*}
 
-
-  %\subsection{Other design decisions}
-  %\label{sec:designdecisions}
-
-    %Data collection is a very critical functionality for both AutomatedSOS and Data4Help. Despite the fact that are two separate elements, deciding to have two different data collection subcomponents in ~\ref{sec:applserverinterf} will result in a significant drawback: the reduction of \texttt{Maintanability} which, as already said in section 3.7.4 of the RASD document, is a very important aspect of our software. This is the reason why in ~\ref{sec:datacollectormethod} is said that \EmergencyDetector  retrieve user's health parameters from \DataCollector  and not collects them directly to the app: in this way any change in the physical wearables deviced will requires the update only of \DataCollector  while \EmergencyDetector  remains the same; thus the software Manintanability is increased.
 
 
 \end{document}

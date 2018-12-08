@@ -15,6 +15,7 @@
 
     \begin{description}
       \item [\textbf{Single user data}] After a third party makes a request to the system for a single user data sharing, by providing  user's fiscal code, the system asks the user for authorization; if positively provided, the third party is granted access to the user's data
+
       \item [\textbf{Amonymous group data}] Third parties can be interested in big amounts of data, but not in who are the people providing it; the system, once the request is sent by the third party, checks if the data can be effectively anonymized (it must find at least 1000 people that can provide data matching the third party request's filters) and, if positively evaluated, grants access to the anonymized data to the third party
     \end{description}
 
@@ -25,9 +26,13 @@
     We will list the project \textbf{goals}, described in the RASD document:
     \begin{description}
       \item[\texttt{G.U1}] Users can collect, store and manage their health data
+
       \item[\texttt{G.U2}] Users can choose to have their health monitored; if their health is critical, an ambulance will be dispatched
+
       \item[\texttt{G.T1}] Third parties can ask single users for their health data sharing
+
       \item[\texttt{G.T2}] Third parties can request access to anonymized data that comes from groups of people
+
       \item[\texttt{G.T3}] Third parties can subscribe to new data and receive it as soon as it is produced
     \end{description}
 
@@ -40,7 +45,9 @@
       Phenomena that occur in the \textit{world} and are related to our application domain are
       \begin{itemize}
         \item physical conditions of the users
+
         \item third parties'projects, researches and interests
+
         \item ambulances dispatched by the SOS system
       \end{itemize}
       These phenomena exist in the \textit{world}, but cannot be observerd directly by our system.
@@ -51,13 +58,17 @@
       In order to communicate with the \textit{world}, our system needs to share some aspects with it. We will list the aspects controlled by the world, but observable by the machine:
       \begin{description}
         \item[\texttt{S.1}] physical parameters of the users, gathered through sensors on wereable devices
+
         \item[\texttt{S.2}] third parties requests to the system for the data they need
+
         \item[\texttt{S.3}] users'location, acquired through GPS signals
       \end{description}
       On the other hand, the aspects that occur in the machine, but are observable by the world are
       \begin{description}
         \item[\texttt{S.4}] interfaces that organize the gathered data that can be filtered according to time or type of data
+
         \item[\texttt{S.5}] messages for the SOS system, that are sent in case of critical health of a user
+
         \item[\texttt{S.6}] payment requests
       \end{description}
 
@@ -68,13 +79,19 @@
       \item[Data] Quantitative variables concerning health parameters
       \begin{description}
         \item[Aggregate data] See \textit{DataSet}
+
         \item[Anonymous data] \textit{data entry} that doesn't contain information about the user from which it was produced; a \textit{data set} is said to be anonymized if it contains only anonymous \textit{data entries} and its cardinality is greater or equal than 1000
+
         \item[Data entry] Tuple that corresponds to the user's parameters in a particular moment
+
         \item[Data set] Set of \textit{data entries}; depending on the context, it can identify a set of entries all belonging to a single user or or a set of anonymous entries belonging to more that 1000 users; a \textit{data set}, among all \textit{data} that the system is storing, can be identified and constructed according to the filters of a third party request
       \end{description}
       \item[Request] Third parties can ask the system for some data sharing through requests; requests are encoded through filling a form; the system, provided that the request is satisfiable, grants the third party access to the requested data
+
       \item[Third party] Actor interested in collecting data from a single user or from an anonymous group of users
+
       \item[Threshold] Numerical values related to a particular health parameter; they act as boundaries between the domain of critical health status and normal health status
+
       \item[User] Actor interested in his/her health data collecting and managing; a user can also be interested in automating SOS calls whenever his health status becomes critical
     \end{description}
 
@@ -85,10 +102,15 @@
 
     \begin{description}
       \item[API] Application Programming Interface
+
       \item[DBMS] Database Management System
+
       \item[Data] Whenever the context refers to generic groups of \textit{data entries}, the terms \textit{data} and \textit{data set} are interchangeable
+
       \item[REST] REpresentational State Transfer
+
       \item[System] Software product that TrackMe wants to develop; can be interchanged with \textit{S2B}
+
       \item[S2B] Software To Be
     \end{description}
 
@@ -109,9 +131,13 @@
   This document describes architecture and design of \texttt{Data4Help} and \texttt{AutomatedSOS} systems. The description will start with a top-down approach, in order to make the reader familiar with the overall structure; a bottom-up approach will then be adopted, in order to describe components in a isolated way. This document is devided in
   \begin{itemize}
     \item Section~\ref{sec:intro} is a brief introduction on the project to be developed in order to make this document self-contained
+
     \item Section~\ref{sec:arcdes} describes the high-level architecture (high-level components, their interation, runtime views and architextural decisions)
+
     \item Section~\ref{sec:ui} provides an overview on how the user interface will look like
+
     \item Section~\ref{sec:req} contains mapping between software requirements, described in the RASD document, and design elements
+    
     \item Section~\ref{sec:imp} identifies the order in which subcomponents will be implemented, integrated and tested document
   \end{itemize}
 

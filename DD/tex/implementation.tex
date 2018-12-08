@@ -13,7 +13,9 @@
     \setlist{nolistsep}
     \begin{itemize}[noitemsep]
       \item \textbf{black}: generic dependency
+
       \item {\color{red} \textbf{red}}: SOS related dependency
+
       \item {\color{blue} \textbf{blue}}: payment related dependency
     \end{itemize}
     At first, red and blue dependencies, as well as their target components may be excluded from the graph, due to the fact that these dependencies are not relevant to the core functionalities of the system part that shall be developed first. We will divide the integration and testing procedure in high level steps, in order to simplify the deadline definition.
@@ -31,8 +33,11 @@
     For the integration and testing procedure we will adopt a top-down approach, starting from the most critical component that has no \textit{use} relation starting from it: the Database. Top-down approach implies that it shall be tested through stubs. In order to move to the next integration and testing step, the unit tests on the database shall guarantee that it
     \begin{itemize}
       \item saves account data provided by the \AccountManager\ stub and data entries provided by the \DataCollector\ stub
+
       \item retrives on request account data or data entries respecting data ownership
+
       \item is able to update data ownership on request
+
       \item is able to compose data sets according to the queries given by the \SetBuilder\ stub
     \end{itemize}
 
@@ -53,7 +58,9 @@
     In this step some of the crucial components of the Application Server will be integrated together. At this point the system shall guarantee that
     \begin{itemize}
       \item the \AccountManager\ shall be able to create accounts of users and third parties according to the Application stub requests and correctly loggin in them
+
       \item the \DataCollector\ shall be able to retrive data entries collected by the Application stub and interact with the Database in order to save them on persistent memory with the ownership set to the user that produced them
+
       \item the \SetBuilder\ shall be able to build queries for the Database according to the \FilterManager\ filters and shall be able to anonymize data sets returned by the Database
     \end{itemize}
 
@@ -72,7 +79,9 @@
     In this step the \RequestManager\ will be added to the Application Server. It shall
     \begin{itemize}
       \item generate single-user or anonymous-group requests from the request form instances provided by the Application stub
+
       \item perform the operations to request the data set to the other components and return the data set or the error notification
+      
       \item update periodically the non-expired requests and return new data sets as soon as new data entries are inserted in the Database from the \DataCollector
     \end{itemize}
 
